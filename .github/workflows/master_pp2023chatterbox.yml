@@ -49,5 +49,5 @@ jobs:
         with:
           app-name: 'PP2023ChatterBox'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_B9F993BF780D4A678D633E31B71733FB }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_0EC425F208E441DBB5E92C03688A39C8 }}
           package: '*.war'
