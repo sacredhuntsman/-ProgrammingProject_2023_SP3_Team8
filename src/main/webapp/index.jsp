@@ -5,7 +5,7 @@
     <title>ChatterBox</title>
 </head>
 <body>
-<h1><%= "Chatterbox - The new encrypted voice chat which we swear is nothing like Discord!" %>
+<h1><%= "Chatterbox - The new encrypted voice chat which we swear is nothing like Discord!.. at all" %>
 </h1>
 <br/>
 <a href="hello-servlet">Hello Servlet</a>
