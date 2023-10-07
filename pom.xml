@@ -52,11 +52,7 @@
                 <artifactId>azure-webapp-maven-plugin</artifactId>
                 <version>2.12.0</version>
                 <configuration>
-                    <schemaVersion>v2</schemaVersion>
-                    <resourceGroup>ProgrammingProject_Chatterbox-1696420029139-rg</resourceGroup>
-                    <appName>ProgrammingProject-Chatterbox-1696420029139</appName>
-                    <pricingTier>F1</pricingTier>
-                    <region>centralus</region>
+            <q></q>
                     <runtime>
                         <os>Windows</os>
                         <javaVersion>Java 17</javaVersion>
