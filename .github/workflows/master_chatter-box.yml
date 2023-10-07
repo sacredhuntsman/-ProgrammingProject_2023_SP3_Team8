@@ -49,5 +49,5 @@ jobs:
         with:
           app-name: 'Chatter-Box'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_CA946EA754E749F08B5A54B2CE71BB9A }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_C49248F9051B4C879B2D5AE4E74BA088 }}
           package: '*.war'
