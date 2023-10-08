@@ -11,6 +11,6 @@
 <a href="hello-servlet">Hello Servlet</a>
 <a href="login">Login</a>
 <a href="registration">Register</a>
-<a href="forgot-password">Forgot Password</a>
+<a href="forgotpassword">Forgot Password</a>
 </body>
 </html>
