@@ -22,7 +22,14 @@
 <body>
 <div class="registration-container">
     <h2>Registration</h2>
-    <form action="register" method="post">
+
+    <!-- Check if there's an error message and display it -->
+    <% String error = request.getParameter("error");
+        if (error != null && !error.isEmpty()) { %>
+    <p style="color: red;"><%= error %></p>
+    <% } %>
+
+    <form action="registration" method="post">
         <div class="input-field">
             <label for="username">Username:</label>
             <input type="text" id="username" name="username" required>

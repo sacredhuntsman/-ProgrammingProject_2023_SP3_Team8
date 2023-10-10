@@ -9,7 +9,14 @@
 <html>
 <head>
     <title>Title</title>
+
+    <!-- Check if there's an error message and display it -->
+    <% String error = request.getParameter("error");
+        if (error != null && !error.isEmpty()) { %>
+    <p style="color: red;"><%= error %></p>
+    <% } %>
 </head>
+
 <body>
 
 </body>

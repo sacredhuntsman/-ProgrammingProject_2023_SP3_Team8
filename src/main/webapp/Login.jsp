@@ -22,6 +22,14 @@
 <body>
 <div class="login-container">
     <h2>Login</h2>
+
+    <!-- Check if there's an error message and display it -->
+    <% String error = request.getParameter("error");
+        if (error != null && !error.isEmpty()) { %>
+    <p style="color: red;"><%= error %></p>
+    <% } %>
+
+
     <form action="login" method="post">
         <div class="input-field">
             <label for="username">Username:</label>

@@ -31,6 +31,20 @@ public class RegistrationServlet extends HttpServlet {
 			return;
 		}
 		
+		// Check if the username or email is already taken
+		for (User existingUser : UserData.users) {
+			if (existingUser.getUsername().equals(username)) {
+				// Username is already taken, handle the error
+				response.sendRedirect("Registration.jsp?error=Username already taken");
+				return;
+			}
+			if (existingUser.getEmail().equals(email)) {
+				// Email is already taken, handle the error
+				response.sendRedirect("Registration.jsp?error=Email already taken");
+				return;
+			}
+		}
+		
 		// Create a new User object. This needs to be sent to a database.
 		// For now it goes to an array list for testing.
 		User newUser = new User();
@@ -44,11 +58,11 @@ public class RegistrationServlet extends HttpServlet {
 		UserData.addUser(newUser);
 		
 		// Redirect to a success page or login page after registration
-		System.out.println(users);
-		response.sendRedirect("/Login.jsp"); // Replace with your success page URL
+		System.out.println(users.toString());
+		response.sendRedirect("Login.jsp"); // Replace with your success page URL
 	}
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.getRequestDispatcher("/Registration.jsp").forward(request, response);
+		request.getRequestDispatcher("Registration.jsp").forward(request, response);
 	}
 	
 	public void destroy() {
