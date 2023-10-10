@@ -1,11 +1,16 @@
 package com.example.programmingproject_chatterbox;
 
-import java.io.IOException;
+import Classes.User;
+import Classes.UserData;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+
+import static Classes.PasswordValidations.verifyPassword;
 
 @WebServlet(name = "LoginServlet", urlPatterns = { "/login" })
 public class LoginServlet extends HttpServlet {
@@ -20,10 +25,10 @@ public class LoginServlet extends HttpServlet {
 		
 		if (isAuthenticated) {
 			// Authentication successful, redirect to a success page or perform further actions
-			response.sendRedirect("/index.jsp"); // Replace with the appropriate success page
+			response.sendRedirect("index.jsp"); // Replace with the appropriate success page
 		} else {
 			// Authentication failed, show an error message or redirect to a login error page
-			response.sendRedirect("Login.jsp?error=true"); // Redirect to login page with an error flag
+			response.sendRedirect("Login.jsp?error=Password does not match"); // Redirect to login page with an error flag
 		}
 		
 	}
@@ -36,10 +41,21 @@ public class LoginServlet extends HttpServlet {
 	}
 	
 	private boolean authenticate(String username, String password) {
-		// Implement your authentication logic here (e.g., check credentials against a database)
-		// Return true if authentication is successful, false otherwise
-		// Replace this logic with your actual authentication mechanism
-		// For demonstration purposes, we assume a username "admin" and password "password" as valid
-		return "admin".equals(username) && "password".equals(password);
+		// Iterate through the user array list to find the user with the given username
+		for (User user : UserData.users) {
+			if (user.getUsername().equals(username)) {
+				// User with the provided username found
+				String hashedPassword = user.getPassword();
+				System.out.println(hashedPassword);
+				// Use the PasswordValidations class to hash the provided password
+				if (verifyPassword(password, hashedPassword)){
+					
+					return true;
+				}
+
+			}
+		}
+		// User with the provided username not found
+		return false;
 	}
 }

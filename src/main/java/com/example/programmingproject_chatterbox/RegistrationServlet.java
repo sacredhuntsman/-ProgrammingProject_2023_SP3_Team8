@@ -10,7 +10,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import static Classes.PasswordValidations.hashPassword;
 import static Classes.UserData.users;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @WebServlet(name = "Registration", value = "/registration")
 public class RegistrationServlet extends HttpServlet {
@@ -23,7 +26,8 @@ public class RegistrationServlet extends HttpServlet {
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
 		String confirmPassword = request.getParameter("confirmPassword");
-		
+//		System.out.println("------password = -------" + password);
+//		System.out.println("------confirmpassword = -------" + confirmPassword);
 		// Check if passwords match
 		if (!password.equals(confirmPassword)) {
 			// Passwords do not match, handle the error (e.g., display an error message)
@@ -52,7 +56,7 @@ public class RegistrationServlet extends HttpServlet {
 		newUser.setFirstName(firstName);
 		newUser.setLastName(lastName);
 		newUser.setEmail(email);
-		newUser.setPassword(password);
+		newUser.setPassword(hashPassword(password));
 		
 		// Add the new user to the ArrayList using UserDataAccess
 		UserData.addUser(newUser);
