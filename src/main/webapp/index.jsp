@@ -8,7 +8,7 @@
 <h1><%= "Chatterbox - The new encrypted voice chat which we swear is nothing like Discord!.. at all" %>
 </h1>
 <br/>
-<a href="hello-servlet">Hello Servlet</a>
+<a href="hello">Hello Servlet</a>
 <a href="login">Login</a>
 <a href="registration">Register</a>
 <a href="forgotpassword">Forgot Password</a>

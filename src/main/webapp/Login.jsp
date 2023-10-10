@@ -35,7 +35,7 @@
             <input type="submit" value="Login">
         </div>
     </form>
-    <a href="forgot-password">Forgot Password</a>
+    <a href="forgotpassword">Forgot Password</a>
 </div>
 </body>
 </html>

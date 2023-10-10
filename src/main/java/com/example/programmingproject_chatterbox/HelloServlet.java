@@ -1,29 +1,17 @@
 package com.example.programmingproject_chatterbox;
 
-import java.io.*;
+import java.io.IOException;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
-import jakarta.servlet.http.*;
-import jakarta.servlet.annotation.*;
-
-@WebServlet(name = "helloServlet", value = "/hello-servlet")
+@WebServlet(name = "HelloServlet", urlPatterns = { "/hello" })
 public class HelloServlet extends HttpServlet {
-	private String message;
-	
-	public void init() {
-		message = "Hello World!";
-	}
-	
-	public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		response.setContentType("text/html");
-		System.out.println("test on hello");
-		
-		// Hello
-		PrintWriter out = response.getWriter();
-		out.println("<html><body>");
-		out.println("<h1>" + message + "</h1>");
-		out.println("</body></html>");
-	}
-	
-	public void destroy() {
-	}
+
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        response.getWriter().write("Hello, World!");
+    }
 }
