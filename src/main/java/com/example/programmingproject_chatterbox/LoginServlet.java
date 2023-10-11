@@ -9,6 +9,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import jakarta.servlet.http.HttpSession;
 
 
 import static Classes.PasswordValidations.verifyPassword;
@@ -25,21 +26,45 @@ public class LoginServlet extends HttpServlet {
 		boolean isAuthenticated = authenticate(username, password);
 		
 		if (isAuthenticated) {
-			// Authentication successful, redirect to a success page or perform further actions
-			response.sendRedirect("index.jsp"); // Replace with the appropriate success page
+			// Authentication successful, store user information in the session
+			HttpSession session = request.getSession();
+			for (User user : UserData.users) {
+				if (user.getUsername().equals(username)) {
+					// User with the provided username found
+					session.setAttribute("username", username);
+					session.setAttribute("firstName", user.getFirstName());
+					session.setAttribute("lastName", user.getLastName());
+					session.setAttribute("email", user.getEmail());
+					session.setMaxInactiveInterval(30*60);
+					
+				}
+			}
+			// Redirect to a success page or perform further actions
+			response.sendRedirect("Profile.jsp"); // Replace with the appropriate success page
 		} else {
 			// Authentication failed, show an error message or redirect to a login error page
 			response.sendRedirect("Login.jsp?error=Password does not match"); // Redirect to login page with an error flag
 		}
-		
 	}
+	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// This method handles GET requests to the /login URL
-		// You can use it for rendering the login form or providing additional information
+		String action = request.getParameter("action"); // Get the action parameter from the request
 		
-		// For example, you can forward the request to the login page:
-		request.getRequestDispatcher("/Login.jsp").forward(request, response);
+		if ("logout".equals(action)) {
+			// Logout action requested
+			HttpSession session = request.getSession(false); // Get the session without creating a new one
+			if (session != null) {
+				session.invalidate(); // Invalidate the session to log the user out
+			}
+			response.sendRedirect("Login.jsp"); // Redirect to the login page after logout
+		} else {
+			// Handle other GET requests (e.g., rendering the login form)
+			request.getRequestDispatcher("/Login.jsp").forward(request, response);
+		}
 	}
+
+	
+	
 	
 	private boolean authenticate(String username, String password) {
 		// Iterate through the user array list to find the user with the given username
@@ -59,4 +84,6 @@ public class LoginServlet extends HttpServlet {
 		// User with the provided username not found
 		return false;
 	}
+	
+	
 }

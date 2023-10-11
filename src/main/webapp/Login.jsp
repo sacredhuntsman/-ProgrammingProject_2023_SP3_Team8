@@ -141,7 +141,7 @@
         </form>
     </div>
     <div class="sign-up">
-        <p>Don't have an account? <a href="signup">Sign up now</a></p>
+        <p>Don't have an account? <a href="registration">Sign up now</a></p>
     </div>
 
 </div>
