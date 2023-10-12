@@ -1,5 +1,7 @@
 package com.example.programmingproject_chatterbox;
 
+import Classes.Admin;
+import Classes.AdminData;
 import Classes.User;
 import Classes.UserData;
 
@@ -11,11 +13,15 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import jakarta.servlet.http.HttpSession;
 
-
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import static Classes.UserData.users;
+import static Classes.PasswordValidations.hashPassword;
 import static Classes.PasswordValidations.verifyPassword;
 
 @WebServlet(name = "LoginServlet", urlPatterns = { "/login" })
 public class LoginServlet extends HttpServlet {
+	
+	private static final boolean DEBUGMODE = true;
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// Retrieve the username and password from the request parameters
@@ -59,11 +65,38 @@ public class LoginServlet extends HttpServlet {
 			response.sendRedirect("Login.jsp"); // Redirect to the login page after logout
 		} else {
 			// Handle other GET requests (e.g., rendering the login form)
+			
+			if (DEBUGMODE == true) {
+				addTestUsers();
+				
+			}
+			
 			request.getRequestDispatcher("/Login.jsp").forward(request, response);
 		}
 	}
-
 	
+	private void addTestUsers() {
+		// Create a new user and admin for testing
+		String a = hashPassword("a");
+		User newUser = new User("a", "1", "1", "1@1", a);
+		Admin newAdmin = new Admin("1", "1", "1@1");
+		for (User existingUser : UserData.users) {
+			if (existingUser.getUsername().equals("1")) {
+				break;
+				// Username is already taken, handle the error
+			}else{
+				UserData.addUser(newUser);
+			}
+		}
+		for (Admin existingAdmin : AdminData.admins) {
+			if (!existingAdmin.getAdminUsername().equals("1")) {
+				// Username is already taken, handle the error
+				break;
+			}else{
+				AdminData.addAdmin(newAdmin);
+			}
+		}
+	}
 	
 	
 	private boolean authenticate(String username, String password) {
