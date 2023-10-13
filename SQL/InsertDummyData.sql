@@ -1,9 +1,9 @@
 -- Dummy data for UserDB
-INSERT INTO UserDB (Username, Name, Email, Password, AvatarLink)
+INSERT INTO UserDB (Username, FirstName, LastName, Email, Password, AvatarLink)
 VALUES
-    ('user1', 'John Doe', 'john.doe@example.com', 'hashed_password_1', 'https://example.com/avatar1.jpg'),
-    ('user2', 'Jane Smith', 'jane.smith@example.com', 'hashed_password_2', 'https://example.com/avatar2.jpg'),
-    ('user3', 'Alice Johnson', 'alice.johnson@example.com', 'hashed_password_3', 'https://example.com/avatar3.jpg');
+    ('user1', 'John', 'Doe', 'john.doe@example.com', 'hashed_password_1', 'https://example.com/avatar1.jpg'),
+    ('user2', 'Jane', 'Smith', 'jane.smith@example.com', 'hashed_password_2', 'https://example.com/avatar2.jpg'),
+    ('user3', 'Alice', 'Johnson', 'alice.johnson@example.com', 'hashed_password_3', 'https://example.com/avatar3.jpg');
 
 -- Dummy data for FriendDB
 INSERT INTO FriendDB (UserID, FriendUserID, Status)

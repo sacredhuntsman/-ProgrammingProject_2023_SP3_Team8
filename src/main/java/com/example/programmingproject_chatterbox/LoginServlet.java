@@ -2,6 +2,7 @@ package com.example.programmingproject_chatterbox;
 
 import Classes.User;
 import Classes.UserData;
+import Classes.Database;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -29,7 +30,7 @@ public class LoginServlet extends HttpServlet {
 			response.sendRedirect("index.jsp"); // Replace with the appropriate success page
 		} else {
 			// Authentication failed, show an error message or redirect to a login error page
-			response.sendRedirect("Login.jsp?error=Password does not match"); // Redirect to login page with an error flag
+			response.sendRedirect("Login.jsp?error=Username or Password does not match"); // Redirect to login page with an error flag
 		}
 		
 	}
@@ -41,6 +42,14 @@ public class LoginServlet extends HttpServlet {
 		request.getRequestDispatcher("/Login.jsp").forward(request, response);
 	}
 	
+	// Search the database for a user with the given username and password
+	private boolean authenticate(String username, String password) {
+		Database database = new Database();
+		return database.authenticate(username, password);
+	}
+
+	//To remove once DB confirmed working
+	/*
 	private boolean authenticate(String username, String password) {
 		// Iterate through the user array list to find the user with the given username
 		for (User user : UserData.users) {
@@ -59,4 +68,5 @@ public class LoginServlet extends HttpServlet {
 		// User with the provided username not found
 		return false;
 	}
+	 */
 }
