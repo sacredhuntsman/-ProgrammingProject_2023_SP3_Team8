@@ -37,6 +37,10 @@
             <input type="email" id="email" name="email" required>
         </div>
         <div class="input-field">
+            <p><label for="age">Date of Birth:</label></p>
+            <input type="date" id="age" name="age" required>
+        </div>
+        <div class="input-field">
             <p><label for="password">Password:</label></p>
             <input type="password" id="password" name="password" required>
         </div>

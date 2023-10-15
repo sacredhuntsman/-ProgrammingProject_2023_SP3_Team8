@@ -30,6 +30,7 @@ public class RegistrationServlet extends HttpServlet {
 		String firstName = request.getParameter("firstName");
 		String lastName = request.getParameter("lastName");
 		String email = request.getParameter("email");
+		Integer age = Integer.parseInt(request.getParameter("age"));
 		String password = request.getParameter("password");
 		String confirmPassword = request.getParameter("confirmPassword");
 		// System.out.println("------password = -------" + password);
@@ -40,22 +41,12 @@ public class RegistrationServlet extends HttpServlet {
 			response.sendRedirect("Registration.jsp?error=Passwords do not match");
 			return;
 		}
+		
+		if (age < 13) {
+			response.sendRedirect("Registration.jsp?error=You must be 13 or older to register");
+			return;
+		}
 
-		// Check if the username or email is already taken
-		/*
-		 * for (User existingUser : UserData.users) {
-		 * if (existingUser.getUsername().equals(username)) {
-		 * // Username is already taken, handle the error
-		 * response.sendRedirect("Registration.jsp?error=Username already taken");
-		 * return;
-		 * }
-		 * if (existingUser.getEmail().equals(email)) {
-		 * // Email is already taken, handle the error
-		 * response.sendRedirect("Registration.jsp?error=Email already taken");
-		 * return;
-		 * }
-		 * }
-		 */
 
 		// Check if the username or email is already taken
 		// Create DB connection
