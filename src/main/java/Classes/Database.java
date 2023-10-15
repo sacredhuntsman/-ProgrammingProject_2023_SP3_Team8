@@ -7,6 +7,8 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
 
 public class Database {
@@ -77,6 +79,8 @@ public class Database {
             }
         }
     }
+    
+   
 
 
     // QUERY FUNCTIONS
@@ -170,6 +174,7 @@ public class Database {
 
             if (resultSet.next()) {
                 String hashedPassword = resultSet.getString("Password");
+                System.out.println("------hashedPassword = -------" + hashedPassword + "------password = -------" + password);
                 return PasswordValidations.verifyPassword(password, hashedPassword);
             } else {
                 return false;
@@ -183,6 +188,41 @@ public class Database {
             closePreparedStatement(preparedStatement); // Fixed variable name
             closeConnection(connection);
         }
+    }
+    
+    public Map<String, String> getSessionData(String username) {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        Map<String, String> userData = new HashMap<>();
+        
+        try {
+            connection = getConnection();
+            String query = "SELECT FirstName, LastName, Email FROM UserDB WHERE Username = ?";
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, username);
+            resultSet = preparedStatement.executeQuery();
+            
+            if (resultSet.next()) {
+                String firstName = resultSet.getString("FirstName");
+                String lastName = resultSet.getString("LastName");
+                String email = resultSet.getString("Email");
+                
+                // Store the data in a map
+                userData.put("FirstName", firstName);
+                userData.put("LastName", lastName);
+                userData.put("Email", email);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // Handle the exception properly, e.g., throw a custom exception or log an error.
+        } finally {
+            closeResultSet(resultSet);
+            closePreparedStatement(preparedStatement);
+            closeConnection(connection);
+        }
+        
+        return userData;
     }
 
 

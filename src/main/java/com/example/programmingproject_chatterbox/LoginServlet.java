@@ -9,7 +9,13 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.Map;
 
 
 import static Classes.PasswordValidations.verifyPassword;
@@ -26,8 +32,17 @@ public class LoginServlet extends HttpServlet {
 		boolean isAuthenticated = authenticate(username, password);
 		
 		if (isAuthenticated) {
-			// Authentication successful, redirect to a success page or perform further actions
-			response.sendRedirect("index.jsp"); // Replace with the appropriate success page
+			Database database = new Database();
+			Map<String, String> userData = database.getSessionData(username);
+			
+			// Store user details in the session
+			HttpSession session = request.getSession();
+			session.setAttribute("userName", username);
+			session.setAttribute("firstName", userData.get("FirstName"));
+			session.setAttribute("lastName", userData.get("LastName"));
+			session.setAttribute("email", userData.get("Email"));
+			
+			response.sendRedirect("Profile.jsp"); // Redirect to the profile page
 		} else {
 			// Authentication failed, show an error message or redirect to a login error page
 			response.sendRedirect("Login.jsp?error=Username or Password does not match"); // Redirect to login page with an error flag
@@ -47,7 +62,10 @@ public class LoginServlet extends HttpServlet {
 		Database database = new Database();
 		return database.authenticate(username, password);
 	}
-
+	
+	
+	
+	
 	//To remove once DB confirmed working
 	/*
 	private boolean authenticate(String username, String password) {
