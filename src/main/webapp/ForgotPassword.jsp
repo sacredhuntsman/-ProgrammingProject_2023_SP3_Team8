@@ -28,8 +28,8 @@
         <form action="reset" method="post">
             <h3 class="sub-heading">Forgot Password</h3>
             <div class="input-field">
-                <p><label for="username">Enter you email to receive a reset link:</label></p>
-                <input type="text" id="username" name="username" required>
+                <p><label for="email">Enter you email to receive a reset link:</label></p>
+                <input type="text" id="email" name="email" required>
             </div>
             <div class="form-btns">
                 <a id="go-back" href="${pageContext.request.contextPath}/login"><div><i class="fa-solid fa-arrow-left"></i> Back</div></a>
