@@ -34,7 +34,7 @@ public class ForgotPasswordServlet extends HttpServlet {
 		if (database.doesEmailExist(email)) {
 			String fromEmail = "chatterbox-reset@outlook.com";
 			String password = "Chatterbox2023";
-			String toEmail = "s3904714@student.rmit.edu.au";
+			//String toEmail = "s3904714@student.rmit.edu.au";
 
 			// Set up the properties for the mail server
 			Properties properties = new Properties();
@@ -58,7 +58,7 @@ public class ForgotPasswordServlet extends HttpServlet {
 				EmailMessage.setFrom(new InternetAddress(fromEmail));
 
 				// Set To: header field of the header
-				EmailMessage.setRecipients(Message.RecipientType.TO, InternetAddress.parse(toEmail));
+				EmailMessage.setRecipients(Message.RecipientType.TO, InternetAddress.parse(email));
 
 				// Set Subject: header field
 				EmailMessage.setSubject("Password Reset");
