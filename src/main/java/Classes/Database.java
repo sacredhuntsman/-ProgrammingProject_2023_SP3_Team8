@@ -189,7 +189,31 @@ public class Database {
             closeConnection(connection);
         }
     }
-    
+    public int getUserID(String username){
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        int userId = 0;
+        try {
+            connection = getConnection();
+            String query = "SELECT UserID FROM UserDB WHERE Username = ?";
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, username);
+            resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                userId = resultSet.getInt("UserID");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // Handle the exception properly, e.g., throw a custom exception or log an error.
+        } finally {
+            closeResultSet(resultSet);
+            closePreparedStatement(preparedStatement);
+            closeConnection(connection);
+        }
+        return userId;
+    }
     public Map<String, String> getSessionData(String username) {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
