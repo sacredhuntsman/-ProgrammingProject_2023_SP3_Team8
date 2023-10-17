@@ -10,7 +10,7 @@
 <p>Last Name: ${sessionScope.lastName}</p>
 <p>Email: ${sessionScope.email}</p>
 
-<a href="Message.jsp">Chat</a>
+<a href="Groups.jsp">Chat</a>
 
 <a href="login?action=logout">Logout</a>
 </body>

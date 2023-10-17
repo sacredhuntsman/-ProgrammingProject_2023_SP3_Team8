@@ -54,9 +54,10 @@ public class ChatServlet extends HttpServlet {
 			response.sendRedirect("/group.jsp?groupId=" + groupId);
 		} else if (action.equals("getMessages")) {
 			int groupId = Integer.parseInt(request.getParameter("groupId"));
+			int channelId = Integer.parseInt(request.getParameter("channelId"));
 			List<Message> messages = null;
 			try {
-				messages = chatService.getMessages(groupId);
+				messages = chatService.getMessages(groupId, channelId);
 			} catch (SQLException e) {
 				throw new RuntimeException(e);
 			}

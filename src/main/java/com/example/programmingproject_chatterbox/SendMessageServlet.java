@@ -28,18 +28,25 @@ public class SendMessageServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 		Database database = new Database();
 		int groupId = Integer.parseInt(request.getParameter("groupId"));
-		int senderId = database.getUserID((String) session.getAttribute("username"));
+		int channelId = Integer.parseInt(request.getParameter("channelId"));
+		int senderId = database.getUserID((String) session.getAttribute("userName"));
 		int recipientId = 0;
 		String messageText = request.getParameter("messageText");
 		
 		// Send the message
 		try {
-			chatService.sendMessage(groupId, senderId, recipientId, messageText);
+			chatService.sendMessage(groupId, channelId, senderId, recipientId, messageText);
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		}
-		
+
+
+// Construct the URL with the dynamically retrieved values
+		String redirectUrl = "Chat.jsp?groupId=" + groupId + "&channelId=" + channelId;
+
+// Use response.sendRedirect to redirect to the constructed URL
+		response.sendRedirect(redirectUrl);
 		// Redirect the user to the group page
-		response.sendRedirect("/group?groupId=" + groupId);
+
 	}
 }

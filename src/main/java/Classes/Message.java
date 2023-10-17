@@ -1,6 +1,6 @@
 package Classes;
 
-import java.security.Timestamp;
+import java.sql.Timestamp;
 
 public class Message {
 	
@@ -10,15 +10,17 @@ public class Message {
 	private int recipientId;
 	private String messageText;
 	private Timestamp createdAt;
+	private int channelId;
 	
 	// getters and setters for each field
 	
 	public Message() {
 	}
 	
-	public Message(int id, int groupId, int senderId, int recipientId, String messageText, Timestamp createdAt) {
+	public Message(int id, int groupId, int channelId, int senderId, int recipientId, String messageText, Timestamp createdAt) {
 		this.id = id;
 		this.groupId = groupId;
+		this.channelId = channelId;
 		this.senderId = senderId;
 		this.recipientId = recipientId;
 		this.messageText = messageText;
@@ -30,6 +32,7 @@ public class Message {
 		return "Message{" +
 				"id=" + id +
 				", groupId=" + groupId +
+				", channelId=" + channelId +
 				", senderId=" + senderId +
 				", recipientId=" + recipientId +
 				", messageText='" + messageText + '\'' +
@@ -76,8 +79,21 @@ public class Message {
 		return messageText;
 	}
 	
-	public Timestamp getCreatedAt() {
+	public java.sql.Timestamp getCreatedAt(java.sql.Timestamp createdAt) {
 		return createdAt;
 	}
 	
+	public void setChannelId(int channelID) {
+		this.channelId = channelID;
+	}
+	
+	public int getChannelId() {
+		return channelId;
+	}
+	
+	public void setCreatedAt(java.sql.Timestamp createdAt) {
+		this.createdAt = createdAt;
+	}
+	
+
 }
