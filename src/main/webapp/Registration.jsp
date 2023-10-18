@@ -38,7 +38,7 @@
         </div>
         <div class="input-field">
             <p><label for="age">Date of Birth:</label></p>
-            <input type="date" id="age" name="age" required>
+            <input type="date" id="age" name="age">
         </div>
         <div class="input-field">
             <p><label for="password">Password:</label></p>
