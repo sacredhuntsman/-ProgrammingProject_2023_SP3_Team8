@@ -1,0 +1,130 @@
+body, html {
+    background-color: #3E4244;
+    padding: 0;
+    margin: 0;
+    font-family: "Noto Sans";
+}
+
+/*layout*/
+.main-container {
+    width: 100%;
+    height: auto;
+    min-height: 100vh;
+    display: flex;
+}
+.side-bar, .info-bar {
+    background-color: #343637;
+    min-width: 250px;
+    width: 20%;
+}
+
+
+/*side bar*/
+#user-info {
+    background-color: #4D4C4C;
+}
+#user-icon {
+    height: 60px;
+    width: 60px;
+    background-color: #0087ff;
+    border-radius: 50%;
+}
+#user-icon i::before {
+    font-size: 40px;
+    color: #fff;
+}
+#user-name {
+    font-family: "Noto Sans";
+    color: #fff;
+    font-weight: 800;
+    max-width: 165px;
+    overflow: hidden;
+}
+#user-menu li, #chat-room-list li, #contacts-list li {
+    color: #fff;
+    line-height: 28px;
+}
+
+#expand-icon {
+    height: 30px;
+    width: 30px;
+    background-color: #706F6C;
+    border-radius: 50%;
+}
+.section-title {
+    color: #fff;
+    font-family: "Noto Sans";
+    font-weight: 800;
+}
+.add-button {
+    background-color: #706F6C;
+    width: 20px;
+    height: 20px;
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    padding: 5px 10px;
+    font-weight: 800;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.15s ease-in-out;
+}
+.add-button:hover {
+    background-color: #fffb00;
+    color: #000;
+}
+.add-button i::before {
+    font-size: 12px;
+
+}
+.grey-spacer {
+    background-color: #444444;
+    height: 8px;
+    border-radius: 8px;
+    width: 90%;
+    margin: 0 auto;
+}
+#chat-name {
+    color: #fff;
+    font-weight: 800;
+}
+#chat-info {
+    color: #BAB6B6;
+    font-family: "Noto Sans";
+    position: relative;
+    top: -1px;
+
+}
+#chat-box {
+    flex: 1;
+
+}
+#chat-control {
+    width: 100%;
+
+}
+#chat-msg-input {
+    width: 100%;
+    margin: 0 auto;
+    height: 35px;
+    border-radius: 35px;
+    border: none;
+    background-color: #4D4C4C;
+    color: #fff;
+    padding: 22px 24px;
+}
+#submit-chat-msg {
+    float: right;
+    position: relative;
+    top: -38px;
+    left: -8px;
+    background-color: #fffb00;
+    width: 32px;
+    height: 32px;
+    border-radius: 24px;
+    cursor: pointer;
+}
+#submit-chat-msg:hover {
+    background-color: #fff;
+    color: #000;
+}

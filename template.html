@@ -1,28 +1,7 @@
-<%@ page import="Classes.Channel" %>
-<%@ page import="java.util.List" %>
-<%@ page import="Classes.ChatService" %>
-<%@ page import="java.sql.SQLException" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-
-<%
-    // Get the current group ID from the request parameter
-    String groupIdParam = request.getParameter("groupId");
-    int groupId = Integer.parseInt(groupIdParam); // Assume groupId is valid
-
-    // Get the list of channels for the selected group from the ChatService class
-    List<Channel> channels = null;
-    ChatService chatService = new ChatService();
-    try {
-        channels = chatService.getChannels(groupId);
-    } catch (SQLException e) {
-        throw new RuntimeException(e);
-    }
-%>
-
 <html>
 <head>
     <title>User Profile</title>
-    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/dashboard.css">
+    <link rel="stylesheet" type="text/css" href="/home/alex/Documents/newprojectRMIT/-ProgrammingProject_2023_SP3_Team8/src/main/webapp/css/dashboard.css">
     <script src="https://kit.fontawesome.com/9c30b9a3ff.js" crossorigin="anonymous"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -87,24 +66,30 @@
         </div>
     </div>
     <div class="main-content flex flex-col grow p-8">
-        <h1>Channels</h1>
-
-        <% for (Channel channel : channels) { %>
-        <a href="Chat.jsp?groupId=<%= groupId %>&channelId=<%= channel.getChannelId() %>"><%= channel.getChannelName() %></a><br>
-        <% } %>
-
-        <h2>Add a New Channel</h2>
-        <form action="add-channel" method="post">
-            <input type="hidden" name="groupId" value="<%= groupId %>">
-            Channel Name: <label>
-            <input type="text" name="channelName">
-        </label>
-            <input type="submit" value="Add">
-        </form>
+        <div id="chat-title" class="flex content-center items-end mx-2 ">
+            <div id="chat-name" class="text-2xl">Chat Name</div>
+            <div id="chat-info" class="mx-4 text-base">
+                8 Members
+            </div>
+        </div>
+        <div id="chat-box" class="p-2 pt-4 overflow-scroll">
+            <% for (Message message : messages) { %>
+            <li><%= message.toString() %></li>
+            <% } %>
+        </div>
+        <div id="chat-control" >
+            <form action="send-message" method="post">
+                <input type="hidden" name="groupId" value="<%= groupId %>">
+                <input type="hidden" name="channelId" value="<%= channelId %>">
+                <label>
+                    <input type="text" id="chat-msg-input" name="messageText">
+                </label>
+                    <input type="submit"  id="submit-chat-msg" value=">">
+            </form>
+        </div>
     </div>
     <div class="info-bar">
     </div>
 </div>
 </body>
 </html>
-
