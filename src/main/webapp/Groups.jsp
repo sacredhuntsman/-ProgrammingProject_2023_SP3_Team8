@@ -42,10 +42,10 @@
             </div>
             <div id="user-menu" class="m-4 mt-8">
                 <ul class="flex flex-col">
-                    <li class="text-sm"><a href="/Profile.jsp">Edit Profile</a></li>
+                    <li class="text-sm"><a href="${pageContext.request.contextPath}/Profile.jsp">Edit Profile</a></li>
                     <li class="text-sm">Manage Chat Rooms</li>
                     <li class="text-sm">Help</li>
-                    <li class="text-sm"><a href="login?action=logout">Logout</a></li>
+                    <li class="text-sm"><a href="${pageContext.request.contextPath}/login?action=logout">Logout</a></li>
                 </ul>
             </div>
 
@@ -59,10 +59,10 @@
             </div>
             <div id="chat-room-list" class="mt-4">
                 <ul class="flex flex-col">
-                    <li class="text-sm">Chat 1</li>
-                    <li class="text-sm">Chat 2</li>
-                    <li class="text-sm">Chat 3</li>
-                    <li class="text-sm">Chat 4</li>
+                    <li class="text-sm"><a href="${pageContext.request.contextPath}/Chat.jsp?groupId=9&channelId=14">Chat 1</a></li>
+                    <li class="text-sm"><a href="${pageContext.request.contextPath}/Chat.jsp?groupId=9&channelId=14">Chat 2</a></li>
+                    <li class="text-sm"><a href="${pageContext.request.contextPath}/Chat.jsp?groupId=9&channelId=14">Chat 3</a></li>
+                    <li class="text-sm"><a href="${pageContext.request.contextPath}/Chat.jsp?groupId=9&channelId=14">Chat 4</a></li>
                 </ul>
             </div>
         </div>
@@ -83,32 +83,42 @@
         </div>
     </div>
     <div class="main-content flex flex-col grow p-8">
-        <h1>Groups</h1>
-        <!-- Check if there's an error message and display it -->
-        <% String error = request.getParameter("error");
-            if (error != null && !error.isEmpty()) { %>
-        <p style="color: red;"><%= error %></p>
-        <% } %>
+        <div id="chat-title" class="flex content-center items-end mx-2 ">
+            <div id="chat-name" class="text-2xl">Groups</div>
+        </div>
+        <div id="chat-control" class="mx-2">
 
-        <% for (Group group : groups) { %>
-        <a href="Channels.jsp?groupId=<%= group.getId() %>"><%= group.getName() %></a>
-        <%--<form action="add-group" method="post">
-            <input type="hidden" name="groupId" value="<%= group.getId() %>">
-            <input type="submit" value="Remove">
-        </form>
-        <br>--%>
-        <% } %>
+            <% String error = request.getParameter("error");
+                if (error != null && !error.isEmpty()) { %>
+            <p style="color: red;"><%= error %></p>
+            <% } %>
 
-        <h2>Add a New Group</h2>
-        <form action="<%= request.getContextPath() %>/add-group" method="post">
-            Group Name: <label>
-            <input type="text" name="groupName">
-        </label>
-            <input type="hidden" name="action" value="add-group">
-            <input type="submit" value="Add">
-        </form>
+            <% for (Group group : groups) { %>
+            <li class="text-white mt-2"><a href="Channels.jsp?groupId=<%= group.getId() %>"><%= group.getName() %></a></li>
+            <% } %>
+
+            <h2 class="text-white text-xl mt-8">Add a New Group</h2>
+            <form action="<%= request.getContextPath() %>/add-group" method="post">
+                <label>
+                <input type="text" name="groupName" placeholder="Group Name">
+                </label>
+                <input type="hidden" name="action" value="add-group"><br>
+                <input type="submit" value="Add">
+            </form>
+        </div>
     </div>
     <div class="info-bar">
+        <div class="m-4">
+            <h1 class="text-white text-xl mt-4 font-bold">Dev Links</h1>
+            <ul>
+                <li class="text-white mt-2"><a href="${pageContext.request.contextPath}/login?action=logout">Login</a></li>
+                <li class="text-white mt-2"><a href="${pageContext.request.contextPath}/Profile.jsp">Profile</a></li>
+                <li class="text-white mt-2"><a href="${pageContext.request.contextPath}/Groups.jsp">Groups</a></li>
+                <li class="text-white mt-2">____________</li>
+                <li class="text-white mt-2"><a href="${pageContext.request.contextPath}/Channels.jsp?groupId=9">Example Channel - Test Group 2</a></li>
+                <li class="text-white mt-2"><a href="${pageContext.request.contextPath}/Chat.jsp?groupId=9&channelId=14">Example Chat - TG 2 CH 1</a></li>
+            </ul>
+        </div>
     </div>
 </div>
 </body>
