@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Forgot Password</title>
+    <title>Reset Password</title>
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/main.css">
     <script src="https://kit.fontawesome.com/9c30b9a3ff.js" crossorigin="anonymous"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -17,19 +17,21 @@
             if (error != null && !error.isEmpty()) { %>
         <p style="color: red;"><%= error %></p>
         <% } %>
+        <%
+            String token = request.getParameter("token");
+        %>
 
-        <form action="forgotpassword" method="post">
-            <h3 class="sub-heading">Forgot Password</h3>
-            <div class="input-field">
-                <p><label for="email">Enter you email to receive a reset link:</label></p>
-                <input type="text" id="email" name="email" required>
-            </div>
-            <div class="form-btns">
-                <a id="go-back" href="${pageContext.request.contextPath}/login"><div><i class="fa-solid fa-arrow-left"></i> Back</div></a>
-                <div class="input-field mg-0">
-                    <input type="submit" value="Send Reset Link">
-                </div>
-            </div>
+
+        <form action="resetPassword" method="post">
+            <label for="newPassword">New Password:</label>
+            <input type="password" id="newPassword" name="newPassword" required>
+
+            <label for="confirmPassword">Confirm Password:</label>
+            <input type="password" id="confirmPassword" name="confirmPassword" required>
+
+            <input type="hidden" name="token" value="<%= token %>">
+
+            <input type="submit" value="Reset Password">
         </form>
     </div>
 </div>
