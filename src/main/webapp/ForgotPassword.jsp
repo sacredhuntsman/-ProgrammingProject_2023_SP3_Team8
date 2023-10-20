@@ -27,7 +27,7 @@
             <div class="form-btns">
                 <a id="go-back" href="${pageContext.request.contextPath}/login"><div><i class="fa-solid fa-arrow-left"></i> Back</div></a>
                 <div class="input-field mg-0">
-                    <input type="submit" value="Register">
+                    <input type="submit" value="Send Reset Link">
                 </div>
             </div>
         </form>

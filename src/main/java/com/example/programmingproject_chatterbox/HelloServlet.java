@@ -3,6 +3,7 @@ package com.example.programmingproject_chatterbox;
 import java.io.IOException;
 
 import Classes.Database;
+import Classes.FileStore;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -15,8 +16,11 @@ public class HelloServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         Database database = new Database();
-
         database.getAllUsers();
+        
+        FileStore fileStore = new FileStore();
+        fileStore.getFiles();
+
         response.getWriter().write("Hello, World!");
     }
 }

@@ -18,7 +18,7 @@
     <p style="color: red;"><%= error %></p>
     <% } %>
 
-    <form action="registration" method="post">
+    <form action="registration" method="post" enctype="multipart/form-data">
         <h3 class="sub-heading">Registration</h3>
         <div class="input-field">
             <p><label for="username">Username:</label></p>
@@ -38,7 +38,7 @@
         </div>
         <div class="input-field">
             <p><label for="age">Date of Birth:</label></p>
-            <input type="date" id="age" name="age" required>
+            <input type="date" id="age" name="age">
         </div>
         <div class="input-field">
             <p><label for="password">Password:</label></p>
@@ -47,6 +47,10 @@
         <div class="input-field">
             <p><label for="confirmPassword">Confirm Password:</label></p>
             <input type="password" id="confirmPassword" name="confirmPassword" required>
+        </div>
+        <div class="input-field">
+            <p><label for="imageUpload">Select Your Profile Picture:</label></p>
+            <input type="file" name="imageUpload" id="imageUpload" accept="image/png, image/jpeg" required>
         </div>
         <div class="form-btns">
             <a id="go-back" href="${pageContext.request.contextPath}/login"><div><i class="fa-solid fa-arrow-left"></i> Back</div></a>
