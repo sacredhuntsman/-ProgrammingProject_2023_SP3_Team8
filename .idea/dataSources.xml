@@ -1,16 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="ChatterBox" uuid="46ab4749-90a3-4512-bd11-79df49b0139c">
-      <driver-ref>azure.ms</driver-ref>
-      <synchronize>true</synchronize>
-      <jdbc-driver>com.microsoft.sqlserver.jdbc.SQLServerDriver</jdbc-driver>
-      <jdbc-url>jdbc:sqlserver://chatterbox-dev.database.windows.net:1433;encrypt=true;trustServerCertificate=false;loginTimeout=30;database=Chatterbox-Dev;</jdbc-url>
-      <jdbc-additional-properties>
-        <property name="AZURE_SQL_DB_SERVER" value="/subscriptions/db36ec5c-bd25-4311-8a28-a60799f9522a/resourceGroups/Chatterbox-Dev/providers/Microsoft.Sql/servers/chatterbox-dev" />
-      </jdbc-additional-properties>
-      <working-dir>$ProjectFileDir$</working-dir>
-    </data-source>
     <data-source source="LOCAL" name="Azure Cosmos DB API for MongoDB - @localhost" uuid="35903301-75fe-41fc-9d82-11280bb121bc">
       <driver-ref>az_cosmos_mongo</driver-ref>
       <synchronize>true</synchronize>
@@ -23,6 +13,26 @@
       <synchronize>true</synchronize>
       <jdbc-driver>com.microsoft.sqlserver.jdbc.SQLServerDriver</jdbc-driver>
       <jdbc-url>jdbc:sqlserver://server.database.windows.net:1433</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
+    <data-source source="LOCAL" name="Chatterbox" uuid="3d45be90-c406-40af-8399-223642c25fb9">
+      <driver-ref>azure.ms</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>com.microsoft.sqlserver.jdbc.SQLServerDriver</jdbc-driver>
+      <jdbc-url>jdbc:sqlserver://chatterbox-dev.database.windows.net:1433;database=Chatterbox-Dev;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;</jdbc-url>
+      <jdbc-additional-properties>
+        <property name="AZURE_SQL_DB_SERVER" value="/subscriptions/db36ec5c-bd25-4311-8a28-a60799f9522a/resourceGroups/Chatterbox-Dev/providers/Microsoft.Sql/servers/chatterbox-dev" />
+      </jdbc-additional-properties>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
+    <data-source source="LOCAL" name="CB" uuid="028f697d-36f3-427a-8eab-6c79327fc09a">
+      <driver-ref>sqlserver.ms</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>com.microsoft.sqlserver.jdbc.SQLServerDriver</jdbc-driver>
+      <jdbc-url>jdbc:sqlserver://chatterbox-dev.database.windows.net:1433;encrypt=true;trustServerCertificate=false;loginTimeout=30;database=Chatterbox-Dev;</jdbc-url>
+      <jdbc-additional-properties>
+        <property name="AZURE_SQL_DB_SERVER" value="/subscriptions/db36ec5c-bd25-4311-8a28-a60799f9522a/resourceGroups/Chatterbox-Dev/providers/Microsoft.Sql/servers/chatterbox-dev" />
+      </jdbc-additional-properties>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
   </component>
