@@ -73,6 +73,7 @@ public class ForgotPasswordServlet extends HttpServlet {
 				Transport.send(EmailMessage);
 
 				System.out.println("Password reset email sent successfully.");
+				request.getRequestDispatcher("/Login.jsp").forward(request, response);
 
 			} catch (MessagingException e) {
 				e.printStackTrace();
@@ -80,14 +81,15 @@ public class ForgotPasswordServlet extends HttpServlet {
 		}
 	}
 
-	public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		response.setContentType("text/html");
-		
-		// Hello
-		PrintWriter out = response.getWriter();
-		out.println("<html><body>");
-		out.println("<h1>" + message + "</h1>");
-		out.println("</body></html>");
+	public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+		request.getRequestDispatcher("/ForgotPassword.jsp").forward(request, response);
+//		response.setContentType("text/html");
+//
+//		// Hello
+//		PrintWriter out = response.getWriter();
+//		out.println("<html><body>");
+//		out.println("<h1>" + message + "</h1>");
+//		out.println("</body></html>");
 	}
 
 	private static String generateResetToken() {

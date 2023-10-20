@@ -25,7 +25,7 @@
         <p style="color: red;"><%= error %></p>
         <% } %>
 
-        <form action="reset" method="post">
+        <form action="forgotpassword" method="post">
             <h3 class="sub-heading">Forgot Password</h3>
             <div class="input-field">
                 <p><label for="email">Enter you email to receive a reset link:</label></p>
