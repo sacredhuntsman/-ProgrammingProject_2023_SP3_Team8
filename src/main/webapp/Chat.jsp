@@ -8,6 +8,7 @@
     // Get the current group ID and channel ID from the request parameters
     String groupIdParam = request.getParameter("groupId");
     String channelIdParam = request.getParameter("channelId");
+
     int groupId = 0;
     int channelId = 0;
     if (groupIdParam != null && !groupIdParam.isEmpty()) {
@@ -28,8 +29,8 @@
 
 <html>
 <head>
-    <title>User Profile</title>
-    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}css/dashboard.css">
+    <title>Chat</title>
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/dashboard.css">
     <script src="https://kit.fontawesome.com/9c30b9a3ff.js" crossorigin="anonymous"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">

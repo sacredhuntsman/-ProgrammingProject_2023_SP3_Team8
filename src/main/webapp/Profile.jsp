@@ -92,13 +92,21 @@
         <div id="chat-control" class="mx-2">
             <div class="text-white text-xl mt-4 font-bold">User info</div>
             <div class="text-white mt-2">Username</div>
-            <input type="text" class="p-1 w-80" value="${sessionScope.userName}">
+            <label>
+                <input type="text" class="p-1 w-80" value="${sessionScope.userName}">
+            </label>
             <div class="text-white mt-2">First Name</div>
-            <input type="text" class="p-1 w-80" value="${sessionScope.firstName}">
+            <label>
+                <input type="text" class="p-1 w-80" value="${sessionScope.firstName}">
+            </label>
             <div class="text-white mt-2">Last Name</div>
-            <input type="text" class="p-1 w-80" value="${sessionScope.lastName}">
+            <label>
+                <input type="text" class="p-1 w-80" value="${sessionScope.lastName}">
+            </label>
             <div class="text-white mt-2">Email</div>
-            <input type="text" class="p-1 w-80" value="${sessionScope.email}">
+            <label>
+                <input type="text" class="p-1 w-80" value="${sessionScope.email}">
+            </label>
             <div class="btn-div">Save Changes</div>
         </div>
     </div>
