@@ -1,9 +1,7 @@
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<!DOCTYPE html>
 <html>
 <head>
     <title>User Profile</title>
-    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/dashboard.css">
+    <link rel="stylesheet" type="text/css" href="/home/alex/Documents/newprojectRMIT/-ProgrammingProject_2023_SP3_Team8/src/main/webapp/css/dashboard.css">
     <script src="https://kit.fontawesome.com/9c30b9a3ff.js" crossorigin="anonymous"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -27,10 +25,10 @@
             </div>
             <div id="user-menu" class="m-4 mt-8">
                 <ul class="flex flex-col">
-                    <li class="text-sm"><a href="${pageContext.request.contextPath}/Profile.jsp">Edit Profile</a></li>
+                    <li class="text-sm"><a href="/Profile.jsp">Edit Profile</a></li>
                     <li class="text-sm">Manage Chat Rooms</li>
                     <li class="text-sm">Help</li>
-                    <li class="text-sm"><a href="${pageContext.request.contextPath}/login?action=logout">Logout</a></li>
+                    <li class="text-sm"><a href="login?action=logout">Logout</a></li>
                 </ul>
             </div>
 
@@ -44,10 +42,10 @@
             </div>
             <div id="chat-room-list" class="mt-4">
                 <ul class="flex flex-col">
-                    <li class="text-sm"><a href="${pageContext.request.contextPath}/Chat.jsp?groupId=9&channelId=14">Chat 1</a></li>
-                    <li class="text-sm"><a href="${pageContext.request.contextPath}/Chat.jsp?groupId=9&channelId=14">Chat 2</a></li>
-                    <li class="text-sm"><a href="${pageContext.request.contextPath}/Chat.jsp?groupId=9&channelId=14">Chat 3</a></li>
-                    <li class="text-sm"><a href="${pageContext.request.contextPath}/Chat.jsp?groupId=9&channelId=14">Chat 4</a></li>
+                    <li class="text-sm">Chat 1</li>
+                    <li class="text-sm">Chat 2</li>
+                    <li class="text-sm">Chat 3</li>
+                    <li class="text-sm">Chat 4</li>
                 </ul>
             </div>
         </div>
@@ -68,26 +66,29 @@
         </div>
     </div>
     <div class="main-content flex flex-col grow p-8">
-        <h1><%= "Chatterbox - The new encrypted voice chat which we swear is nothing like Discord!.. at all" %>
-        </h1>
-        <br/>
-        <a href="hello">Hello Servlet</a>
-        <a href="login">Login</a>
-        <a href="registration">Register</a>
-        <a href="forgotpassword">Forgot Password</a>
+        <div id="chat-title" class="flex content-center items-end mx-2 ">
+            <div id="chat-name" class="text-2xl">Chat Name</div>
+            <div id="chat-info" class="mx-4 text-base">
+                8 Members
+            </div>
+        </div>
+        <div id="chat-box" class="p-2 pt-4 overflow-scroll">
+            <% for (Message message : messages) { %>
+            <li><%= message.toString() %></li>
+            <% } %>
+        </div>
+        <div id="chat-control" >
+            <form action="send-message" method="post">
+                <input type="hidden" name="groupId" value="<%= groupId %>">
+                <input type="hidden" name="channelId" value="<%= channelId %>">
+                <label>
+                    <input type="text" id="chat-msg-input" name="messageText">
+                </label>
+                    <input type="submit"  id="submit-chat-msg" value=">">
+            </form>
+        </div>
     </div>
     <div class="info-bar">
-        <div class="m-4">
-            <h1 class="text-white text-xl mt-4 font-bold">Dev Links</h1>
-            <ul>
-                <li class="text-white mt-2"><a href="${pageContext.request.contextPath}/login?action=logout">Login</a></li>
-                <li class="text-white mt-2"><a href="${pageContext.request.contextPath}/Profile.jsp">Profile</a></li>
-                <li class="text-white mt-2"><a href="${pageContext.request.contextPath}/Groups.jsp">Groups</a></li>
-                <li class="text-white mt-2">____________</li>
-                <li class="text-white mt-2"><a href="${pageContext.request.contextPath}/Channels.jsp?groupId=9">Example Channel - Test Group 2</a></li>
-                <li class="text-white mt-2"><a href="${pageContext.request.contextPath}/Chat.jsp?groupId=9&channelId=14">Example Chat - TG 2 CH 1</a></li>
-            </ul>
-        </div>
     </div>
 </div>
 </body>
