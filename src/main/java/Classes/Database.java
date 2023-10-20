@@ -142,13 +142,14 @@ public class Database {
 
         try {
             connection = getConnection();
-            String query = "INSERT INTO UserDB (Username, FirstName, LastName, Email, Password) VALUES (?, ?, ?, ?, ?)";
+            String query = "INSERT INTO UserDB (Username, FirstName, LastName, Email, Password, DateOfBirth) VALUES (?, ?, ?, ?, ?, ?)";
             preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, user.getUsername());
             preparedStatement.setString(2, user.getFirstName());
             preparedStatement.setString(3, user.getLastName());
             preparedStatement.setString(4, user.getEmail());
             preparedStatement.setString(5, user.getPassword());
+            preparedStatement.setString(6, user.getAge());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

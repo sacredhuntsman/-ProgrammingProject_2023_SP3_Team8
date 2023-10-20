@@ -5,6 +5,7 @@
 </head>
 <body>
 <h1>User Profile</h1>
+<img src="https://chatterboxavatarstorage.blob.core.windows.net/blob/${sessionScope.userName}" alt="Avatar" style="width:200px">
 <p>User name: ${sessionScope.userName}</p>
 <p>First Name: ${sessionScope.firstName}</p>
 <p>Last Name: ${sessionScope.lastName}</p>
