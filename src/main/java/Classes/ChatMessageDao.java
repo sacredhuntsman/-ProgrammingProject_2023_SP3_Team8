@@ -68,7 +68,9 @@ public class ChatMessageDao {
 		ResultSet resultSet = null;
 		PreparedStatement statement = null;
 		try {
-			statement = connection.prepareStatement("SELECT * FROM ChatMessageDB WHERE groupID = ? AND ChannelID = ?");
+			// SQL Join to return the username of the sender
+			statement = connection.prepareStatement("SELECT u.Username, c.* FROM ChatMessageDB AS c JOIN UserDB AS u ON u.UserId = c.senderId WHERE groupID = ? AND ChannelID = ?");
+			//statement = connection.prepareStatement("SELECT * FROM ChatMessageDB WHERE groupID = ? AND ChannelID = ?");
 			statement.setInt(1, groupId);
 			statement.setInt(2, channelId);
 			resultSet = statement.executeQuery();
@@ -79,6 +81,7 @@ public class ChatMessageDao {
 				message.setGroupId(resultSet.getInt("groupID"));
 				message.setChannelId(resultSet.getInt("ChannelID"));
 				message.setSenderId(resultSet.getInt("senderID"));
+				message.setSenderName(resultSet.getString("Username"));
 				message.setRecipientId(resultSet.getInt("recipientID"));
 				message.setMessageText(resultSet.getString("messageText"));
 				message.setCreatedAt(resultSet.getTimestamp("createdDate"));
@@ -96,6 +99,34 @@ public class ChatMessageDao {
 			}
 			database.closeConnection(connection);
 		}
+	}
+
+	public String getChatTitle(int groupId, int channelId) throws SQLException {
+		Connection connection = database.getConnection();
+		ResultSet resultSet = null;
+		PreparedStatement statement = null;
+		try {
+			statement = connection.prepareStatement("SELECT ChannelName FROM ChannelDB WHERE groupID = ? AND ChannelID = ?");
+			statement.setInt(1, groupId);
+			statement.setInt(2, channelId);
+			resultSet = statement.executeQuery();
+			String chatTitle = "";
+			while (resultSet.next()) {
+				chatTitle = resultSet.getString("ChannelName");
+			}
+			return chatTitle;
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		} finally {
+			if (resultSet != null) {
+				resultSet.close();
+			}
+			if (statement != null) {
+				statement.close();
+			}
+			database.closeConnection(connection);
+		}
+
 	}
 	
 	public List<Channel> getChannels(int groupId) throws SQLException {

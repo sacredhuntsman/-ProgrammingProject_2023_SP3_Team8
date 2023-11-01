@@ -52,6 +52,10 @@ public class ChatService {
 			return chatMessageDao.getMessages(groupId, channelId);
 		
 	}
+
+	public String getChatTitle(int groupId, int channelId) throws SQLException {
+		return chatMessageDao.getChatTitle(groupId, channelId);
+	}
 	
 	public void removeGroup(int groupId) {
 	
