@@ -1,30 +1,22 @@
 package com.example.programmingproject_chatterbox;
 
-import java.io.*;
-import java.io.IOException;
+import Classes.Database;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
-import java.util.Properties;
+import java.io.IOException;
 import java.security.SecureRandom;
+import java.util.Properties;
 
-import Classes.User;
-import Classes.UserData;
-
-import Classes.Database;
-
-@WebServlet(name = "forgotPassword", value = "/forgotpassword")
+@WebServlet(name = "ForgotPassword", value = "/forgotpassword")
 public class ForgotPasswordServlet extends HttpServlet {
 	private String message;
-	
-	public void init() {
-		message = "Forgot Password!";
-	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -64,10 +56,11 @@ public class ForgotPasswordServlet extends HttpServlet {
 				EmailMessage.setSubject("Password Reset");
 
 				// Generate a unique token for password reset (you can implement your logic here)
-				String resetToken = generateResetToken();
+				//String resetToken = generateResetToken();
+				String resetToken = request.getSession().getId();
 
 				// Set the actual message
-				EmailMessage.setText("Click the following link to reset your password: https://chatter-box.azurewebsites.net/reset?token=" + resetToken);
+				EmailMessage.setText("Click the following link to reset your password: https://chatter-box.azurewebsites.net/ResetPassword?token=" + resetToken);
 
 				// Send message
 				Transport.send(EmailMessage);
@@ -82,14 +75,8 @@ public class ForgotPasswordServlet extends HttpServlet {
 	}
 
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+		//response.setContentType("text/html");
 		request.getRequestDispatcher("/ForgotPassword.jsp").forward(request, response);
-//		response.setContentType("text/html");
-//
-//		// Hello
-//		PrintWriter out = response.getWriter();
-//		out.println("<html><body>");
-//		out.println("<h1>" + message + "</h1>");
-//		out.println("</body></html>");
 	}
 
 	private static String generateResetToken() {
