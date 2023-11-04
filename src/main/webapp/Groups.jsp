@@ -1,4 +1,5 @@
 <%@ page import="Classes.Group" %>
+<%@ page import="Classes.Database" %>
 <%@ page import="java.util.List" %>
 <%@ page import="Classes.ChatService" %>
 <%@ page import="java.sql.SQLException" %>
@@ -6,10 +7,12 @@
 
 <%
     // Get the list of groups from the ChatService class
+    Database database = new Database();
+    int userID = database.getUserID((String) session.getAttribute("userName"));
     List<Group> groups = null;
     ChatService chatService = new ChatService();
     try {
-        groups = chatService.getGroups();
+        groups = chatService.getGroups(userID);
     } catch (SQLException e) {
         throw new RuntimeException(e);
     }

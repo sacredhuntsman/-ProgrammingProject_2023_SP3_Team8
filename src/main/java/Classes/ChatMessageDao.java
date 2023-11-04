@@ -12,12 +12,16 @@ public class ChatMessageDao {
 		database = new Database();
 	}
 	
-	public void saveGroup(Group group) throws SQLException {
+	public void saveGroup(Group group, int creatorID) throws SQLException {
 		Connection connection = database.getConnection();
 		try {
 			PreparedStatement statement = connection.prepareStatement("INSERT INTO GroupDB (GroupName) VALUES (?)");
+			PreparedStatement statementCreator = connection.prepareStatement("INSERT INTO GroupMembershipDB (GroupID, GroupUserID) VALUES (?,?)");
 			statement.setString(1, group.getName());
 			statement.executeUpdate();
+			statementCreator.setInt(1, database.getGroupID(group.getName()));
+			statementCreator.setInt(2, creatorID);
+			statementCreator.executeUpdate();
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		} finally {
@@ -25,18 +29,34 @@ public class ChatMessageDao {
 		}
 	}
 	
-	public List<Group> getGroups() throws SQLException {
+	public List<Group> getGroups(int userID) throws SQLException {
 		Connection connection = database.getConnection();
 		try {
-			PreparedStatement statement = connection.prepareStatement("SELECT * FROM GroupDB");
-			ResultSet resultSet = statement.executeQuery();
-			List<Group> groups = new ArrayList<>();
-			while (resultSet.next()) {
-				Group group = new Group();
-				group.setId(resultSet.getInt("GroupID"));
-				group.setName(resultSet.getString("GroupName"));
-				groups.add(group);
+			// Step 1: Execute the initial query to get group IDs associated with the userID
+			PreparedStatement initialQuery = connection.prepareStatement("SELECT GroupID FROM GroupMembershipDB WHERE GroupUserID = ?");
+			initialQuery.setInt(1, userID);
+			ResultSet initialResult = initialQuery.executeQuery();
+			List<Integer> groupIDs = new ArrayList<>();
+			
+			while (initialResult.next()) {
+				groupIDs.add(initialResult.getInt("GroupID"));
 			}
+			
+			// Step 2: Execute a query for each group ID to get group information
+			List<Group> groups = new ArrayList<>();
+			for (int groupID : groupIDs) {
+				PreparedStatement groupQuery = connection.prepareStatement("SELECT * FROM GroupDB WHERE GroupID = ?");
+				groupQuery.setInt(1, groupID);
+				ResultSet groupResult = groupQuery.executeQuery();
+				
+				if (groupResult.next()) {
+					Group group = new Group();
+					group.setId(groupResult.getInt("GroupID"));
+					group.setName(groupResult.getString("GroupName"));
+					groups.add(group);
+				}
+			}
+			
 			return groups;
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
@@ -44,6 +64,7 @@ public class ChatMessageDao {
 			database.closeConnection(connection);
 		}
 	}
+
 	
 	public void saveMessage(Message message) throws SQLException {
 		Connection connection = database.getConnection();
@@ -121,13 +142,19 @@ public class ChatMessageDao {
 	}
 	
 
-	public void saveChannel(Channel channel) throws SQLException {
+	public void saveChannel(Channel channel, int creatorID) throws SQLException {
 		Connection connection = database.getConnection();
+		
 		try {
 			PreparedStatement statement = connection.prepareStatement("INSERT INTO ChannelDB (ChannelName, GroupID) VALUES (?, ?)");
+			PreparedStatement statementCreator = connection.prepareStatement
+					("INSERT INTO ChannelMembershipDB (ChannelID, UserID) VALUES (?, ?)");
 			statement.setString(1, channel.getChannelName());
 			statement.setInt(2, channel.getGroupId());
 			statement.executeUpdate();
+			statementCreator.setInt(1, database.getChannelID(channel.getChannelName()));
+			statementCreator.setInt(2, creatorID);
+			statementCreator.executeUpdate();
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		} finally {

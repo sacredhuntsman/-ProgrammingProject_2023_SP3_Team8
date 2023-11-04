@@ -1,12 +1,14 @@
 package com.example.programmingproject_chatterbox;
 
 import Classes.ChatService;
+import Classes.Database;
 import Classes.Group;
 import Classes.Message;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -23,12 +25,15 @@ public class ChatServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String action = request.getParameter("action");
+		HttpSession session = request.getSession();
+		Database database = new Database();
+		int creatorID = database.getUserID((String) session.getAttribute("userId"));
 		
 		if (action.equals("createGroup")) {
 			String groupName = request.getParameter("groupName");
 			Group group = null;
 			try {
-				group = chatService.createGroup(groupName);
+				group = chatService.createGroup(groupName, creatorID);
 			} catch (SQLException e) {
 				throw new RuntimeException(e);
 			}
@@ -37,7 +42,7 @@ public class ChatServlet extends HttpServlet {
 		} else if (action.equals("getGroups")) {
 			List<Group> groups = null;
 			try {
-				groups = chatService.getGroups();
+				groups = chatService.getGroups(creatorID);
 			} catch (SQLException e) {
 				throw new RuntimeException(e);
 			}
