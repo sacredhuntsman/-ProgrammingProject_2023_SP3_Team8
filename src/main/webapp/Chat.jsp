@@ -94,6 +94,24 @@
             </div>
         </div>
     </div>
+    <div id="chat-output"></div>
+    <input type="text" id="message" placeholder="Type your message">
+    <button onclick="sendMessage()">Send</button>
+
+    <script>
+        const socket = new WebSocket("ws://" + location.host + "/chat");
+
+        socket.onmessage = function (event) {
+            const output = document.getElementById("chat-output");
+            output.innerHTML += "<p>" + event.data + "</p>";
+        };
+
+        function sendMessage() {
+            const message = document.getElementById("message").value;
+            socket.send(message);
+            document.getElementById("message").value = "";
+        }
+    </script>
     <div class="main-content flex flex-col grow p-8">
         <div id="chat-title" class="flex content-center items-end mx-2 ">
             <div id="chat-name" class="text-2xl">Chat Name</div>
