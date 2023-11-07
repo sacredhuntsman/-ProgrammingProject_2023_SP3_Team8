@@ -3,6 +3,14 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd"
          version="6.0">
+    <servlet>
+        <servlet-name>InviteUserServlet</servlet-name>
+        <servlet-class>com.example.programmingproject_chatterbox.InviteUserServlet</servlet-class>
+    </servlet>
 
+    <servlet-mapping>
+        <servlet-name>InviteUserServlet</servlet-name>
+        <url-pattern>/invite</url-pattern>
+    </servlet-mapping>
 
 </web-app>

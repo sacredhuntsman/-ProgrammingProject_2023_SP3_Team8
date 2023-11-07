@@ -343,4 +343,28 @@ public class Database {
             closeConnection(connection);
         }
     }
+	
+	public void inviteUser(String userName, int groupId) {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        try {
+            int userID = getUserID(userName);
+            if (userID == 0) {
+                return;
+            }
+            connection = getConnection();
+
+            String query = "INSERT INTO GroupMembershipDB (GroupID, GroupUserID) VALUES (?, ?)";
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1, groupId);
+            preparedStatement.setInt(2, userID);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // Handle the exception properly, e.g., throw a custom exception or log an error.
+        } finally {
+            closePreparedStatement(preparedStatement);
+            closeConnection(connection);
+        }
+	}
 }
