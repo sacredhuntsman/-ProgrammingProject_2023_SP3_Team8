@@ -116,7 +116,7 @@
             <% } %>
         </div>
         <div id="chat-control" >
-            <form action="send-message" method="post">
+            <form id="chat-form" action="send-message" method="post">
                 <input type="hidden" name="groupId" value="<%= groupId %>">
                 <input type="hidden" name="channelId" value="<%= channelId %>">
                 <label>
@@ -142,10 +142,37 @@
 </div>
 <script src="${pageContext.request.contextPath}/js/chat.js"></script>
 <script>
-    console.log("Chat.jsp: groupId = <%= groupId %>, channelId = <%= channelId %>")
+    // initial load of messages
+    fetchNewMessages(<%= groupId %>, <%= channelId%>);
+
+    // fetch new messages every 10 seconds
     setInterval(function() {
         fetchNewMessages(<%= groupId %>, <%= channelId%>);
     }, 10000);
+    $(document).ready(function () {
+        // Capture the form submission event
+        $("#chat-form").submit(function (event) {
+            event.preventDefault(); // Prevent the default form submission
+
+            // Handle the form submission with an AJAX request
+            $.ajax({
+                type: "POST", // or "GET" depending on your requirements
+                url: "/send-message",
+                data: $("#chat-form").serialize(), // Serialize the form data
+                success: function (response) {
+                    console.log("AJAX Request Success: " + response);
+                    // Fetch the new messages after the form submission
+                    fetchNewMessages(<%= groupId %>, <%= channelId%>);
+                },
+                error: function (error) {
+                    console.log("AJAX Request Failed: " + response);
+                }
+            });
+
+            // Clear the input field
+            $("#chat-msg-input").val("");
+        });
+    });
 </script>
 
 </body>

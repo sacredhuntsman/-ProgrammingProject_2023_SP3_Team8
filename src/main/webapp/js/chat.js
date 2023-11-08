@@ -1,4 +1,6 @@
-// ajax request to /fetch-new-messages using jquery
+
+
+
 function fetchNewMessages(groupId, channelId) {
     console.log("Fetching new messages...");
     $.ajax({
