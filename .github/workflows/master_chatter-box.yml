@@ -1,3 +1,6 @@
+# Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
+# More GitHub Actions for Azure: https://github.com/Azure/actions
+
 name: Build and deploy WAR app to Azure Web App - Chatter-Box
 
 on:
@@ -11,12 +14,7 @@ jobs:
     runs-on: windows-latest
 
     steps:
-      - uses: actions/checkout@v2
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: '16'  # Change this to the desired Node.js version (e.g., '14', '16', '17')
+      - uses: actions/checkout@v4
 
       - name: Set up Java version
         uses: actions/setup-java@v1
@@ -27,7 +25,7 @@ jobs:
         run: mvn clean install
 
       - name: Upload artifact for deployment job
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: java-app
           path: '${{ github.workspace }}/target/*.war'
@@ -41,7 +39,7 @@ jobs:
 
     steps:
       - name: Download artifact from build job
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: java-app
 
@@ -51,5 +49,5 @@ jobs:
         with:
           app-name: 'Chatter-Box'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_C49248F9051B4C879B2D5AE4E74BA088 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_469C632D62C24EAD881D52802CAF27C3 }}
           package: '*.war'
