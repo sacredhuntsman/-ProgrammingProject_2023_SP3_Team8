@@ -149,7 +149,7 @@
 
     // fetch new messages every 10 seconds
     setInterval(function() {
-        fetchNewMessages(<%= groupId %>, <%= channelId%>, ${pageContext.request.contextPath});
+        fetchNewMessages(<%= groupId %>, <%= channelId%>, "${pageContext.request.contextPath}");
     }, 10000);
     $(document).ready(function () {
         // Capture the form submission event
@@ -171,7 +171,7 @@
                 success: function (response) {
                     console.log("AJAX Request Success: " + response);
                     // Fetch the new messages after the form submission
-                    fetchNewMessages(<%= groupId %>, <%= channelId%>, );
+                    fetchNewMessages(<%= groupId %>, <%= channelId%>, "${pageContext.request.contextPath}");
                 },
                 error: function (error) {
                     console.log("AJAX Request Failed: " + response);
