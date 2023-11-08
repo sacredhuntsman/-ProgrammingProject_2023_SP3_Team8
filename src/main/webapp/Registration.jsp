@@ -12,53 +12,53 @@
 <div class="registration-container">
     <h1 class="logo">Chatter<span>BOX</span></h1>
     <div class="inner-container">
-    <!-- Check if there's an error message and display it -->
-    <% String error = request.getParameter("error");
-        if (error != null && !error.isEmpty()) { %>
-    <p style="color: red;"><%= error %></p>
-    <% } %>
+        <!-- Check if there's an error message and display it -->
+        <% String error = request.getParameter("error");
+            if (error != null && !error.isEmpty()) { %>
+        <p style="color: red;"><%= error %></p>
+        <% } %>
 
-    <form action="registration" method="post" enctype="multipart/form-data">
-        <h3 class="sub-heading">Registration</h3>
-        <div class="input-field">
-            <p><label for="username">Username:</label></p>
-            <input type="text" id="username" name="username" required>
-        </div>
-        <div class="input-field">
-            <p><label for="firstName">First Name:</label></p>
-            <input type="text" id="firstName" name="firstName" required>
-        </div>
-        <div class="input-field">
-            <p><label for="lastName">Last Name:</label></p>
-            <input type="text" id="lastName" name="lastName" required>
-        </div>
-        <div class="input-field">
-            <p><label for="email">Email:</label></p>
-            <input type="email" id="email" name="email" required>
-        </div>
-        <div class="input-field">
-            <p><label for="age">Date of Birth:</label></p>
-            <input type="date" id="age" name="age">
-        </div>
-        <div class="input-field">
-            <p><label for="password">Password:</label></p>
-            <input type="password" id="password" name="password" required>
-        </div>
-        <div class="input-field">
-            <p><label for="confirmPassword">Confirm Password:</label></p>
-            <input type="password" id="confirmPassword" name="confirmPassword" required>
-        </div>
-        <div class="input-field">
-            <p><label for="imageUpload">Select Your Profile Picture:</label></p>
-            <input type="file" name="imageUpload" id="imageUpload" accept="image/png, image/jpeg" required>
-        </div>
-        <div class="form-btns">
-            <a id="go-back" href="${pageContext.request.contextPath}/login"><div><i class="fa-solid fa-arrow-left"></i> Back</div></a>
-            <div class="input-field mg-0">
-                <input type="submit" value="Register">
+        <form action="registration" method="post" enctype="multipart/form-data">
+            <h3 class="sub-heading">Registration</h3>
+            <div class="input-field">
+                <p><label for="username">Username:</label></p>
+                <input type="text" id="username" name="username" required>
             </div>
-        </div>
-    </form>
+            <div class="input-field">
+                <p><label for="firstName">First Name:</label></p>
+                <input type="text" id="firstName" name="firstName" required>
+            </div>
+            <div class="input-field">
+                <p><label for="lastName">Last Name:</label></p>
+                <input type="text" id="lastName" name="lastName" required>
+            </div>
+            <div class="input-field">
+                <p><label for="email">Email:</label></p>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="input-field">
+                <p><label for="age">Date of Birth:</label></p>
+                <input type="date" id="age" name="age" required>
+            </div>
+            <div class="input-field">
+                <p><label for="password">Password:</label></p>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <div class="input-field">
+                <p><label for="confirmPassword">Confirm Password:</label></p>
+                <input type="password" id="confirmPassword" name="confirmPassword" required>
+            </div>
+            <div class="input-field">
+                <p><label for="imageUpload">Select Your Profile Picture:</label></p>
+                <input type="file" name="imageUpload" id="imageUpload" accept="image/png, image/jpeg" required>
+            </div>
+            <div class="form-btns">
+                <a id="go-back" href="${pageContext.request.contextPath}/login"><div><i class="fa-solid fa-arrow-left"></i> Back</div></a>
+                <div class="input-field mg-0">
+                    <input type="submit" value="Register">
+                </div>
+            </div>
+        </form>
     </div>
 </div>
 </body>

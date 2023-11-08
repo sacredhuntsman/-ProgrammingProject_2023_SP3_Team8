@@ -72,7 +72,7 @@
         <div id="chat-title" class="flex content-center items-end mx-2 ">
             <div id="chat-name" class="text-2xl"><%= chatTitle %></div>
             <div id="chat-info" class="mx-4 text-base">
-                8 Members
+
             </div>
         </div>
         <div id="chat-box" class="p-2 pt-4 overflow-scroll">
@@ -104,10 +104,12 @@
 
             %>
             <div class="chat-message w-full flex my-6 <%= isSender %>">
-                <div class="sender-img text-center mx-4"></div>
+                <div class="sender-img text-center mx-4">
+                    <img src="https://chatterboxavatarstorage.blob.core.windows.net/blob/<%= userName %>" alt="sender image">
+                </div>
                 <div class="message-content">
                     <div class="message-info flex mx-2">
-                        <div class="messange-sender-name text-white mr-2"><%= userName %></div>
+                        <div class="message-sender-name text-white mr-2"><%= userName %></div>
                         <div class="message-stats text-slate-400 text-xs italic" style="line-height: 24px;"> @ <%= formattedTimestamp %></div>
                     </div>
                     <div class="message-text text-white mx-2">

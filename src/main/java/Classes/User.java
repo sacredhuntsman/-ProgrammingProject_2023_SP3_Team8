@@ -1,29 +1,27 @@
 package Classes;
 
-import java.sql.Date;
-
 public class User {
 	private String username;
 	private String firstName;
 	private String lastName;
 	private String email;
 	private String password; // Password should be securely hashed and salted in practice
-	private Date dateOfBirth;
-	
+	private String ageString;
+
 	// Constructors
 	public User() {
 		// Default constructor
 	}
-	
-	public User(String username, String firstName, String lastName, String email, String password, Date dateOfBirth) {
+
+	public User(String username, String firstName, String lastName, String email, String password, String ageString) {
 		this.username = username;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
 		this.password = password;
-		this.dateOfBirth = dateOfBirth;
+		this.ageString = ageString;
 	}
-	
+
 	// Getter and Setter methods for each field
 	public String getUsername() {
 		return username;
@@ -55,13 +53,13 @@ public class User {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public Date getDateOfBirth() {
-		return dateOfBirth;
+	public String getAge(){
+		return ageString;
 	}
-	public void setDateOfBirth(Date dateOfBirth) {
-		this.dateOfBirth = dateOfBirth;
+	public void setAge(String ageString){
+		this.ageString = ageString;
 	}
-	
+
 	@Override
 	public String toString() {
 		return "User{" +
@@ -72,6 +70,4 @@ public class User {
 				", password='" + password + '\'' +
 				'}';
 	}
-	
-
 }

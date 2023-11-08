@@ -56,7 +56,7 @@ function formatMessage(isSender, userName, formattedTimestamp, messageText) {
                 <div class="sender-img text-center"></div>
                 <div class="message-content">
                     <div class="message-info flex mx-2">
-                        <div class="messange-sender-name text-white mr-2">${userName}</div>
+                        <div class="message-sender-name text-white mr-2">${userName}</div>
                         <div class="message-stats text-slate-400 text-xs italic" style="line-height: 24px;"> @ ${formattedDate}</div>
                     </div>
                     <div class="message-text text-white mx-2">

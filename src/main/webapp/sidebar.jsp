@@ -74,8 +74,11 @@
     <div id="user-info" class="flex flex-col shadow-lg rounded-md m-4 p-2">
         <div id="user-bar" class="flex justify-between content-center items-center mt-2">
             <div id="user-icon" class="flex content-center justify-center items-center mx-2 shrink-0">
-                <i class="fa-solid fa-bolt-lightning"></i>
+                <div class="circular-icon">
+                    <img src="https://chatterboxavatarstorage.blob.core.windows.net/blob/${sessionScope.userName}" alt="Avatar" style="width: 50px; height: 50px;">
+                </div>
             </div>
+
             <div id="user-name" class="flex grow text-xl content-center justify-start items-center justify-items-start px-2">
                 ${sessionScope.userName}
             </div>
