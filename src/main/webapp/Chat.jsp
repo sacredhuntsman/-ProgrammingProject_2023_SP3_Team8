@@ -149,22 +149,29 @@
 
     // fetch new messages every 10 seconds
     setInterval(function() {
-        fetchNewMessages(<%= groupId %>, <%= channelId%>);
+        fetchNewMessages(<%= groupId %>, <%= channelId%>, ${pageContext.request.contextPath});
     }, 10000);
     $(document).ready(function () {
         // Capture the form submission event
         $("#chat-form").submit(function (event) {
             event.preventDefault(); // Prevent the default form submission
 
+            let context = "${pageContext.request.contextPath}";
+            let _url = "";
+            if (!(context == null || context === "undefined" || typeof context === "undefined" || context === "")) {
+                _url = urlPath + "/send-message";
+            } else {
+                _url = "/send-message";
+            }
             // Handle the form submission with an AJAX request
             $.ajax({
                 type: "POST", // or "GET" depending on your requirements
-                url: "/send-message",
+                url: _url,
                 data: $("#chat-form").serialize(), // Serialize the form data
                 success: function (response) {
                     console.log("AJAX Request Success: " + response);
                     // Fetch the new messages after the form submission
-                    fetchNewMessages(<%= groupId %>, <%= channelId%>);
+                    fetchNewMessages(<%= groupId %>, <%= channelId%>, );
                 },
                 error: function (error) {
                     console.log("AJAX Request Failed: " + response);

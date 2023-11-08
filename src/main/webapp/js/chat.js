@@ -1,10 +1,16 @@
-
-
-
-function fetchNewMessages(groupId, channelId) {
+function fetchNewMessages(groupId, channelId, urlPath) {
+    let _url = "";
+    console.log(urlPath);
+    console.log(urlPath == null || urlPath === "undefined" || typeof urlPath === "undefined" || urlPath === "");
+    if (!(urlPath == null || urlPath === "undefined" || typeof urlPath === "undefined" || urlPath === "")) {
+        _url = urlPath + "/fetch-new-messages";
+    } else {
+        _url = "/fetch-new-messages";
+    }
+    console.log(_url);
     console.log("Fetching new messages...");
     $.ajax({
-        url: "/fetch-new-messages",
+        url: _url,
         method: "GET",
         data: {
             groupId: groupId,
@@ -17,7 +23,6 @@ function fetchNewMessages(groupId, channelId) {
             for(let i= 0; i < data.length; i++) {
                 $('#chat-box').append(formatMessage(data[i].isSender, data[i].senderName, data[i].timestamp, data[i].message));
             }
-
 
         },
         error: function (jqXHR, textStatus, errorThrown) {
