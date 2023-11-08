@@ -20,7 +20,7 @@ import Classes.Message;
 @WebServlet(name = "fetchNewMessages", value = "/fetch-new-messages")
 public class FetchNewMessagesServlet extends HttpServlet {
     private String message;
-    private SimpleDateFormat inputDateFormat = new SimpleDateFormat("your-date-format-here");
+    //private SimpleDateFormat inputDateFormat = new SimpleDateFormat("h:mma");
 
     public void init() {
         message = "Forgot Password!";
@@ -62,10 +62,19 @@ public class FetchNewMessagesServlet extends HttpServlet {
         StringBuilder json = new StringBuilder();
         json.append("[");
 
+        boolean isFirstMessage = true; // Flag to track the first message
+
         for (Message message : messages) {
-            if (json.length() > 1) {
-                json.append(",");
+            if (message.getMessageText().isEmpty()) {
+                continue; // Skip blank messages
             }
+
+            if (!isFirstMessage) {
+                json.append(",");
+            } else {
+                isFirstMessage = false;
+            }
+
             String isSender = "receiver"; // Default value if "userName" is not found
             String userName = message.getSenderName(); // Use the current message's sender name
             // Retrieve "userName" from the session
@@ -77,28 +86,25 @@ public class FetchNewMessagesServlet extends HttpServlet {
                 }
             }
 
-            // If the message text is blank, skip it
-            if (message.getMessageText().equals("")) {
-                continue;
+            try {
+                // Construct JSON object for each message
+                json.append("{");
+                json.append("\"message\": \"").append(message.getMessageText()).append("\",");
+                json.append("\"timestamp\": \"").append(message.getCreatedAt().toString()).append("\",");
+                json.append("\"isSender\": \"").append(isSender).append("\",");
+                json.append("\"senderName\": \"").append(message.getSenderName()).append("\"");
+                json.append("}");
+            } catch (Exception e) {
+                throw new RuntimeException(e);
             }
-           // Date date = inputDateFormat.parse(message.getCreatedAt().toString());
-            // Create a SimpleDateFormat object for the desired output format
-           // SimpleDateFormat outputDateFormat = new SimpleDateFormat("h:mma");
-           // String formattedTimestamp = outputDateFormat.format(date);
-
-            // Construct JSON object for each message
-            json.append("{");
-            json.append("\"message\": \"").append(message.getMessageText()).append("\",");
-            //json.append("\"timestamp\": \"").append(formattedTimestamp).append("\",");
-            //json.append("\"isSender\": \"").append(isSender).append("\",");
-            //json.append("\"senderName\": \"").append(message.getSenderName()).append("\",");
-            json.append("}");
         }
 
         json.append("]");
 
         return json.toString();
     }
+
+
 
     public void destroy() {
     }

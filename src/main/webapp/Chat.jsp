@@ -58,6 +58,7 @@
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/dashboard.css">
     <script src="https://kit.fontawesome.com/9c30b9a3ff.js" crossorigin="anonymous"></script>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Audiowide&family=Baloo+2:wght@700&family=Noto+Sans:wght@400;600;700&display=swap" rel="stylesheet">
@@ -119,7 +120,7 @@
                 <input type="hidden" name="groupId" value="<%= groupId %>">
                 <input type="hidden" name="channelId" value="<%= channelId %>">
                 <label>
-                    <input type="text" id="chat-msg-input" name="messageText">
+                    <input type="text" id="chat-msg-input" name="messageText" placeholder="Enter your message here...">
                 </label>
                     <input type="submit"  id="submit-chat-msg" value=">">
             </form>
@@ -139,5 +140,13 @@
         </div>
     </div>
 </div>
+<script src="${pageContext.request.contextPath}/js/chat.js"></script>
+<script>
+    console.log("Chat.jsp: groupId = <%= groupId %>, channelId = <%= channelId %>")
+    setInterval(function() {
+        fetchNewMessages(<%= groupId %>, <%= channelId%>);
+    }, 10000);
+</script>
+
 </body>
 </html>
