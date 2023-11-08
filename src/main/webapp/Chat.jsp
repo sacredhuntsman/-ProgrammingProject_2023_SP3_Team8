@@ -159,7 +159,7 @@
             let context = "${pageContext.request.contextPath}";
             let _url = "";
             if (!(context == null || context === "undefined" || typeof context === "undefined" || context === "")) {
-                _url = urlPath + "/send-message";
+                _url = context + "/send-message";
             } else {
                 _url = "/send-message";
             }
