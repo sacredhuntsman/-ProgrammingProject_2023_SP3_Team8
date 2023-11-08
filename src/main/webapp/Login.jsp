@@ -24,9 +24,10 @@
                 <input type="text" id="username" name="username" required>
             </div>
             <div class="input-field">
-                <div class="forgot-password"><a href="forgotpassword">Forgot Password</a></div>
+
                 <p><label for="password">Password:</label></p>
                 <input type="password" id="password" name="password" required>
+                <div class="forgot-password"><a href="forgotpassword">Forgot Password</a></div>
             </div>
             <div class="input-field">
                 <p class="align-right"><input type="submit" value="Login"></p>
