@@ -1,10 +1,16 @@
-
-
-
-function fetchNewMessages(groupId, channelId) {
+function fetchNewMessages(groupId, channelId, urlPath) {
+    let _url = "";
+    console.log(urlPath);
+    console.log(urlPath == null || urlPath === "undefined" || typeof urlPath === "undefined" || urlPath === "");
+    if (!(urlPath == null || urlPath === "undefined" || typeof urlPath === "undefined" || urlPath === "")) {
+        _url = urlPath + "/fetch-new-messages";
+    } else {
+        _url = "/fetch-new-messages";
+    }
+    console.log(_url);
     console.log("Fetching new messages...");
     $.ajax({
-        url: "/fetch-new-messages",
+        url: _url,
         method: "GET",
         data: {
             groupId: groupId,
@@ -18,7 +24,6 @@ function fetchNewMessages(groupId, channelId) {
                 $('#chat-box').append(formatMessage(data[i].isSender, data[i].senderName, data[i].timestamp, data[i].message));
             }
 
-
         },
         error: function (jqXHR, textStatus, errorThrown) {
             console.log("AJAX Request Error: " + errorThrown);
@@ -27,13 +32,32 @@ function fetchNewMessages(groupId, channelId) {
 }
 
 function formatMessage(isSender, userName, formattedTimestamp, messageText) {
+
+    // Input date string
+    var inputDateStr = formattedTimestamp;
+
+    // Parse the input date string into a JavaScript Date object
+    var inputDate = new Date(inputDateStr);
+
+    // Format the date as "hh:mma dd/MM"
+    var formattedDate = inputDate.toLocaleTimeString('en-US', {
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: true,
+    }) + ' ' + inputDate.toLocaleDateString('en-US', {
+        day: '2-digit',
+        month: '2-digit',
+    });
+
+    console.log(formattedDate); // Output: "10:42AM 08/11"
+
     return `
       <div class="chat-message w-full flex my-6 ${isSender}">
                 <div class="sender-img text-center"></div>
                 <div class="message-content">
                     <div class="message-info flex mx-2">
                         <div class="messange-sender-name text-white mr-2">${userName}</div>
-                        <div class="message-stats text-slate-400 text-xs italic" style="line-height: 24px;"> @ ${formattedTimestamp}</div>
+                        <div class="message-stats text-slate-400 text-xs italic" style="line-height: 24px;"> @ ${formattedDate}</div>
                     </div>
                     <div class="message-text text-white mx-2">
                         ${messageText}
