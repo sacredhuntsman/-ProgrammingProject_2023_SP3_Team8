@@ -145,7 +145,9 @@
 <script src="${pageContext.request.contextPath}/js/chat.js"></script>
 <script>
     // initial load of messages
-    fetchNewMessages(<%= groupId %>, <%= channelId%>);
+    fetchNewMessages(<%= groupId %>, <%= channelId%>, "${pageContext.request.contextPath}");
+
+
 
     // fetch new messages every 10 seconds
     setInterval(function() {
