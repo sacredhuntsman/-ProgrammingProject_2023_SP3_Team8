@@ -72,7 +72,7 @@
         <div id="chat-title" class="flex content-center items-end mx-2 ">
             <div id="chat-name" class="text-2xl"><%= chatTitle %></div>
             <div id="chat-info" class="mx-4 text-base">
-                8 Members
+
             </div>
         </div>
         <div id="chat-box" class="p-2 pt-4 overflow-scroll">
@@ -104,10 +104,12 @@
 
             %>
             <div class="chat-message w-full flex my-6 <%= isSender %>">
-                <div class="sender-img text-center mx-4"></div>
+                <div class="sender-img text-center mx-4">
+                    <img src="https://chatterboxavatarstorage.blob.core.windows.net/blob/<%= userName %>" alt="sender image">
+                </div>
                 <div class="message-content">
                     <div class="message-info flex mx-2">
-                        <div class="messange-sender-name text-white mr-2"><%= userName %></div>
+                        <div class="message-sender-name text-white mr-2"><%= userName %></div>
                         <div class="message-stats text-slate-400 text-xs italic" style="line-height: 24px;"> @ <%= formattedTimestamp %></div>
                     </div>
                     <div class="message-text text-white mx-2">
@@ -145,26 +147,35 @@
 <script src="${pageContext.request.contextPath}/js/chat.js"></script>
 <script>
     // initial load of messages
-    fetchNewMessages(<%= groupId %>, <%= channelId%>);
+    fetchNewMessages(<%= groupId %>, <%= channelId%>, "${pageContext.request.contextPath}");
+
+
 
     // fetch new messages every 10 seconds
     setInterval(function() {
-        fetchNewMessages(<%= groupId %>, <%= channelId%>);
+        fetchNewMessages(<%= groupId %>, <%= channelId%>, "${pageContext.request.contextPath}");
     }, 10000);
     $(document).ready(function () {
         // Capture the form submission event
         $("#chat-form").submit(function (event) {
             event.preventDefault(); // Prevent the default form submission
 
+            let context = "${pageContext.request.contextPath}";
+            let _url = "";
+            if (!(context == null || context === "undefined" || typeof context === "undefined" || context === "")) {
+                _url = context + "/send-message";
+            } else {
+                _url = "/send-message";
+            }
             // Handle the form submission with an AJAX request
             $.ajax({
                 type: "POST", // or "GET" depending on your requirements
-                url: "/send-message",
+                url: _url,
                 data: $("#chat-form").serialize(), // Serialize the form data
                 success: function (response) {
                     console.log("AJAX Request Success: " + response);
                     // Fetch the new messages after the form submission
-                    fetchNewMessages(<%= groupId %>, <%= channelId%>);
+                    fetchNewMessages(<%= groupId %>, <%= channelId%>, "${pageContext.request.contextPath}");
                 },
                 error: function (error) {
                     console.log("AJAX Request Failed: " + response);

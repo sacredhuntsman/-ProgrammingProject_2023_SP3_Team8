@@ -28,6 +28,7 @@ body, html {
     width: 60px;
     background-color: #0087ff;
     border-radius: 50%;
+    overflow: hidden; /* Hides the image overflow */
 }
 #user-icon i::before, #user-icon-m i::before {
     font-size: 40px;

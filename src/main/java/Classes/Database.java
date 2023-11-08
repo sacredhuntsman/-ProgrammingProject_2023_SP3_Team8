@@ -149,7 +149,7 @@ public class Database {
             preparedStatement.setString(3, user.getLastName());
             preparedStatement.setString(4, user.getEmail());
             preparedStatement.setString(5, user.getPassword());
-            preparedStatement.setDate(6, user.getDateOfBirth());
+            preparedStatement.setString(6, user.getAge());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

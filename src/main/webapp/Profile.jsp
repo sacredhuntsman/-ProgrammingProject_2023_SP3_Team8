@@ -39,6 +39,7 @@
             <div id="chat-name" class="text-2xl">Edit Profile</div>
         </div>
         <div id="chat-control" class="mx-2">
+            <img src="https://chatterboxavatarstorage.blob.core.windows.net/blob/${sessionScope.userName}" alt="Avatar" style="width:200px">
             <div class="text-white text-xl mt-4 font-bold">User info</div>
             <div class="text-white mt-2">Username</div>
             <label>
