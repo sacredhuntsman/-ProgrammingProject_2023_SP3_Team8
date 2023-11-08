@@ -1,6 +1,7 @@
 <%@ page import="Classes.Message" %>
 <%@ page import="Classes.Group" %>
 <%@ page import="Classes.Channel" %>
+<%@ page import="Classes.Database" %>
 <%@ page import="java.util.List" %>
 <%@ page import="Classes.ChatService" %>
 <%@ page import="java.sql.SQLException" %>
@@ -10,10 +11,12 @@
 
 <%
     // Get the list of groups from the ChatService class
+    Database database = new Database();
+    int userID = database.getUserID((String) session.getAttribute("userName"));
     List<Group> groups = null;
     ChatService chatService = new ChatService();
     try {
-        groups = chatService.getGroups();
+        groups = chatService.getGroups(userID);
     } catch (SQLException e) {
         throw new RuntimeException(e);
     }
@@ -57,6 +60,7 @@
             </form>
         </div>
     </div>
+
     <div class="info-bar">
         <div class="m-4">
             <h1 class="text-white text-xl mt-4 font-bold">Dev Links</h1>

@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page import="Classes.Channel" %>
 <%@ page import="java.util.List" %>
 <%@ page import="Classes.ChatService" %>
@@ -51,6 +52,9 @@
                 <input type="submit" value="Add">
             </form>
         </div>
+    </div>
+    <div>
+        <c:import url="inviteUser.jsp" />
     </div>
     <div class="info-bar">
         <div class="m-4">

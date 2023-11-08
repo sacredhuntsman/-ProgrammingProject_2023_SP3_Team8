@@ -215,6 +215,59 @@ public class Database {
         }
         return userId;
     }
+    
+    public int getGroupID(String groupName){
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        int groupId = 0;
+        try {
+            connection = getConnection();
+            String query = "SELECT GroupID FROM GroupDB WHERE GroupName = ?";
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, groupName);
+            resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                groupId = resultSet.getInt("GroupID");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // Handle the exception properly, e.g., throw a custom exception or log an error.
+        } finally {
+            closeResultSet(resultSet);
+            closePreparedStatement(preparedStatement);
+            closeConnection(connection);
+        }
+        return groupId;
+    }
+    
+    public int getChannelID(String channelName){
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        int channelId = 0;
+        try {
+            connection = getConnection();
+            String query = "SELECT ChannelID FROM ChannelDB WHERE ChannelName = ?";
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, channelName);
+            resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                channelId = resultSet.getInt("ChannelID");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // Handle the exception properly, e.g., throw a custom exception or log an error.
+        } finally {
+            closeResultSet(resultSet);
+            closePreparedStatement(preparedStatement);
+            closeConnection(connection);
+        }
+        return channelId;
+    }
+    
     public Map<String, String> getSessionData(String username) {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -223,17 +276,19 @@ public class Database {
         
         try {
             connection = getConnection();
-            String query = "SELECT FirstName, LastName, Email FROM UserDB WHERE Username = ?";
+            String query = "SELECT UserID, FirstName, LastName, Email FROM UserDB WHERE Username = ?";
             preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, username);
             resultSet = preparedStatement.executeQuery();
             
             if (resultSet.next()) {
+                int userId = resultSet.getInt("UserID");
                 String firstName = resultSet.getString("FirstName");
                 String lastName = resultSet.getString("LastName");
                 String email = resultSet.getString("Email");
                 
                 // Store the data in a map
+                userData.put("UserID", String.valueOf(userId));
                 userData.put("FirstName", firstName);
                 userData.put("LastName", lastName);
                 userData.put("Email", email);
@@ -288,4 +343,28 @@ public class Database {
             closeConnection(connection);
         }
     }
+	
+	public void inviteUser(String userName, int groupId) {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        try {
+            int userID = getUserID(userName);
+            if (userID == 0) {
+                return;
+            }
+            connection = getConnection();
+
+            String query = "INSERT INTO GroupMembershipDB (GroupID, GroupUserID) VALUES (?, ?)";
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1, groupId);
+            preparedStatement.setInt(2, userID);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // Handle the exception properly, e.g., throw a custom exception or log an error.
+        } finally {
+            closePreparedStatement(preparedStatement);
+            closeConnection(connection);
+        }
+	}
 }

@@ -11,15 +11,16 @@ public class ChatService {
 		chatMessageDao = new ChatMessageDao();
 	}
 	
-	public Group createGroup(String groupName) throws SQLException {
+	public Group createGroup(String groupName, int creatorID) throws SQLException {
 		Group group = new Group();
 		group.setName(groupName);
-		chatMessageDao.saveGroup(group);
+		
+		chatMessageDao.saveGroup(group, creatorID);
 		return group;
 	}
 	
-	public List<Group> getGroups() throws SQLException {
-		return chatMessageDao.getGroups();
+	public List<Group> getGroups(int userID) throws SQLException {
+		return chatMessageDao.getGroups(userID);
 	}
 	
 	public void sendMessage(int groupId, int channelId, int senderId, int recipientId, String messageText) throws SQLException {
@@ -61,11 +62,11 @@ public class ChatService {
 	
 	}
 	
-	public Channel createChannel(String channelName, int groupId) throws SQLException {
+	public Channel createChannel(String channelName, int groupId, int creatorID) throws SQLException {
 		Channel channel = new Channel();
 		channel.setChannelName(channelName);
 		channel.setGroupId(groupId);
-		chatMessageDao.saveChannel(channel);
+		chatMessageDao.saveChannel(channel, creatorID);
 		return channel;
 	}
 }
