@@ -29,7 +29,7 @@ function fetchNewMessages(groupId, channelId) {
 function formatMessage(isSender, userName, formattedTimestamp, messageText) {
     return `
       <div class="chat-message w-full flex my-6 ${isSender}">
-                <div class="sender-img text-center mx-4"></div>
+                <div class="sender-img text-center"></div>
                 <div class="message-content">
                     <div class="message-info flex mx-2">
                         <div class="messange-sender-name text-white mr-2">${userName}</div>

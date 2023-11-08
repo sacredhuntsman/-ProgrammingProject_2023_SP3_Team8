@@ -20,17 +20,19 @@
     } catch (SQLException e) {
         throw new RuntimeException(e);
     }
+
+    // Janky logout check if no user ID
+    String userId = (String) session.getAttribute("userId");
+    if (!(userId != null && !userId.isEmpty())) {
+        response.sendRedirect("login");
+    }
+
 %>
 
 <html>
 <head>
     <title>User Profile</title>
-    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/dashboard.css">
-    <script src="https://kit.fontawesome.com/9c30b9a3ff.js" crossorigin="anonymous"></script>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Audiowide&family=Baloo+2:wght@700&family=Noto+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    <jsp:include page="head.jsp" />
 </head>
 <body>
 <div class="main-container flex items-stretch justify-stretch">

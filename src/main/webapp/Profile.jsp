@@ -18,19 +18,18 @@
         throw new RuntimeException(e);
     }
 
-
+    // Janky logout check if no user ID
+    String userId = (String) session.getAttribute("userId");
+    if (!(userId != null && !userId.isEmpty())) {
+        response.sendRedirect("login");
+    }
 
 
 %>
 <html>
 <head>
     <title>User Profile</title>
-    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/dashboard.css">
-    <script src="https://kit.fontawesome.com/9c30b9a3ff.js" crossorigin="anonymous"></script>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Audiowide&family=Baloo+2:wght@700&family=Noto+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    <jsp:include page="head.jsp" />
 </head>
 <body>
 <div class="main-container flex items-stretch justify-stretch">
@@ -43,19 +42,19 @@
             <div class="text-white text-xl mt-4 font-bold">User info</div>
             <div class="text-white mt-2">Username</div>
             <label>
-                <input type="text" class="p-1 w-80" value="${sessionScope.userName}">
+                <input type="text" class="p-1 w-50" value="${sessionScope.userName}">
             </label>
             <div class="text-white mt-2">First Name</div>
             <label>
-                <input type="text" class="p-1 w-80" value="${sessionScope.firstName}">
+                <input type="text" class="p-1 w-50" value="${sessionScope.firstName}">
             </label>
             <div class="text-white mt-2">Last Name</div>
             <label>
-                <input type="text" class="p-1 w-80" value="${sessionScope.lastName}">
+                <input type="text" class="p-1 w-50" value="${sessionScope.lastName}">
             </label>
             <div class="text-white mt-2">Email</div>
             <label>
-                <input type="text" class="p-1 w-80" value="${sessionScope.email}">
+                <input type="text" class="p-1 w-50" value="${sessionScope.email}">
             </label>
             <div class="btn-div">Save Changes</div>
         </div>
