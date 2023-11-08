@@ -8,6 +8,8 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.io.PrintWriter;
+
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -32,21 +34,19 @@ public class SendMessageServlet extends HttpServlet {
 		int senderId = database.getUserID((String) session.getAttribute("userName"));
 		int recipientId = 0;
 		String messageText = request.getParameter("messageText");
-		
+
 		// Send the message
 		try {
 			chatService.sendMessage(groupId, channelId, senderId, recipientId, messageText);
+
+			// Send a success response
+			response.setContentType("application/json");
+			response.setCharacterEncoding("UTF-8");
+			PrintWriter out = response.getWriter();
+			out.print("{\"status\": \"success\"}");
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		}
-
-
-// Construct the URL with the dynamically retrieved values
-		String redirectUrl = "Chat.jsp?groupId=" + groupId + "&channelId=" + channelId;
-
-// Use response.sendRedirect to redirect to the constructed URL
-		response.sendRedirect(redirectUrl);
-		// Redirect the user to the group page
-
 	}
+
 }

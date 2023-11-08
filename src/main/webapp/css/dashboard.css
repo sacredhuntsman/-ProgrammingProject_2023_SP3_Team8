@@ -153,3 +153,20 @@ body, html {
     transition: all 0.15s ease-in-out;
     margin: 10px 0;
 }
+
+.sender-img {
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    background-color: #0087ff;
+    margin-right: 10px;
+}
+.sender {
+    flex-direction: row-reverse;
+}
+.sender .message-text {
+    text-align: right;
+}
+.sender .message-info {
+    justify-content: flex-end;
+}

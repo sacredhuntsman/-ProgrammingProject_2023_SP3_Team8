@@ -34,61 +34,7 @@
 </head>
 <body>
 <div class="main-container flex items-stretch justify-stretch">
-    <div class="side-bar flex flex-col shrink-0">
-        <div id="user-info" class="flex flex-col shadow-lg rounded-md m-4 p-2">
-            <div id="user-bar" class="flex justify-between content-center items-center mt-2">
-                <div id="user-icon" class="flex content-center justify-center items-center mx-2 shrink-0">
-                    <i class="fa-solid fa-bolt-lightning"></i>
-                </div>
-                <div id="user-name" class="flex grow text-xl content-center justify-start items-center justify-items-start px-2">
-                    ${sessionScope.userName}
-                </div>
-                <div id="expand-icon" class="flex content-center justify-center items-center m-3 shrink-0">
-                    <i class="fas fa-chevron-down"></i>
-                </div>
-            </div>
-            <div id="user-menu" class="m-4 mt-8">
-                <ul class="flex flex-col">
-                    <li class="text-sm"><a href="${pageContext.request.contextPath}/Profile.jsp">Edit Profile</a></li>
-                    <li class="text-sm">Manage Chat Rooms</li>
-                    <li class="text-sm">Help</li>
-                    <li class="text-sm"><a href="${pageContext.request.contextPath}/login?action=logout">Logout</a></li>
-                </ul>
-            </div>
-
-        </div>
-        <div id="chat-rooms" class="flex flex-col  rounded-md m-4 p-2">
-            <div class="title flex items-center">
-                <div class="section-title text-xl">Chat Rooms</div>
-                <div class="add-button flex content-center justify-center items-center mx-2">
-                    <i class="fas fa-plus"></i>
-                </div>
-            </div>
-            <div id="chat-room-list" class="mt-4">
-                <ul class="flex flex-col">
-                    <li class="text-sm"><a href="${pageContext.request.contextPath}/Chat.jsp?groupId=9&channelId=14">Chat 1</a></li>
-                    <li class="text-sm"><a href="${pageContext.request.contextPath}/Chat.jsp?groupId=9&channelId=14">Chat 2</a></li>
-                    <li class="text-sm"><a href="${pageContext.request.contextPath}/Chat.jsp?groupId=9&channelId=14">Chat 3</a></li>
-                    <li class="text-sm"><a href="${pageContext.request.contextPath}/Chat.jsp?groupId=9&channelId=14">Chat 4</a></li>
-                </ul>
-            </div>
-        </div>
-        <div class="grey-spacer"></div>
-        <div id="contacts" class="flex flex-col  rounded-md m-4 p-2">
-            <div class="title flex items-center">
-                <div class="section-title text-xl">Contacts</div>
-                <div class="add-button flex content-center justify-center items-center mx-2">
-                    <i class="fas fa-plus"></i>
-                </div>
-            </div>
-            <div id="contacts-list" class="mt-4">
-                <ul class="flex flex-col">
-                    <li class="text-sm">My Contact</li>
-
-                </ul>
-            </div>
-        </div>
-    </div>
+    <jsp:include page="sidebar.jsp" />
     <div class="main-content flex flex-col grow p-8">
         <div id="chat-title" class="flex content-center items-end mx-2 ">
             <div id="chat-name" class="text-2xl">Edit Profile</div>

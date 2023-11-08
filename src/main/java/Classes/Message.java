@@ -7,6 +7,7 @@ public class Message {
 	private int id;
 	private int groupId;
 	private int senderId;
+	private String senderName;
 	private int recipientId;
 	private String messageText;
 	private Timestamp createdAt;
@@ -17,11 +18,12 @@ public class Message {
 	public Message() {
 	}
 	
-	public Message(int id, int groupId, int channelId, int senderId, int recipientId, String messageText, Timestamp createdAt) {
+	public Message(int id, int groupId, int channelId, int senderId, String senderName, int recipientId, String messageText, Timestamp createdAt) {
 		this.id = id;
 		this.groupId = groupId;
 		this.channelId = channelId;
 		this.senderId = senderId;
+		this.senderName = senderName;
 		this.recipientId = recipientId;
 		this.messageText = messageText;
 		this.createdAt = createdAt;
@@ -79,7 +81,7 @@ public class Message {
 		return messageText;
 	}
 	
-	public java.sql.Timestamp getCreatedAt(java.sql.Timestamp createdAt) {
+	public java.sql.Timestamp getCreatedAt() {
 		return createdAt;
 	}
 	
@@ -95,5 +97,11 @@ public class Message {
 		this.createdAt = createdAt;
 	}
 	
+	public void setSenderName(String senderName) {
+		this.senderName = senderName;
+	}
 
+	public String getSenderName() {
+		return senderName;
+	}
 }
