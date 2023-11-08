@@ -31,10 +31,18 @@
     List<Group> groups = null;
     List<Channel> channels = null;
 
+    int userIdValue = 0;
+    String userId = (String) session.getAttribute("userId");
+    if (userId != null && !userId.isEmpty()) {
+        userIdValue = Integer.parseInt(userId);
+    } else {
+        response.sendRedirect("login");
+    }
+
     ChatService chatService = new ChatService();
     try {
 
-        groups = chatService.getGroups();
+        groups = chatService.getGroups(userIdValue);
 
         // Set default values for groupId and channelId if they are not set in the request.
         if (groupIdParam == null || groupIdParam.isEmpty()) {
