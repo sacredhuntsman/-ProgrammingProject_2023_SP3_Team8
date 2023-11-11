@@ -75,7 +75,7 @@
         <div id="user-bar" class="flex justify-between content-center items-center mt-2">
             <div id="user-icon" class="flex content-center justify-center items-center mx-2 shrink-0">
                 <div class="circular-icon">
-                    <img src="https://chatterboxavatarstorage.blob.core.windows.net/blob/${sessionScope.userName}" alt="Avatar" style="width: 50px; height: 50px;">
+                    <img src="https://chatterboxavatarstorage.blob.core.windows.net/blob/${sessionScope.userName}" alt="Avatar"  style="width: 50px; height: 50px;">
                 </div>
             </div>
 
