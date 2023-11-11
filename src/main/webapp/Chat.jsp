@@ -92,11 +92,11 @@
                 //if the message text is blank, skip it
                 if (message.getMessageText().equals("")) {
                     continue;
-                }
-                Date date = inputDateFormat.parse(message.getCreatedAt().toString());
+                }                Date date = inputDateFormat.parse(message.getCreatedAt().toString());
                 // Create a SimpleDateFormat object for the desired output format
                 SimpleDateFormat outputDateFormat = new SimpleDateFormat("h:mma");
                 String formattedTimestamp = outputDateFormat.format(date);
+
 
 
 
