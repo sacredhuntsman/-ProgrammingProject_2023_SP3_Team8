@@ -26,9 +26,9 @@ public class UpdateAvatarServlet extends HttpServlet {
         try {
             FileStore filestore = new FileStore();
             // Upload the image to Azure Blob Storage
-            System.out.println("DEBUG1");
+
             filestore.updateFile(fileContent, username);
-            System.out.println("DEBUG2");
+
             // Redirect to the profile page
             response.sendRedirect("Profile.jsp");
         } catch (Exception e) {
