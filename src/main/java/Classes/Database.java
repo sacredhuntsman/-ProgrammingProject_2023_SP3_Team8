@@ -7,9 +7,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Properties;
+import java.util.*;
 
 public class Database {
     private String jdbcUrl;
@@ -367,4 +365,33 @@ public class Database {
             closeConnection(connection);
         }
 	}
+
+    public List<String> getUsernamesMatchingQuery(String searchQuery) {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        List<String> usernames = new ArrayList<>(); // Initialize the list
+        try {
+            connection = getConnection();
+            String query = "SELECT Username FROM UserDB WHERE Username LIKE ?";
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, "%" + searchQuery + "%");
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                String username = resultSet.getString("Username");
+                usernames.add(username);
+            }
+            return usernames;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // Handle the exception properly, e.g., throw a custom exception or log an error.
+            return usernames; // Ensure a valid list is returned even on error
+        } finally {
+            // Close resources in the reverse order of their creation
+            closeResultSet(resultSet);
+            closePreparedStatement(preparedStatement);
+            closeConnection(connection);
+        }
+    }
+
 }

@@ -40,6 +40,11 @@
         </div>
         <div id="chat-control" class="mx-2">
             <img src="https://chatterboxavatarstorage.blob.core.windows.net/blob/${sessionScope.userName}" alt="Avatar" style="width:200px">
+            <form action="updateAvatar" method="post" enctype="multipart/form-data">
+                <input type="file" name="avatarImage" accept="image/*">
+                <input type="submit" value="Upload">
+                <input type="hidden" name="username" value="${sessionScope.userName}">
+            </form>
             <div class="text-white text-xl mt-4 font-bold">User info</div>
             <div class="text-white mt-2">Username</div>
             <label>

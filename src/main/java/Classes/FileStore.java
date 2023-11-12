@@ -57,4 +57,18 @@ public class FileStore {
                 .containerName(containerName).buildClient();
         blobContainerClient.getBlobClient(fileName).upload(fileStream, fileStream.available());        
     }
+
+    public void updateFile(InputStream fileContent, String username) throws IOException {
+        // Delete the existing file, if it exists
+        BlobContainerClient blobContainerClient = new BlobContainerClientBuilder().connectionString(connectionString)
+                .containerName(containerName).buildClient();
+        System.out.println("DEBUG3");
+        if (blobContainerClient.getBlobClient(username).exists()) {
+            System.out.println("DEBUG4");
+            blobContainerClient.getBlobClient(username).delete();
+        }
+        System.out.println("DEBUG5");
+        // Upload the new file
+        blobContainerClient.getBlobClient(username).upload(fileContent, fileContent.available());
+    }
 }
