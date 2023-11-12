@@ -23,7 +23,7 @@ public class InviteUserServlet extends HttpServlet {
 
 		// Redirect or display success message
 
-		request.setAttribute("invitationSuccess", true);
+		response.sendRedirect("Channels.jsp?groupId=" + groupId);
 	}
 }
 

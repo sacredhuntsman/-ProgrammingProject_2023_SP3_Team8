@@ -6,7 +6,7 @@
 </head>
 <body>
 <h1>Invite User to Group</h1>
-<form id="inviteForm">
+<form action = "invite" id="inviteForm" method="post">
     <label>Enter User Name:</label>
     <!-- Hidden input field to capture the groupId from the URL -->
     <input type="hidden" name="groupId" value="${param.groupId}">
@@ -42,6 +42,9 @@
                 // Set the selected username to the input field
                 document.querySelector('input[name="userName"]').value = username;
                 userResults.style.display = 'none'; // Hide the results
+
+                // Submit the form after the user is selected
+                document.getElementById('inviteForm').submit();
             };
             userResults.appendChild(userItem);
         });

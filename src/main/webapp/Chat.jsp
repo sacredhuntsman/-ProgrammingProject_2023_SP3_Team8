@@ -48,10 +48,11 @@
         if (groupIdParam == null || groupIdParam.isEmpty()) {
             groupId = groups.get(0).getId();
         }
+        channels = chatService.getChannels(groupId);
         if(channelIdParam == null || channelIdParam.isEmpty()) {
             channelId = channels.get(0).getChannelId();
         }
-        channels = chatService.getChannels(groupId);
+
         messages = chatService.getMessages(groupId, channelId);
         chatTitle = chatService.getChatTitle(groupId, channelId);
 
@@ -68,12 +69,17 @@
 <body>
 <div class="main-container flex items-stretch justify-stretch">
     <jsp:include page="sidebar.jsp" />
+    <div>
+        <!-- Include the group members' page within an iframe -->
+       <jsp:include page="ChannelMembers.jsp" />
+    </div>
     <div class="main-content flex flex-col grow p-8">
         <div id="chat-title" class="flex content-center items-end mx-2 ">
             <div id="chat-name" class="text-2xl"><%= chatTitle %></div>
             <div id="chat-info" class="mx-4 text-base">
 
             </div>
+
         </div>
         <div id="chat-box" class="p-2 pt-4 overflow-scroll">
             <% for (Message message : messages) {

@@ -41,6 +41,7 @@
         <div id="chat-title" class="flex content-center items-end mx-2 ">
             <div id="chat-name" class="text-2xl">Groups</div>
         </div>
+
         <div id="chat-control" class="mx-2">
 
             <% String error = request.getParameter("error");
