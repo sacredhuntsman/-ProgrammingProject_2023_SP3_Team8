@@ -35,15 +35,16 @@
 <body>
 <div class="main-container flex items-stretch justify-stretch">
     <jsp:include page="sidebar.jsp" />
+        <div>
+            <!-- Include the group members' page within an iframe -->
+            <jsp:include page="GroupMembers.jsp" />
+            </div>
 
     <div class="main-content flex flex-col grow p-8">
         <div id="chat-title" class="flex content-center items-end mx-2 ">
             <div id="chat-name" class="text-2xl">Channels</div>
         </div>
-        <div>
-            <!-- Include the group members' page within an iframe -->
-            <iframe src="GroupMembers.jsp?groupId=<%= groupId %>" width="100%" height="600"></iframe>
-        </div>
+
         <div id="chat-control" class="mx-2">
 
             <% for (Channel channel : channels) { %>
