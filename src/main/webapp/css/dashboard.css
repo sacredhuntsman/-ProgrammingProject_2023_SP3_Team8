@@ -99,29 +99,30 @@ body, html {
 #chat-box {
     flex: 1;
 }
+#chat-form {
+    padding-top: 22px;
+}
 #chat-control {
     width: 100%;
+
 }
 #chat-msg-input {
-    width: 100%;
     margin: 0 auto;
     height: 35px;
-    border-radius: 35px;
+    border-radius: 24px 0 0 24px;
     border: none;
     background-color: #4D4C4C;
     color: #fff;
     padding: 22px 24px;
 }
 #submit-chat-msg {
-    float: right;
-    position: relative;
-    top: -38px;
-    left: -8px;
     background-color: #fffb00;
-    width: 32px;
-    height: 32px;
-    border-radius: 24px;
+    width: 100px;
+    height: 43px;
+    border-radius: 0 24px 24px 0;
     cursor: pointer;
+    padding: 0;
+    margin: 0;
 }
 #submit-chat-msg:hover {
     background-color: #fff;
@@ -138,6 +139,10 @@ body, html {
     text-align: center;
     padding: 8px;
     margin: 24px 0;
+}
+.main-content
+{
+    height: 100vh;
 }
 .main-content form input[type="submit"] {
     background-color: #EFE84B;
@@ -195,6 +200,27 @@ body, html {
     color: #efe84b;
     font-weight: bold;
 }
+.message-text {
+    word-wrap: break-word;
+}
+
+.scrollbar1::-webkit-scrollbar {
+    width: 16px;
+}
+
+.scrollbar1::-webkit-scrollbar-track {
+    border-radius: 8px;
+    background-color: #343637;
+    border: 1px solid #000000;
+}
+
+.scrollbar1::-webkit-scrollbar-thumb {
+    border-radius: 8px;
+    border: 3px solid transparent;
+    background-clip: content-box;
+    background-color: #6b6b6b;
+}
+
 @media only screen and (max-width: 600px) {
     .side-bar, .info-bar {
         display: none !important;

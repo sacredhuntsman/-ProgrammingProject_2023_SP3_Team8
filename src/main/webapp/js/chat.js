@@ -1,5 +1,6 @@
-function fetchNewMessages(groupId, channelId, urlPath) {
+function fetchNewMessages(groupId, channelId, urlPath, existingMessagesCount) {
     let _url = "";
+    let msgs = [];
     console.log(urlPath);
     console.log(urlPath == null || urlPath === "undefined" || typeof urlPath === "undefined" || urlPath === "");
     if (!(urlPath == null || urlPath === "undefined" || typeof urlPath === "undefined" || urlPath === "")) {
@@ -23,12 +24,18 @@ function fetchNewMessages(groupId, channelId, urlPath) {
             for(let i= 0; i < data.length; i++) {
                 $('#chat-box').append(formatMessage(data[i].isSender, data[i].senderName, data[i].timestamp, data[i].message));
             }
+            if(existingMessagesCount < data.length) {
+                console.log("Scrolling to bottom as new msg found...")
+                scrollChatToBottom();
+            }
+
 
         },
         error: function (jqXHR, textStatus, errorThrown) {
             console.log("AJAX Request Error: " + errorThrown);
         }
     });
+
 }
 
 function formatMessage(isSender, userName, formattedTimestamp, messageText) {

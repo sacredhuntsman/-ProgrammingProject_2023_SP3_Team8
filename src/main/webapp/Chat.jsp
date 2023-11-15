@@ -81,7 +81,7 @@
             </div>
 
         </div>
-        <div id="chat-box" class="p-2 pt-4 overflow-scroll">
+        <div id="chat-box" class="p-2 pt-4 overflow-y-scroll scrollbar1">
             <% for (Message message : messages) {
                 String isSender = "receiver"; // Default value if "userName" is not found
 
@@ -126,13 +126,13 @@
             <% } %>
         </div>
         <div id="chat-control" >
-            <form id="chat-form" action="send-message" method="post">
+            <form id="chat-form" action="send-message" method="post" style="display: flex;">
                 <input type="hidden" name="groupId" value="<%= groupId %>">
                 <input type="hidden" name="channelId" value="<%= channelId %>">
-                <label>
-                    <input type="text" id="chat-msg-input" name="messageText" placeholder="Enter your message here...">
+                <label style="width: 100%">
+                    <input type="text" id="chat-msg-input" name="messageText" placeholder="Enter your message here..." style="width: 100%">
                 </label>
-                    <input type="submit"  id="submit-chat-msg" value=">">
+                    <input type="submit"  id="submit-chat-msg" value="send">
             </form>
         </div>
     </div>
@@ -152,6 +152,11 @@
 </div>
 <script src="${pageContext.request.contextPath}/js/chat.js"></script>
 <script>
+    function scrollChatToBottom() {
+        let chatBox = document.getElementById('chat-box');
+        chatBox.scrollTop = chatBox.scrollHeight;
+    }
+
     // initial load of messages
     fetchNewMessages(<%= groupId %>, <%= channelId%>, "${pageContext.request.contextPath}");
 
@@ -159,9 +164,20 @@
 
     // fetch new messages every 10 seconds
     setInterval(function() {
-        fetchNewMessages(<%= groupId %>, <%= channelId%>, "${pageContext.request.contextPath}");
+        //count the number of messages
+        let msg = document.getElementsByClassName("chat-message");
+        console.log("msg length: " + msg.length);
+        let msgCount = msg.length;
+
+        fetchNewMessages(<%= groupId %>, <%= channelId%>, "${pageContext.request.contextPath}", msgCount);
     }, 10000);
     $(document).ready(function () {
+
+
+
+        scrollChatToBottom();
+
+
         // Capture the form submission event
         $("#chat-form").submit(function (event) {
             event.preventDefault(); // Prevent the default form submission
@@ -180,8 +196,10 @@
                 data: $("#chat-form").serialize(), // Serialize the form data
                 success: function (response) {
                     console.log("AJAX Request Success: " + response);
+                    scrollChatToBottom();
                     // Fetch the new messages after the form submission
                     fetchNewMessages(<%= groupId %>, <%= channelId%>, "${pageContext.request.contextPath}");
+                    scrollChatToBottom();
                 },
                 error: function (error) {
                     console.log("AJAX Request Failed: " + response);
