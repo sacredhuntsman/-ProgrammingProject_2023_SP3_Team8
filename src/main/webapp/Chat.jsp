@@ -81,7 +81,7 @@
             </div>
 
         </div>
-        <div id="chat-box" class="p-2 pt-4 overflow-scroll">
+        <div id="chat-box" class="p-2 pt-4 overflow-y-scroll scrollbar1">
             <!-- messages get populated here via Javascript AJAX -->
         </div>
         <div id="chat-control" >
