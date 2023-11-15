@@ -81,49 +81,8 @@
             </div>
 
         </div>
-        <div id="chat-box" class="p-2 pt-4 overflow-y-scroll scrollbar1">
-            <% for (Message message : messages) {
-                String isSender = "receiver"; // Default value if "userName" is not found
-
-                String userName = (String) message.getSenderName();
-                // Retrieve "userName" from the session
-                String currentUser = (String) session.getAttribute("userName");
-                if (userName != null) {
-                    // Compare the session "userName" with the message sender name
-                    if (userName.equals(currentUser)) {
-                        isSender = "sender";
-                    }
-                }
-
-                //if the message text is blank, skip it
-                if (message.getMessageText().equals("")) {
-                    continue;
-                }                Date date = inputDateFormat.parse(message.getCreatedAt().toString());
-                // Create a SimpleDateFormat object for the desired output format
-                SimpleDateFormat outputDateFormat = new SimpleDateFormat("h:mma");
-                String formattedTimestamp = outputDateFormat.format(date);
-
-
-
-
-
-
-            %>
-            <div class="chat-message w-full flex my-6 <%= isSender %>">
-                <div class="sender-img text-center mx-4">
-                    <img src="https://chatterboxavatarstorage.blob.core.windows.net/blob/<%= userName %>" alt="sender image">
-                </div>
-                <div class="message-content">
-                    <div class="message-info flex mx-2">
-                        <div class="message-sender-name text-white mr-2"><%= userName %></div>
-                        <div class="message-stats text-slate-400 text-xs italic" style="line-height: 24px;"> @ <%= formattedTimestamp %></div>
-                    </div>
-                    <div class="message-text text-white mx-2">
-                        <%= message.getMessageText() %>
-                    </div>
-                </div>
-            </div>
-            <% } %>
+        <div id="chat-box" class="p-2 pt-4 overflow-scroll">
+            <!-- messages get populated here via Javascript AJAX -->
         </div>
         <div id="chat-control" >
             <form id="chat-form" action="send-message" method="post" style="display: flex;">

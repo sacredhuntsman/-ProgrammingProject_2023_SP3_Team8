@@ -30,6 +30,17 @@ http://localhost:8080/ProgrammingProject_Chatterbox_war_exploded
 
 This will run the main file for the project and load the login page on your local server.
 
+If using the included dockerfile, you can run the following commands to launch the server locally.
+
+```
+docker build -t my-tomcat-app:1.0 .
+```
+followed by
+```
+docker run -p 8080:8080 my-tomcat-app:1.0
+```
+The application will then be available at http://localhost:8080/
+
 ## Running the Project live from Azure webapps
 
 Navigate to the following URL in your browser:

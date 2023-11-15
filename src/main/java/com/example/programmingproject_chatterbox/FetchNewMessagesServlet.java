@@ -16,6 +16,7 @@ import jakarta.servlet.http.HttpSession;
 
 import Classes.ChatService;
 import Classes.Message;
+import Classes.SimpleStringEncryptor;
 
 @WebServlet(name = "fetchNewMessages", value = "/fetch-new-messages")
 public class FetchNewMessagesServlet extends HttpServlet {
@@ -74,7 +75,7 @@ public class FetchNewMessagesServlet extends HttpServlet {
             } else {
                 isFirstMessage = false;
             }
-
+            String messageText = message.getMessageText();
             String isSender = "receiver"; // Default value if "userName" is not found
             String userName = message.getSenderName(); // Use the current message's sender name
             // Retrieve "userName" from the session
@@ -86,10 +87,18 @@ public class FetchNewMessagesServlet extends HttpServlet {
                 }
             }
 
+            // Decrypt the messageText
+            try {
+                messageText = SimpleStringEncryptor.decrypt(messageText);
+            } catch (Exception e) {
+                throw new RuntimeException("Error encrypting messageText", e);
+            }
+
+
             try {
                 // Construct JSON object for each message
                 json.append("{");
-                json.append("\"message\": \"").append(message.getMessageText()).append("\",");
+                json.append("\"message\": \"").append(messageText).append("\",");
                 json.append("\"timestamp\": \"").append(message.getCreatedAt().toString()).append("\",");
                 json.append("\"isSender\": \"").append(isSender).append("\",");
                 json.append("\"senderName\": \"").append(message.getSenderName()).append("\"");

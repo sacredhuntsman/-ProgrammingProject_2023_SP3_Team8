@@ -9,6 +9,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.io.PrintWriter;
+import Classes.SimpleStringEncryptor;
 
 
 import java.io.IOException;
@@ -34,6 +35,14 @@ public class SendMessageServlet extends HttpServlet {
 		int senderId = database.getUserID((String) session.getAttribute("userName"));
 		int recipientId = 0;
 		String messageText = request.getParameter("messageText");
+
+		// Encrypt the messageText
+		try {
+			messageText = SimpleStringEncryptor.encrypt(messageText);
+		} catch (Exception e) {
+			throw new RuntimeException("Error encrypting messageText", e);
+		}
+
 
 		// Send the message
 		try {
