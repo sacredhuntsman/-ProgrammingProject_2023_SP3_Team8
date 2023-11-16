@@ -48,19 +48,22 @@
 
 
                     ResultSet resultSetGroupID = preparedStatementGroupID.executeQuery();
+
                     if (resultSetGroupID.next()) {
                         int privateGroupId = resultSetGroupID.getInt("PrivateGroupID");
 
+                        //remove duplicate
+
+
                         // Create a hyperlink with the username pointing to PrivateChat.jsp
                         String privateChatURL = "PrivateChat.jsp?privateGroupID=" + privateGroupId;
-                        output.println("<a href=\"" + privateChatURL + "\">" + resultSetUserName.getString("Username") + "</a>");
+                        output.println("<a href=\"" + privateChatURL + "\" class=\"text-white\">" + resultSetUserName.getString("Username") + "</a>");
                         output.println("<br>");
                         // Now you can use the privateGroupId as needed
                     } else {
-                        System.out.println("No PrivateGroupID found for the given userIDs");
+                        System.out.println("<span class=\"text-white\">No PrivateGroupID found for the given userIDs");
                     }
                     //System.out.println(resultSetGroupID.getInt("PrivateGroupID"));
-
                 }
             }
 

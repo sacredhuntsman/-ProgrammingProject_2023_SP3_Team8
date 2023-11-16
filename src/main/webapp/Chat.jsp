@@ -70,10 +70,6 @@
 <body>
 <div class="main-container flex items-stretch justify-stretch">
     <jsp:include page="sidebar.jsp" />
-    <div>
-        <!-- Include the group members' page within an iframe -->
-        <jsp:include page="ChannelMembers.jsp" />
-    </div>
     <div class="main-content flex flex-col grow p-8">
         <div id="chat-title" class="flex content-center items-end mx-2 ">
             <div id="chat-name" class="text-2xl"><%= chatTitle %></div>
@@ -82,75 +78,31 @@
             </div>
 
         </div>
-        <div id="chat-box" class="p-2 pt-4 overflow-scroll">
-            <% for (Message message : messages) {
-                String isSender = "receiver"; // Default value if "userName" is not found
-
-                String userName = (String) message.getSenderName();
-                // Retrieve "userName" from the session
-                String currentUser = (String) session.getAttribute("userName");
-                if (userName != null) {
-                    // Compare the session "userName" with the message sender name
-                    if (userName.equals(currentUser)) {
-                        isSender = "sender";
-                    }
-                }
-
-                //if the message text is blank, skip it
-                if (message.getMessageText().equals("")) {
-                    continue;
-                }                Date date = inputDateFormat.parse(message.getCreatedAt().toString());
-                // Create a SimpleDateFormat object for the desired output format
-                SimpleDateFormat outputDateFormat = new SimpleDateFormat("h:mma");
-                String formattedTimestamp = outputDateFormat.format(date);
-
-
-
-
-
-
-            %>
-            <div class="chat-message w-full flex my-6 <%= isSender %>">
-                <div class="sender-img text-center mx-4">
-                    <img src="https://chatterboxavatarstorage.blob.core.windows.net/blob/<%= userName %>" alt="sender image">
-                </div>
-                <div class="message-content">
-                    <div class="message-info flex mx-2">
-                        <div class="message-sender-name text-white mr-2"><%= userName %></div>
-                        <div class="message-stats text-slate-400 text-xs italic" style="line-height: 24px;"> @ <%= formattedTimestamp %></div>
-                    </div>
-                    <div class="message-text text-white mx-2">
-                        <%= message.getMessageText() %>
-                    </div>
-                </div>
-            </div>
-            <% } %>
+        <div id="chat-box" class="p-2 pt-4 overflow-y-scroll scrollbar1">
+            <!-- messages get populated here via Javascript AJAX -->
         </div>
         <div id="chat-control" >
-            <form id="chat-form" action="send-message" method="post">
+            <form id="chat-form" action="send-message" method="post" style="display: flex;">
                 <input type="hidden" name="groupId" value="<%= groupId %>">
                 <input type="hidden" name="channelId" value="<%= channelId %>">
-                <label>
-                    <input type="text" id="chat-msg-input" name="messageText" placeholder="Enter your message here...">
+                <label style="width: 100%">
+                    <input type="text" style="width: 100%" id="chat-msg-input" name="messageText" placeholder="Enter your message here..." style="width: 100%">
                 </label>
-                <input type="submit"  id="submit-chat-msg" value=">">
+                <input type="submit"  id="submit-chat-msg" value="send">
             </form>
         </div>
     </div>
-    <div>
-        <c:import url="inviteUser.jsp" />
-    </div>
+
     <div class="info-bar">
         <div class="m-4">
-            <h1 class="text-white text-xl mt-4 font-bold">Dev Links</h1>
-            <ul>
-                <li class="text-white mt-2"><a href="${pageContext.request.contextPath}/login">Login</a></li>
-                <li class="text-white mt-2"><a href="${pageContext.request.contextPath}/Profile.jsp">Profile</a></li>
-                <li class="text-white mt-2"><a href="${pageContext.request.contextPath}/Groups.jsp">Groups</a></li>
-                <li class="text-white mt-2">____________</li>
-                <li class="text-white mt-2"><a href="${pageContext.request.contextPath}/Channels.jsp?groupId=9">Example Channel - Test Group 2</a></li>
-                <li class="text-white mt-2"><a href="${pageContext.request.contextPath}/Chat.jsp?groupId=9&channelId=14">Example Chat - TG 2 CH 1</a></li>
+            <div class="text-2xl text-white">Group Members</div>
+            <ul class="flex flex-col list-disc pt-2 pl-4">
+                <jsp:include page="ChannelMembers.jsp" />
             </ul>
+        </div>
+        <div class="m-4">
+            <div class="text-2xl text-white">Invite User</div>
+            <c:import url="inviteUser.jsp" />
         </div>
     </div>
 </div>

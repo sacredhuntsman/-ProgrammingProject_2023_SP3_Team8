@@ -6,9 +6,8 @@
     <title>Invite User to Group</title>
 </head>
 <body>
-<h1>Invite User to Group</h1>
 <form action="invite" id="inviteForm" method="post">
-    <label>Enter User Name:</label>
+    <label class="text-white py-1">Serach for user and click there name in the list below:</label>
     <!-- Hidden input field to capture the groupId from the URL -->
     <input type="hidden" name="groupId" value="${param.groupId}">
     <c:if test="${not empty param.channelId}">

@@ -220,7 +220,11 @@ body, html {
     background-clip: content-box;
     background-color: #6b6b6b;
 }
-
+#inviteUserResults > div, #friendUserResults > div {
+    margin: 10px 0;
+    color: #fff;
+    text-decoration: underline;
+}
 @media only screen and (max-width: 600px) {
     .side-bar, .info-bar {
         display: none !important;

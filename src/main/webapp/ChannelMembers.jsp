@@ -12,7 +12,6 @@
     <title>Enrolled Members</title>
 </head>
 <body>
-<h1>Enrolled Members</h1>
 
 <%
     //Extract channel ID from the url
@@ -39,10 +38,7 @@
 
             // Need to move to the first record of the result set
             if (resultSetUserName.next()) {
-                output.println("Username: " + resultSetUserName.getString("Username") + "<br>");
-                // output.println("Name: " + resultSet.getString("name") + "<br>");
-                // Add other member details here based on your database structure
-                output.println("<br>");
+                output.println("<li class=\"text-sm text-white active py-1\">" + resultSetUserName.getString("Username") + "</li>");
             }
         }
 
