@@ -11,7 +11,11 @@
 
 <%
     // Extract channel ID from the URL
+
     String userId = (String) session.getAttribute("userId");
+    if (!(userId != null && !userId.isEmpty())) {
+        response.sendRedirect("login");
+    }
     int currentUser = Integer.parseInt(userId);
 
     Database database = new Database();
