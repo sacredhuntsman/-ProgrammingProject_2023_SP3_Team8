@@ -11,8 +11,7 @@
 
 <%
     // Get the current group ID and channel ID from the request parameters
-    String groupIdParam = request.getParameter("groupId");
-    String channelIdParam = request.getParameter("channelId");
+    String groupIdParam = request.getParameter("privateGroupID");
     String chatTitle = "Placeholder Chat Name";
 
     //used to make the date pretty
@@ -20,17 +19,15 @@
 
 
     int groupId = 0;
-    int channelId = 0;
+
     if (groupIdParam != null && !groupIdParam.isEmpty()) {
         groupId = Integer.parseInt(groupIdParam);
     }
-    if (channelIdParam != null && !channelIdParam.isEmpty()) {
-        channelId = Integer.parseInt(channelIdParam);
-    }
+
     // Get the list of messages for the selected channel from the ChatService class
     List<Message> messages = null;
     List<Group> groups = null;
-    List<Channel> channels = null;
+
 
     int userIdValue = 0;
     String userId = (String) session.getAttribute("userId");
@@ -43,19 +40,16 @@
     ChatService chatService = new ChatService();
     try {
 
-        groups = chatService.getGroups(userIdValue);
+        groups = chatService.getPrivateGroups(userIdValue);
 
         // Set default values for groupId and channelId if they are not set in the request.
         if (groupIdParam == null || groupIdParam.isEmpty()) {
             groupId = groups.get(0).getId();
         }
-        channels = chatService.getChannels(groupId);
-        if(channelIdParam == null || channelIdParam.isEmpty()) {
-            channelId = channels.get(0).getChannelId();
-        }
 
-        messages = chatService.getMessages(groupId, channelId);
-        chatTitle = chatService.getChatTitle(groupId, channelId);
+        messages = chatService.getPrivateMessages(groupId);
+        //chatTitle = chatService.getPrivateChatTitle(groupId);
+        chatTitle = "Private Chat";
 
     } catch (SQLException e) {
         throw new RuntimeException(e);
@@ -70,10 +64,7 @@
 <body>
 <div class="main-container flex items-stretch justify-stretch">
     <jsp:include page="sidebar.jsp" />
-    <div>
-        <!-- Include the group members' page within an iframe -->
-        <jsp:include page="ChannelMembers.jsp" />
-    </div>
+
     <div class="main-content flex flex-col grow p-8">
         <div id="chat-title" class="flex content-center items-end mx-2 ">
             <div id="chat-name" class="text-2xl"><%= chatTitle %></div>
@@ -127,19 +118,17 @@
             <% } %>
         </div>
         <div id="chat-control" >
-            <form id="chat-form" action="send-message" method="post">
+            <form id="privatechat-form" action="send-private-message" method="post">
                 <input type="hidden" name="groupId" value="<%= groupId %>">
-                <input type="hidden" name="channelId" value="<%= channelId %>">
+
                 <label>
-                    <input type="text" id="chat-msg-input" name="messageText" placeholder="Enter your message here...">
+                    <input type="text" id="chat-msg-input" name="privateMessageText" placeholder="Enter your message here...">
                 </label>
                 <input type="submit"  id="submit-chat-msg" value=">">
             </form>
         </div>
     </div>
-    <div>
-        <c:import url="inviteUser.jsp" />
-    </div>
+>
     <div class="info-bar">
         <div class="m-4">
             <h1 class="text-white text-xl mt-4 font-bold">Dev Links</h1>
@@ -157,35 +146,35 @@
 <script src="${pageContext.request.contextPath}/js/chat.js"></script>
 <script>
     // initial load of messages
-    fetchNewMessages(<%= groupId %>, <%= channelId%>, "${pageContext.request.contextPath}");
+    FetchPrivateMessages(<%= groupId %>, "${pageContext.request.contextPath}");
 
 
 
     // fetch new messages every 10 seconds
     setInterval(function() {
-        fetchNewMessages(<%= groupId %>, <%= channelId%>, "${pageContext.request.contextPath}");
+        FetchPrivateMessages(<%= groupId %>, "${pageContext.request.contextPath}");
     }, 10000);
     $(document).ready(function () {
         // Capture the form submission event
-        $("#chat-form").submit(function (event) {
+        $("#privatechat-form").submit(function (event) {
             event.preventDefault(); // Prevent the default form submission
 
             let context = "${pageContext.request.contextPath}";
             let _url = "";
             if (!(context == null || context === "undefined" || typeof context === "undefined" || context === "")) {
-                _url = context + "/send-message";
+                _url = context + "/send-private-message";
             } else {
-                _url = "/send-message";
+                _url = "/send-private-message";
             }
             // Handle the form submission with an AJAX request
             $.ajax({
                 type: "POST", // or "GET" depending on your requirements
                 url: _url,
-                data: $("#chat-form").serialize(), // Serialize the form data
+                data: $("#privatechat-form").serialize(), // Serialize the form data
                 success: function (response) {
                     console.log("AJAX Request Success: " + response);
                     // Fetch the new messages after the form submission
-                    fetchNewMessages(<%= groupId %>, <%= channelId%>, "${pageContext.request.contextPath}");
+                    FetchPrivateMessages(<%= groupId %>, "${pageContext.request.contextPath}");
                 },
                 error: function (error) {
                     console.log("AJAX Request Failed: " + response);

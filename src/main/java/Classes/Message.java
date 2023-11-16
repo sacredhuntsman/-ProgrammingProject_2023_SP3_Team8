@@ -28,7 +28,7 @@ public class Message {
 		this.messageText = messageText;
 		this.createdAt = createdAt;
 	}
-	
+
 	@Override
 	public String toString() {
 		return "Message{" +

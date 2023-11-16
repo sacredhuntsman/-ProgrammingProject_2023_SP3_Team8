@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html>
@@ -6,17 +7,20 @@
 </head>
 <body>
 <h1>Invite User to Group</h1>
-<form action = "invite" id="inviteForm" method="post">
+<form action="invite" id="inviteForm" method="post">
     <label>Enter User Name:</label>
     <!-- Hidden input field to capture the groupId from the URL -->
     <input type="hidden" name="groupId" value="${param.groupId}">
-    <input type="text" name="userName" oninput="searchUsernames(this)">
-    <div id="userResults" style="display: none;"></div>
+    <c:if test="${not empty param.channelId}">
+        <input type="hidden" name="channelID" value="${param.channelId}">
+    </c:if>
+    <input type="text" name="userName" oninput="searchInviteUsernames(this)">
+    <div id="inviteUserResults" style="display: none;"></div>
     <input type="submit" value="Invite User" style="display: none;">
 </form>
 
 <script>
-    function searchUsernames(input) {
+    function searchInviteUsernames(input) {
         let searchQuery = input.value;
         if (searchQuery.length >= 3) {
             fetch('searchUsernames?searchQuery=' + searchQuery, {
@@ -24,16 +28,16 @@
             })
                 .then(response => response.json())
                 .then(data => {
-                    displayUsernames(data);
+                    displayInviteUsernames(data);
                 });
         } else {
-            clearUsernames();
+            clearInviteUsernames();
         }
     }
 
-    function displayUsernames(usernames) {
-        const userResults = document.getElementById('userResults');
-        userResults.innerHTML = ''; // Clear previous entries
+    function displayInviteUsernames(usernames) {
+        const inviteUserResults = document.getElementById('inviteUserResults');
+        inviteUserResults.innerHTML = ''; // Clear previous entries
 
         usernames.forEach(username => {
             const userItem = document.createElement('div');
@@ -41,20 +45,20 @@
             userItem.onclick = function() {
                 // Set the selected username to the input field
                 document.querySelector('input[name="userName"]').value = username;
-                userResults.style.display = 'none'; // Hide the results
+                inviteUserResults.style.display = 'none'; // Hide the results
 
                 // Submit the form after the user is selected
                 document.getElementById('inviteForm').submit();
             };
-            userResults.appendChild(userItem);
+            inviteUserResults.appendChild(userItem);
         });
-        userResults.style.display = 'block'; // Show the results
+        inviteUserResults.style.display = 'block'; // Show the results
     }
 
-    function clearUsernames() {
-        const userResults = document.getElementById('userResults');
-        userResults.innerHTML = ''; // Clear the list
-        userResults.style.display = 'none'; // Hide the results
+    function clearInviteUsernames() {
+        const inviteUserResults = document.getElementById('inviteUserResults');
+        inviteUserResults.innerHTML = ''; // Clear the list
+        inviteUserResults.style.display = 'none'; // Hide the results
     }
 
     document.getElementById('inviteForm').addEventListener('submit', function(event) {

@@ -345,6 +345,7 @@ public class Database {
 	public void inviteUser(String userName, int groupId) {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
+
         try {
             int userID = getUserID(userName);
             if (userID == 0) {
@@ -393,5 +394,139 @@ public class Database {
             closeConnection(connection);
         }
     }
+
+    public void inviteUserToChannel(String userName, int channelID) {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        try {
+            int userID = getUserID(userName);
+            if (userID == 0) {
+                return;
+            }
+            connection = getConnection();
+
+            String query = "INSERT INTO ChannelMembershipDB (ChannelID, UserID) VALUES (?, ?)";
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1, channelID);
+            preparedStatement.setInt(2, userID);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // Handle the exception properly, e.g., throw a custom exception or log an error.
+        } finally {
+            closePreparedStatement(preparedStatement);
+            closeConnection(connection);
+        }
+    }
+
+
+    public void addFriend(String userName, String currentUser) {
+        Connection connection = null;
+
+        PreparedStatement preparedStatement = null;
+        try {
+
+            int userID = getUserID(userName);
+            int currentID = getUserID(currentUser);
+            if (userID == 0 || currentID == 0) {
+                return;
+            }
+            connection = getConnection();
+
+            String query = "INSERT INTO FriendDB (UserID, FriendUserID) VALUES (?, ?)";
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1, currentID);
+            preparedStatement.setInt(2, userID);
+            preparedStatement.executeUpdate();
+            preparedStatement.setInt(1, userID);
+            preparedStatement.setInt(2, currentID);
+            preparedStatement.executeUpdate();
+
+            //create a group based on the new friendship and add to the database
+
+            ChatService chatService = new ChatService();
+            int friendshipID = getFriendshipID(userName, currentUser);
+
+            Group group = null;
+            group = chatService.createPrivateGroup("FriendshipID:" + friendshipID, currentID, userID);
+
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // Handle the exception properly, e.g., throw a custom exception or log an error.
+        } finally {
+            closePreparedStatement(preparedStatement);
+            closeConnection(connection);
+        }
+    }
+    //get the friendshipid from the database
+    public int getFriendshipID(String userName, String currentUser) {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        int friendshipID = 0;
+        try {
+            int userID = getUserID(userName);
+            int currentID = getUserID(currentUser);
+            if (userID == 0 || currentID == 0) {
+                return 0;
+            }
+            connection = getConnection();
+
+            String query = "SELECT FriendshipID FROM FriendDB WHERE UserID = ? AND FriendUserID = ?";
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1, currentID);
+            preparedStatement.setInt(2, userID);
+            resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                friendshipID = resultSet.getInt("FriendshipID");
+            }
+            preparedStatement.setInt(1, userID);
+            preparedStatement.setInt(2, currentID);
+            resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                friendshipID = resultSet.getInt("FriendshipID");
+            }
+            return friendshipID;
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // Handle the exception properly, e.g., throw a custom exception or log an error.
+            return friendshipID;
+        } finally {
+            closeResultSet(resultSet);
+            closePreparedStatement(preparedStatement);
+            closeConnection(connection);
+        }
+    }
+
+    public int getPrivateGroupID(String groupName){
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        int groupId = 0;
+        try {
+            connection = getConnection();
+            String query = "SELECT PrivateGroupID FROM PrivateGroupDB WHERE PrivateGroupName = ?";
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, groupName);
+            resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                groupId = resultSet.getInt("PrivateGroupID");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // Handle the exception properly, e.g., throw a custom exception or log an error.
+        } finally {
+            closeResultSet(resultSet);
+            closePreparedStatement(preparedStatement);
+            closeConnection(connection);
+        }
+        return groupId;
+    }
+
 
 }

@@ -64,7 +64,41 @@ public class ChatMessageDao {
 			database.closeConnection(connection);
 		}
 	}
+	public List<Group> getPrivateGroups(int userID) throws SQLException {
+		Connection connection = database.getConnection();
+		try {
+			// Step 1: Execute the initial query to get group IDs associated with the userID
+			PreparedStatement initialQuery = connection.prepareStatement("SELECT PrivateGroupID FROM PrivateGroupMembershipDB WHERE PrivateGroupUserID = ?");
+			initialQuery.setInt(1, userID);
+			ResultSet initialResult = initialQuery.executeQuery();
+			List<Integer> groupIDs = new ArrayList<>();
 
+			while (initialResult.next()) {
+				groupIDs.add(initialResult.getInt("PrivateGroupID"));
+			}
+
+			// Step 2: Execute a query for each group ID to get group information
+			List<Group> groups = new ArrayList<>();
+			for (int groupID : groupIDs) {
+				PreparedStatement groupQuery = connection.prepareStatement("SELECT * FROM PrivateGroupDB WHERE PrivateGroupID = ?");
+				groupQuery.setInt(1, groupID);
+				ResultSet groupResult = groupQuery.executeQuery();
+
+				if (groupResult.next()) {
+					Group group = new Group();
+					group.setId(groupResult.getInt("PrivateGroupID"));
+					group.setName(groupResult.getString("PrivateGroupName"));
+					groups.add(group);
+				}
+			}
+
+			return groups;
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		} finally {
+			database.closeConnection(connection);
+		}
+	}
 	
 	public void saveMessage(Message message) throws SQLException {
 		Connection connection = database.getConnection();
@@ -186,6 +220,78 @@ public class ChatMessageDao {
 			statementCreator.setInt(1, database.getChannelID(channel.getChannelName()));
 			statementCreator.setInt(2, creatorID);
 			statementCreator.executeUpdate();
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		} finally {
+			database.closeConnection(connection);
+		}
+	}
+
+	public void savePrivateGroup(Group group, int creatorID, int userID) throws SQLException {
+		Connection connection = database.getConnection();
+		try {
+			PreparedStatement statement = connection.prepareStatement("INSERT INTO PrivateGroupDB (PrivateGroupName) VALUES (?)");
+			PreparedStatement statementCreator = connection.prepareStatement("INSERT INTO PrivateGroupMembershipDB (PrivateGroupID, PrivateGroupUserID, PrivateGroupUserID2) VALUES (?,?,?)");
+
+			statement.setString(1, group.getName());
+			statement.executeUpdate();
+			statementCreator.setInt(1, database.getPrivateGroupID(group.getName()));
+			statementCreator.setInt(2, creatorID);
+			statementCreator.setInt(3, userID);
+			statementCreator.executeUpdate();
+
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		} finally {
+			database.closeConnection(connection);
+		}
+	}
+
+	public List<Message> getPrivateMessages(int privateGroupId) throws SQLException {
+		Connection connection = database.getConnection();
+		ResultSet resultSet = null;
+		PreparedStatement statement = null;
+		try {
+			// SQL Join to return the username of the sender
+			statement = connection.prepareStatement("SELECT u.Username, c.* FROM PrivateChatMessageDB AS c JOIN UserDB AS u ON u.UserId = c.senderId WHERE PrivateGroupID = ?");
+			//statement = connection.prepareStatement("SELECT * FROM ChatMessageDB WHERE groupID = ? AND ChannelID = ?");
+			statement.setInt(1, privateGroupId);
+			resultSet = statement.executeQuery();
+			List<Message> messages = new ArrayList<>();
+			while (resultSet.next()) {
+				Message message = new Message();
+				message.setId(resultSet.getInt("PrivateMessageID"));
+				message.setGroupId(resultSet.getInt("PrivateGroupID"));
+				message.setSenderId(resultSet.getInt("senderID"));
+				message.setSenderName(resultSet.getString("Username"));
+				message.setMessageText(resultSet.getString("messageText"));
+				message.setCreatedAt(resultSet.getTimestamp("createdDate"));
+				messages.add(message);
+			}
+			return messages;
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		} finally {
+			if (resultSet != null) {
+				resultSet.close();
+			}
+			if (statement != null) {
+				statement.close();
+			}
+			database.closeConnection(connection);
+		}
+	}
+
+	public void savePrivateMessage(PrivateMessage message) throws SQLException {
+		Connection connection = database.getConnection();
+		try {
+
+			PreparedStatement statement = connection.prepareStatement("INSERT INTO PrivateChatMessageDB (PrivateGroupID, senderID, messageText) VALUES (?, ?, ?)");
+			statement.setInt(1, message.getGroupId());
+			statement.setInt(2, message.getSenderId());
+			statement.setString(3, message.getMessageText());
+			//statement.setTimestamp(5, new Timestamp(message.getCreatedAt().getTimestamp()));
+			statement.executeUpdate();
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		} finally {

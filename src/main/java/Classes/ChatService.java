@@ -69,4 +69,29 @@ public class ChatService {
 		chatMessageDao.saveChannel(channel, creatorID);
 		return channel;
 	}
+
+    public Group createPrivateGroup(String groupName, int creatorID, int userID) throws SQLException {
+		Group group = new Group();
+		group.setName(groupName);
+
+		chatMessageDao.savePrivateGroup(group, creatorID, userID);
+		return group;
+	}
+
+	public List<Message> getPrivateMessages(int groupId) throws SQLException {
+		return chatMessageDao.getPrivateMessages(groupId);
+
+	}
+
+	public List<Group> getPrivateGroups(int userIdValue) throws SQLException {
+		return chatMessageDao.getPrivateGroups(userIdValue);
+	}
+
+	public void sendPrivateMessage(int groupId, int senderId, String messageText) throws SQLException {
+		PrivateMessage message = new PrivateMessage();
+		message.setGroupId(groupId);
+		message.setSenderId(senderId);
+		message.setMessageText(messageText);
+		chatMessageDao.savePrivateMessage(message);
+	}
 }

@@ -28,7 +28,7 @@
 
 <html>
 <head>
-    <title>User Profile</title>
+    <title>Channels</title>
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/dashboard.css">
     <jsp:include page="head.jsp" />
 </head>

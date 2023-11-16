@@ -18,12 +18,21 @@ public class InviteUserServlet extends HttpServlet {
 		// Invite user functionality
 		int groupId = Integer.parseInt(request.getParameter("groupId"));
 		String userName = request.getParameter("userName");
-		Database database = new Database();
-		database.inviteUser(userName, groupId);
+		if (request.getParameter("channelID") != null) {
+			int channelID = Integer.parseInt(request.getParameter("channelID"));
+			// Assuming you have a method in your Database class to add a user to a channel
+			Database database = new Database();
+			database.inviteUserToChannel(userName, channelID);
+			response.sendRedirect("Chat.jsp?groupId=" + groupId + "&channelId=" + channelID);
+		} else {
+			Database database = new Database();
+			database.inviteUser(userName, groupId);
+			response.sendRedirect("Channels.jsp?groupId=" + groupId);
+		}
 
 		// Redirect or display success message
 
-		response.sendRedirect("Channels.jsp?groupId=" + groupId);
+
 	}
 }
 

@@ -2,21 +2,20 @@ package com.example.programmingproject_chatterbox;
 
 import Classes.ChatService;
 import Classes.Database;
+import Classes.SimpleStringEncryptor;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import java.io.PrintWriter;
-import Classes.SimpleStringEncryptor;
-
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.SQLException;
 
-@WebServlet(name = "SendMessageServlet", value = "/send-message")
-public class SendMessageServlet extends HttpServlet {
+@WebServlet(name = "SendPrivateMessageServlet", value = "/send-private-message")
+public class SendPrivateMessageServlet extends HttpServlet {
 	
 	private ChatService chatService;
 	
@@ -28,14 +27,12 @@ public class SendMessageServlet extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// Get the groupId, senderId, recipientId, and messageText from the request
-;
 		HttpSession session = request.getSession();
 		Database database = new Database();
 		int groupId = Integer.parseInt(request.getParameter("groupId"));
-		int channelId = Integer.parseInt(request.getParameter("channelId"));
 		int senderId = database.getUserID((String) session.getAttribute("userName"));
 		int recipientId = 0;
-		String messageText = request.getParameter("messageText");
+		String messageText = request.getParameter("privateMessageText");
 
 		// Encrypt the messageText
 		try {
@@ -47,7 +44,7 @@ public class SendMessageServlet extends HttpServlet {
 
 		// Send the message
 		try {
-			chatService.sendMessage(groupId, channelId, senderId, recipientId, messageText);
+			chatService.sendPrivateMessage(groupId, senderId, messageText);
 
 			// Send a success response
 			response.setContentType("application/json");

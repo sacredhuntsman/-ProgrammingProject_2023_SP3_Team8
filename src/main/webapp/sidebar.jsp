@@ -148,11 +148,15 @@
                 <i class="fas fa-plus"></i>
             </div>
         </div>
+        <div>
+            <!-- Include the add friend -->
+            <jsp:include page="AddContact.jsp" />
+        </div>
         <div id="contacts-list" class="mt-4">
-            <ul class="flex flex-col">
-                <li class="text-sm">My Contact</li>
 
-            </ul>
+                <!-- Include the add friend -->
+                <jsp:include page="Contacts.jsp" />
+
         </div>
     </div>
 </div>

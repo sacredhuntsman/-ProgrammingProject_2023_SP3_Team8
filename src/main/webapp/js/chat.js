@@ -38,6 +38,46 @@ function fetchNewMessages(groupId, channelId, urlPath, existingMessagesCount) {
 
 }
 
+function FetchPrivateMessages(groupId, urlPath) {
+    let _url = "";
+    let msgs = [];
+    console.log(urlPath);
+    console.log(urlPath == null || urlPath === "undefined" || typeof urlPath === "undefined" || urlPath === "");
+    if (!(urlPath == null || urlPath === "undefined" || typeof urlPath === "undefined" || urlPath === "")) {
+        _url = urlPath + "/fetch-new-messages";
+    } else {
+        _url = "/fetch-new-messages";
+    }
+    console.log(_url);
+    console.log("Fetching new messages...");
+    $.ajax({
+        url: _url,
+        method: "GET",
+        data: {
+            groupId: groupId,
+        },
+        success: function (data) {
+            console.log(data);
+            //clear existing messages
+            $('#privatechat-box').html("");
+            for(let i= 0; i < data.length; i++) {
+                $('#privatechat-box').append(formatMessage(data[i].isSender, data[i].senderName, data[i].timestamp, data[i].message));
+            }
+            if(existingMessagesCount < data.length) {
+                console.log("Scrolling to bottom as new msg found...")
+                scrollChatToBottom();
+            }
+
+
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            console.log("AJAX Request Error: " + errorThrown);
+        }
+    });
+
+
+}
+
 function formatMessage(isSender, userName, formattedTimestamp, messageText) {
 
     // Input date string
