@@ -1,25 +1,21 @@
 package com.example.programmingproject_chatterbox;
 
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.sql.SQLException;
-import java.text.SimpleDateFormat;
-import java.util.List;
-import java.util.Date;
-
-import jakarta.servlet.ServletException;
+import Classes.ChatService;
+import Classes.Message;
+import Classes.SimpleStringEncryptor;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
-import Classes.ChatService;
-import Classes.Message;
-import Classes.SimpleStringEncryptor;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.sql.SQLException;
+import java.util.List;
 
-@WebServlet(name = "fetchNewMessages", value = "/fetch-new-messages")
-public class FetchNewMessagesServlet extends HttpServlet {
+@WebServlet(name = "fetchPrivateMessages", value = "/fetch-private-messages")
+public class FetchPrivateMessagesServlet extends HttpServlet {
     private String message;
     //private SimpleDateFormat inputDateFormat = new SimpleDateFormat("h:mma");
 
@@ -31,15 +27,13 @@ public class FetchNewMessagesServlet extends HttpServlet {
         response.setContentType("text/html");
         HttpSession session = request.getSession();
         String groupIdParam = request.getParameter("groupId");
-        String channelIdParam = request.getParameter("channelId");
         int groupId = Integer.parseInt(groupIdParam);
-        int channelId = Integer.parseInt(channelIdParam);
 
         // For demonstration purposes, let's assume you have a List of new messages.
-        List<Message> newMessages = fetchNewMessages(groupId, channelId);
+        List<Message> privateMessages = fetchPrivateMessages(groupId);
 
         // Convert newMessages to JSON
-        String jsonResponse = convertMessagesToJson(newMessages, session);
+        String jsonResponse = convertMessagesToJson(privateMessages, session);
 
         // Set response content type and write JSON response
         response.setContentType("application/json");
@@ -48,10 +42,10 @@ public class FetchNewMessagesServlet extends HttpServlet {
         out.flush();
     }
 
-    private List<Message> fetchNewMessages(int groupId, int channelId) {
+    private List<Message> fetchPrivateMessages(int groupId) {
         ChatService chatService = new ChatService();
         try {
-            List<Message> messages = chatService.getMessages(groupId, channelId);
+            List<Message> messages = chatService.getPrivateMessages(groupId);
             return messages;
         } catch (SQLException e) {
             throw new RuntimeException(e);

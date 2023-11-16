@@ -38,15 +38,15 @@ function fetchNewMessages(groupId, channelId, urlPath, existingMessagesCount) {
 
 }
 
-function FetchPrivateMessages(groupId, urlPath) {
+function FetchPrivateMessages(groupId, urlPath, existingMessagesCount) {
     let _url = "";
     let msgs = [];
     console.log(urlPath);
     console.log(urlPath == null || urlPath === "undefined" || typeof urlPath === "undefined" || urlPath === "");
     if (!(urlPath == null || urlPath === "undefined" || typeof urlPath === "undefined" || urlPath === "")) {
-        _url = urlPath + "/fetch-new-messages";
+        _url = urlPath + "/fetch-private-messages";
     } else {
-        _url = "/fetch-new-messages";
+        _url = "/fetch-private-messages";
     }
     console.log(_url);
     console.log("Fetching new messages...");
@@ -59,9 +59,12 @@ function FetchPrivateMessages(groupId, urlPath) {
         success: function (data) {
             console.log(data);
             //clear existing messages
-            $('#privatechat-box').html("");
+            $('#chat-box').html("");
             for(let i= 0; i < data.length; i++) {
-                $('#privatechat-box').append(formatMessage(data[i].isSender, data[i].senderName, data[i].timestamp, data[i].message));
+                if(data[i].messageText !== "") {
+                    $('#chat-box').append(formatMessage(data[i].isSender, data[i].senderName, data[i].timestamp, data[i].message));
+
+                }
             }
             if(existingMessagesCount < data.length) {
                 console.log("Scrolling to bottom as new msg found...")
