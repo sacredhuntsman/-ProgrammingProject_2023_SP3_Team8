@@ -66,6 +66,26 @@
             channelId = channels.get(0).getChannelId();
         }
 
+        //remove duplicate groups
+        for(int i = 0; i < groups.size(); i++) {
+            for(int j = i + 1; j < groups.size(); j++) {
+                if(groups.get(i).getId() == groups.get(j).getId()) {
+                    groups.remove(j);
+                    j--;
+                }
+            }
+        }
+
+        //remove duplicate channels
+        for(int i = 0; i < channels.size(); i++) {
+            for(int j = i + 1; j < channels.size(); j++) {
+                if(channels.get(i).getChannelId() == channels.get(j).getChannelId()) {
+                    channels.remove(j);
+                    j--;
+                }
+            }
+        }
+
     } catch (SQLException e) {
         throw new RuntimeException(e);
     }

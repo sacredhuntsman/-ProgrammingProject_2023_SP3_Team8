@@ -6,9 +6,9 @@
     <title>Find a friend</title>
 </head>
 <body>
-<h1>Find a friend</h1>
+<h1 class="text-white">Find a friend</h1>
 <form action="add-contact" id="addFriendForm" method="post">
-    <label>Enter User Name:</label>
+    <label class="text-white">Enter User Name:</label>
     <!-- Hidden input field to capture the groupId from the URL -->
 
     <input type="text" name="UserName" oninput="searchFriendUsernames(this)">

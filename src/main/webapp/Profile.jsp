@@ -65,7 +65,7 @@
             <div class="btn-div">Save Changes</div>
         </div>
     </div>
-    <div class="info-bar">
+    <div class="info-bar" style="display: none;">
         <div class="m-4">
             <h1 class="text-white text-xl mt-4 font-bold">Dev Links</h1>
             <ul>
