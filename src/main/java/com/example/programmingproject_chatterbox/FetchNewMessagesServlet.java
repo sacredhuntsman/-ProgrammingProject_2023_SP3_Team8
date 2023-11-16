@@ -91,7 +91,12 @@ public class FetchNewMessagesServlet extends HttpServlet {
             try {
                 messageText = SimpleStringEncryptor.decrypt(messageText);
             } catch (Exception e) {
-                throw new RuntimeException("Error encrypting messageText", e);
+                messageText= "Error decrypting message";
+            }
+
+            // if message is blank, skip it
+            if (messageText.isEmpty()) {
+                continue;
             }
 
 
