@@ -145,6 +145,11 @@
 </div>
 <script src="${pageContext.request.contextPath}/js/chat.js"></script>
 <script>
+    function scrollChatToBottom() {
+        let chatBox = document.getElementById('chat-box');
+        chatBox.scrollTop = chatBox.scrollHeight;
+    }
+
     // initial load of messages
     FetchPrivateMessages(<%= groupId %>, "${pageContext.request.contextPath}");
 
@@ -152,29 +157,43 @@
 
     // fetch new messages every 10 seconds
     setInterval(function() {
-        FetchPrivateMessages(<%= groupId %>, "${pageContext.request.contextPath}");
+        //count the number of messages
+        let msg = document.getElementsByClassName("chat-message");
+        console.log("msg length: " + msg.length);
+        let msgCount = msg.length;
+
+        FetchPrivateMessages(<%= groupId %>, "${pageContext.request.contextPath}", msgCount);
     }, 10000);
     $(document).ready(function () {
+
+
+
+        scrollChatToBottom();
+
+
         // Capture the form submission event
-        $("#privatechat-form").submit(function (event) {
+        $("#chat-form").submit(function (event) {
             event.preventDefault(); // Prevent the default form submission
 
             let context = "${pageContext.request.contextPath}";
             let _url = "";
             if (!(context == null || context === "undefined" || typeof context === "undefined" || context === "")) {
-                _url = context + "/send-private-message";
+                _url = context + "/send-message";
             } else {
-                _url = "/send-private-message";
+                _url = "/send-message";
             }
             // Handle the form submission with an AJAX request
             $.ajax({
                 type: "POST", // or "GET" depending on your requirements
                 url: _url,
-                data: $("#privatechat-form").serialize(), // Serialize the form data
+                data: $("#chat-form").serialize(), // Serialize the form data
                 success: function (response) {
                     console.log("AJAX Request Success: " + response);
+                    scrollChatToBottom();
                     // Fetch the new messages after the form submission
-                    FetchPrivateMessages(<%= groupId %>, "${pageContext.request.contextPath}");
+                    let msg = document.getElementsByClassName("chat-message");
+                    FetchPrivateMessages(<%= groupId %>, "${pageContext.request.contextPath}", msg.length);
+                    scrollChatToBottom();
                 },
                 error: function (error) {
                     console.log("AJAX Request Failed: " + response);

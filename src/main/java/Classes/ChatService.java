@@ -51,7 +51,6 @@ public class ChatService {
 	
 	public List<Message> getMessages(int groupId, int channelId) throws SQLException {
 			return chatMessageDao.getMessages(groupId, channelId);
-		
 	}
 
 	public String getChatTitle(int groupId, int channelId) throws SQLException {
@@ -80,7 +79,6 @@ public class ChatService {
 
 	public List<Message> getPrivateMessages(int groupId) throws SQLException {
 		return chatMessageDao.getPrivateMessages(groupId);
-
 	}
 
 	public List<Group> getPrivateGroups(int userIdValue) throws SQLException {
