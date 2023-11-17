@@ -22,11 +22,9 @@ public class ForgotPasswordServlet extends HttpServlet {
 			throws ServletException, IOException {
 		String email = request.getParameter("email");
 		Database database = new Database();
-		// Check if username is taken
 		if (database.doesEmailExist(email)) {
 			String fromEmail = "chatterbox-reset@outlook.com";
 			String password = "Chatterbox2023";
-			//String toEmail = "s3904714@student.rmit.edu.au";
 
 			// Set up the properties for the mail server
 			Properties properties = new Properties();
@@ -55,12 +53,12 @@ public class ForgotPasswordServlet extends HttpServlet {
 				// Set Subject: header field
 				EmailMessage.setSubject("Password Reset");
 
-				// Generate a unique token for password reset (you can implement your logic here)
+				// Generate a unique token for password reset
 				//String resetToken = generateResetToken();
 				String resetToken = request.getSession().getId();
 
 				// Set the actual message
-				EmailMessage.setText("Click the following link to reset your password: https://chatter-box.azurewebsites.net/ResetPassword?token=" + resetToken);
+				EmailMessage.setText("Click the following link to reset your password: https://chatter-box.azurewebsites.net/resetpassword?token=" + resetToken);
 
 				// Send message
 				Transport.send(EmailMessage);

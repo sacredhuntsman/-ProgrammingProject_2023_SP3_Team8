@@ -35,14 +35,14 @@ public class ResetPasswordServlet extends HttpServlet {
 		// Validate that newPassword and confirmPassword match
 		if (!newPassword.equals(confirmPassword)) {
 			// Passwords don't match, display an error message
-			response.sendRedirect("https://chatter-box.azurewebsites.net/ResetPassword?token=" + token + "&error=passwordMismatch");
+			response.sendRedirect("https://chatter-box.azurewebsites.net/resetpassword?token=" + token + "&error=passwordMismatch");
 			return;
 		}
 
 		// Validate the token (you should implement a more secure and sophisticated validation)
 		if (!isValidToken) {
 			// Invalid token, display an error message
-			response.sendRedirect("https://chatter-box.azurewebsites.net/ResetPassword?token=" + token + "&error=invalidToken");
+			response.sendRedirect("https://chatter-box.azurewebsites.net/resetpassword?token=" + token + "&error=invalidToken");
 			return;
 		}
 
