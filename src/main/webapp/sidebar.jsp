@@ -116,12 +116,17 @@
         </div>
 
     </div>
-    <div id="groups-rooms" class="flex flex-col  rounded-md m-4 p-2">
+    <div id="groups-rooms" class="flex flex-col rounded-md m-4 p-2">
         <div class="title flex items-center">
             <div class="section-title text-xl">Your Groups</div>
-            <div class="add-button flex content-center justify-center items-center mx-2">
+            <div class="add-button flex content-center justify-center items-center mx-2" id="addGroupButton">
                 <i class="fas fa-plus"></i>
             </div>
+        </div>
+        <div id="addGroupContainer" style="display: none;">
+            <!-- Include the add group -->
+            <jsp:include page="AddGroup.jsp" />
+            <button id="cancelAddChannel" class="mt-2">Cancel</button>
         </div>
         <div id="groups-list" class="mt-4">
             <% String error = request.getParameter("error");
@@ -132,7 +137,9 @@
                 <% if(!groups.isEmpty()) { %>
                 <% for (Group group : groups) { %>
                 <% if(groupId == group.getId()) activeGroup = group.getName();%>
-                <li id="group-<%= group.getId()%>" class="text-sm text-white <%= groupId == group.getId() ? "active" : "" %>"><a href="Channels.jsp?groupId=<%= group.getId() %>"><%= group.getName() %></a></li>
+                <li id="group-<%= group.getId()%>" class="text-sm text-white <%= groupId == group.getId() ? "active" : "" %>">
+                    <a href="Channels.jsp?groupId=<%= group.getId() %>"><%= group.getName() %></a>
+                </li>
                 <% } %>
                 <% } else { %>
                 <li class="text-sm text-white">You are not part of any groups.</li>
@@ -144,9 +151,14 @@
     <div id="chat-rooms" class="flex flex-col  rounded-md m-4 p-2">
         <div class="title flex items-center">
             <div class="section-title text-xl"><%= activeGroup%> Rooms</div>
-            <div class="add-button flex content-center justify-center items-center mx-2">
+            <div class="add-button flex content-center justify-center items-center mx-2" id="addChannelButton">
                 <i class="fas fa-plus"></i>
             </div>
+        </div>
+        <div id="addChannelContainer" style="display: none;">
+            <!-- Include the add group -->
+<%--            <jsp:include page="AddChannel.jsp" />--%>
+            <button id="cancelAddGroup" class="mt-2">Cancel</button>
         </div>
         <div id="chat-room-list" class="mt-4">
             <ul class="flex flex-col">
@@ -164,13 +176,14 @@
     <div id="contacts" class="flex flex-col  rounded-md m-4 p-2">
         <div class="title flex items-center">
             <div class="section-title text-xl">Contacts</div>
-            <div class="add-button flex content-center justify-center items-center mx-2">
+            <div class="add-button flex content-center justify-center items-center mx-2" id="addContactButton">
                 <i class="fas fa-plus"></i>
             </div>
         </div>
-        <div>
-            <!-- Include the add friend -->
+        <div id="addContactContainer" style="display: none;">
+            <!-- Include the add group -->
             <jsp:include page="AddContact.jsp" />
+            <button id="cancelAddContact" class="mt-2">Cancel</button>
         </div>
         <div id="contacts-list" class="mt-4">
 
@@ -180,6 +193,9 @@
         </div>
     </div>
 </div>
+
+
+
 <!-- Mobile Side Bar -->
 <div class="mobile-container">
     <div id="expand-icon-menu" class="flex content-center justify-center items-center m-3 shrink-0">
@@ -264,10 +280,15 @@
                     <i class="fas fa-plus"></i>
                 </div>
             </div>
+            <div>
+                <!-- Include the add friend -->
+                <jsp:include page="AddContact.jsp" />
+            </div>
             <div id="contacts-list-m" class="mt-4">
-                <ul class="flex flex-col">
-                    <li class="text-sm">My Contact</li>
-                </ul>
+
+                <!-- Include the add friend -->
+                <jsp:include page="Contacts.jsp" />
+
             </div>
         </div>
     </div>
@@ -280,5 +301,31 @@
          $('#collapse-icon-menu').click(function() {
               $('.side-bar-m').css("left", "-100%");
          });
+    });
+</script>
+<script>
+    $(document).ready(function() {
+        $('#addGroupButton').click(function() {
+            $('#addGroupContainer').toggle();
+        });
+        $('#cancelAddGroup').click(function() {
+            $('#addGroupContainer').hide();
+        });
+        $('#addChannelButton').click(function() {
+            $('#addChannelContainer').toggle();
+            $('#addGroupContainer').hide(); // Hide Add Group form when showing Add Channel form
+        });
+
+        $('#cancelAddChannel').click(function() {
+            $('#addChannelContainer').hide();
+        })
+        $('#addContactButton').click(function() {
+            $('#addContactContainer').toggle();
+            $('#addGroupContainer').hide(); // Hide Add Group form when showing Add Channel form
+        });
+
+        $('#cancelAddContact').click(function() {
+            $('#addContactContainer').hide();
+        })
     });
 </script>

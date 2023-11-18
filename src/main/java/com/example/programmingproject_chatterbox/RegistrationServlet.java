@@ -5,13 +5,17 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.sql.Connection;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import Classes.User;
 import Classes.UserData;
@@ -21,10 +25,7 @@ import Classes.FileStore;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.Part;
+import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.MultipartConfig;
 
 import static Classes.PasswordValidations.hashPassword;
@@ -52,6 +53,23 @@ public class RegistrationServlet extends HttpServlet {
 		String email = request.getParameter("email");
 		String ageString = request.getParameter("age");
 
+		// Retain the original form data as attributes
+		HttpSession registrationSession = request.getSession();
+		registrationSession.setAttribute("username", username);
+		registrationSession.setAttribute("firstName", firstName);
+		registrationSession.setAttribute("lastName", lastName);
+		registrationSession.setAttribute("email", email);
+		registrationSession.setAttribute("age", ageString);
+
+
+		//error null variable
+		String usernameError = "";
+		String emailError = "";
+		String ageError = "";
+		String passwordError = "";
+
+		List<String> errors = new ArrayList<>();
+
 		// Parse the date from the POST request
 		String birthdateString = request.getParameter("age");
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
@@ -78,19 +96,32 @@ public class RegistrationServlet extends HttpServlet {
 		String confirmPassword = request.getParameter("confirmPassword");
 		Part imagePart = request.getPart("imageUpload");
 		InputStream inputStream = imagePart.getInputStream();
+		if (imagePart.getSize() == 0) {
+			// No file uploaded, use a default image
+			inputStream = getServletContext().getResourceAsStream("/images/defaultAvatar.png");
+		}
+
 
 		// System.out.println("------password = -------" + password);
 		// System.out.println("------confirmpassword = -------" + confirmPassword);
 		// Check if passwords match
+
+
 		if (!password.equals(confirmPassword)) {
 			// Passwords do not match, handle the error (e.g., display an error message)
-			response.sendRedirect("Registration.jsp?error=Passwords do not match");
-			return;
+			//response.sendRedirect("Registration.jsp?error=Passwords do not match");
+			//return;
+			passwordError = "Passwords do not match";
+			errors.add(passwordError);
+
 		}
 
 		if (age < 13) {
-			response.sendRedirect("Registration.jsp?error=You must be 13 or older to register");
-			return;
+			//response.sendRedirect("Registration.jsp?error=You must be 13 or older to register");
+			//return;
+			ageError = "You must be 13 or older to register";
+			errors.add(ageError);
+
 		}
 
 		// Check if the username or email is already taken
@@ -99,13 +130,31 @@ public class RegistrationServlet extends HttpServlet {
 		// Check if username is taken
 		if (database.doesUsernameExist(username)) {
 			// Username is already taken, handle the error
-			response.sendRedirect("Registration.jsp?error=Username already taken");
-			return;
+			//response.sendRedirect("Registration.jsp?error=Username already taken");
+			//return;
+			usernameError = "Username already taken";
+			errors.add(usernameError);
 		}
 		// Check if email is taken
 		if (database.doesEmailExist(email)) {
 			// Email is already taken, handle the error
-			response.sendRedirect("Registration.jsp?error=Email already taken");
+			//response.sendRedirect("Registration.jsp?error=Email already taken");
+			//return;
+			emailError = "Email already taken";
+			errors.add(emailError);
+		}
+		if (!errors.isEmpty()) {
+			StringBuilder errorParams = new StringBuilder("?");
+			for (String error : errors) {
+				errorParams.append("error=").append(URLEncoder.encode(error, StandardCharsets.UTF_8)).append("&");
+			}
+
+			errorParams.append("usernameError=").append(usernameError)
+					.append("&emailError=").append(emailError)
+					.append("&ageError=").append(ageError)
+					.append("&passwordError=").append(passwordError);
+
+			response.sendRedirect("Registration.jsp" + errorParams.toString());
 			return;
 		}
 
@@ -139,24 +188,7 @@ public class RegistrationServlet extends HttpServlet {
 		System.out.println(users.toString());
 		response.sendRedirect("Login.jsp"); // Replace with your success page URL
 
-		// To remove once DB confirmed working
-		/*
-		 * // Create a new User object. This needs to be sent to a database.
-		 * // For now it goes to an array list for testing.
-		 * User newUser = new User();
-		 * newUser.setUsername(username);
-		 * newUser.setFirstName(firstName);
-		 * newUser.setLastName(lastName);
-		 * newUser.setEmail(email);
-		 * newUser.setPassword(hashPassword(password));
-		 *
-		 * // Add the new user to the ArrayList using UserDataAccess
-		 * UserData.addUser(newUser);
-		 *
-		 * // Redirect to a success page or login page after registration
-		 * System.out.println(users.toString());
-		 * response.sendRedirect("Login.jsp"); // Replace with your success page URL
-		 */
+
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)

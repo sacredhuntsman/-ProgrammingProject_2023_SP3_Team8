@@ -36,34 +36,39 @@
     <jsp:include page="sidebar.jsp" />
     <div class="main-content flex flex-col grow p-8">
         <div id="chat-title" class="flex content-center items-end mx-2 ">
-            <div id="chat-name" class="text-2xl">Edit Profile</div>
+            <div id="chat-name" class="text-2xl">Profile</div>
         </div>
         <div id="chat-control" class="mx-2">
             <img src="https://chatterboxavatarstorage.blob.core.windows.net/blob/${sessionScope.userName}" alt="Avatar" style="width:200px">
             <form action="updateAvatar" method="post" enctype="multipart/form-data">
+                <div class="text-1xl">Update Image</div>
                 <input type="file" name="avatarImage" accept="image/*">
                 <input type="submit" value="Upload">
                 <input type="hidden" name="username" value="${sessionScope.userName}">
             </form>
-            <div class="text-white text-xl mt-4 font-bold">User info</div>
-            <div class="text-white mt-2">Username</div>
-            <label>
-                <input type="text" class="p-1 w-50" value="${sessionScope.userName}">
-            </label>
-            <div class="text-white mt-2">First Name</div>
-            <label>
-                <input type="text" class="p-1 w-50" value="${sessionScope.firstName}">
-            </label>
-            <div class="text-white mt-2">Last Name</div>
-            <label>
-                <input type="text" class="p-1 w-50" value="${sessionScope.lastName}">
-            </label>
-            <div class="text-white mt-2">Email</div>
-            <label>
-                <input type="text" class="p-1 w-50" value="${sessionScope.email}">
-            </label>
-            <div class="btn-div">Save Changes</div>
+            <form action="updateProfile" method="post">
+
+                <div class="text-white text-xl mt-4 font-bold">User info</div>
+                <div class="text-white mt-2">Username</div>
+                <label>
+                    <input type="text" name="username" value="${sessionScope.userName}" readonly>
+                </label>
+                <div class="text-white mt-2">First Name</div>
+                <label>
+                    <input type="text" name="firstName" class="p-1 w-50" value="${sessionScope.firstName}">
+                </label>
+                <div class="text-white mt-2">Last Name</div>
+                <label>
+                    <input type="text" name="lastName" class="p-1 w-50" value="${sessionScope.lastName}">
+                </label>
+                <div class="text-white mt-2">Email</div>
+                <label>
+                    <input type="text" name="email" class="p-1 w-50" value="${sessionScope.email}">
+                </label>
+                <input type="submit" class="btn-div">
+            </form>
         </div>
+
     </div>
     <div class="info-bar" style="display: none;">
         <div class="m-4">

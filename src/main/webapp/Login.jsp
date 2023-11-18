@@ -16,6 +16,10 @@
     if (error != null && !error.isEmpty()) { %>
     <p style="color: red;"><%= error %></p>
     <% } %>
+    <% String success = request.getParameter("success");
+        if (success != null && !success.isEmpty()) { %>
+    <p style="color: lightgreen;"><%= success %></p>
+    <% } %>
     <div class="inner-container">
 
         <form action="login" method="post">

@@ -19,6 +19,7 @@
         <% } %>
         <%
             String token = request.getParameter("token");
+            String username = request.getParameter("username");
         %>
 
 
@@ -28,6 +29,7 @@
 
             <label for="confirmPassword">Confirm Password:</label>
             <input type="password" id="confirmPassword" name="confirmPassword" required>
+            <input type="hidden" name="username" value="<%= username %>">
 
             <input type="hidden" name="token" value="<%= token %>">
 

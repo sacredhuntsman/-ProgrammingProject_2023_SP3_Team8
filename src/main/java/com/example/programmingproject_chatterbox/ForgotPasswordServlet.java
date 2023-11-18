@@ -13,6 +13,8 @@ import javax.mail.internet.MimeMessage;
 import java.io.IOException;
 import java.security.SecureRandom;
 import java.util.Properties;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @WebServlet(name = "ForgotPassword", value = "/forgotpassword")
 public class ForgotPasswordServlet extends HttpServlet {
@@ -52,13 +54,23 @@ public class ForgotPasswordServlet extends HttpServlet {
 
 				// Set Subject: header field
 				EmailMessage.setSubject("Password Reset");
+				Database db = new Database();
+				String username = db.getusername(email);
+				System.out.println(username);
 
 				// Generate a unique token for password reset
 				//String resetToken = generateResetToken();
 				String resetToken = request.getSession().getId();
 
+				//extract the current url
+				String url = request.getRequestURL().toString();
+				int lastSlashIndex = url.lastIndexOf('/');
+				if (lastSlashIndex != -1) {
+					url = url.substring(0, lastSlashIndex + 1);
+				}
+
 				// Set the actual message
-				EmailMessage.setText("Click the following link to reset your password: https://chatter-box.azurewebsites.net/resetpassword?token=" + resetToken);
+				EmailMessage.setText("Click the following link to reset your password: " + url +  "resetPassword?" + "username=" + username + "&token=" + resetToken);
 
 				// Send message
 				Transport.send(EmailMessage);
@@ -84,6 +96,9 @@ public class ForgotPasswordServlet extends HttpServlet {
 		random.nextBytes(bytes);
 		return org.apache.commons.codec.binary.Base64.encodeBase64URLSafeString(bytes);
 	}
+
+
+
 
 	public void destroy() {
 	}

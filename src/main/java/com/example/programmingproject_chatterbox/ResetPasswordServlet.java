@@ -11,11 +11,16 @@ import jakarta.servlet.http.HttpServletResponse;
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import javax.xml.crypto.Data;
 import java.io.IOException;
 import java.security.SecureRandom;
 import java.util.Properties;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-@WebServlet(name = "ResetPassword", value = "/resetpassword")
+import static Classes.PasswordValidations.hashPassword;
+
+@WebServlet(name = "ResetPassword", value = "/resetPassword")
 public class ResetPasswordServlet extends HttpServlet {
 	private String message;
 
@@ -25,7 +30,11 @@ public class ResetPasswordServlet extends HttpServlet {
 		String newPassword = request.getParameter("newPassword");
 		String confirmPassword = request.getParameter("confirmPassword");
 		String token = request.getParameter("token");
+		String username = request.getParameter("username");
+
+
 		String ID = request.getSession().getId();
+
 		boolean isValidToken = false;
 
 		if(ID.equals(token)){
@@ -35,32 +44,32 @@ public class ResetPasswordServlet extends HttpServlet {
 		// Validate that newPassword and confirmPassword match
 		if (!newPassword.equals(confirmPassword)) {
 			// Passwords don't match, display an error message
-			response.sendRedirect("https://chatter-box.azurewebsites.net/resetpassword?token=" + token + "&error=passwordMismatch");
+			response.sendRedirect("/resetpassword?token=" + token + "&error=passwordMismatch");
 			return;
 		}
 
 		// Validate the token (you should implement a more secure and sophisticated validation)
 		if (!isValidToken) {
 			// Invalid token, display an error message
-			response.sendRedirect("https://chatter-box.azurewebsites.net/resetpassword?token=" + token + "&error=invalidToken");
+			response.sendRedirect("/resetpassword?token=" + token + "&error=invalidToken");
 			return;
 		}
 
 		// Assuming the token is valid, update the user's password
-		String username = getUsernameFromToken(token);
+
+		System.out.println(username);
 		updatePassword(username, newPassword);
 
 		// Redirect to a success page
-		response.sendRedirect("ResetSuccess.jsp");
-	}
-
-	private String getUsernameFromToken(String username) {
-		// Implement logic to get username
-		return "test";
+		response.sendRedirect("Login.jsp?success=Password Reset was successful");
 	}
 
 	private void updatePassword(String username, String newPassword) {
-		// Implement logic to update the user's password
+		Database database = new Database();
+		String hashedPassword = hashPassword(newPassword);
+		database.updatePassword(username, hashedPassword);
+
+
 	}
 
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {

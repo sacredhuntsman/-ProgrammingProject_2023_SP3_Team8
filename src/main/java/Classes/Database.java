@@ -173,7 +173,7 @@ public class Database {
 
             if (resultSet.next()) {
                 String hashedPassword = resultSet.getString("Password");
-                System.out.println("------hashedPassword = -------" + hashedPassword + "------password = -------" + password);
+
                 return PasswordValidations.verifyPassword(password, hashedPassword);
             } else {
                 return false;
@@ -529,4 +529,71 @@ public class Database {
     }
 
 
+    public void updatePassword(String username, String newPassword) {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+
+        try {
+            connection = getConnection();
+            String query = "UPDATE UserDB SET Password = ? WHERE Username = ?";
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, newPassword);
+            preparedStatement.setString(2, username);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // Handle the exception properly, e.g., throw a custom exception or log an error.
+        } finally {
+            closePreparedStatement(preparedStatement);
+            closeConnection(connection);
+        }
+    }
+
+    public String getusername(String email) {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        String username = "";
+        try {
+            connection = getConnection();
+            String query = "SELECT Username FROM UserDB WHERE Email = ?";
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, email);
+            resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                username = resultSet.getString("Username");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // Handle the exception properly, e.g., throw a custom exception or log an error.
+        } finally {
+            closeResultSet(resultSet);
+            closePreparedStatement(preparedStatement);
+            closeConnection(connection);
+        }
+        return username;
+    }
+
+    public void updateUser(String username, String email, String firstName, String lastName) {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+
+        try {
+            connection = getConnection();
+            String query = "UPDATE UserDB SET Email = ?, FirstName = ?, LastName = ? WHERE Username = ?";
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, email);
+            preparedStatement.setString(2, firstName);
+            preparedStatement.setString(3, lastName);
+            preparedStatement.setString(4, username);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // Handle the exception properly, e.g., throw a custom exception or log an error.
+        } finally {
+            closePreparedStatement(preparedStatement);
+            closeConnection(connection);
+        }
+    }
 }

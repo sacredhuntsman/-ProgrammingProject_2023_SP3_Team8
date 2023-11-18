@@ -77,7 +77,7 @@
             <!-- messages get populated here via Javascript AJAX -->
         </div>
         <div id="chat-control" >
-            <form id="chat-form" action="send-message" method="post" style="display: flex;">
+            <form id="privatechat-form" action="send-private-message" method="post" style="display: flex;">
                 <input type="hidden" name="groupId" value="<%= groupId %>">
 
                 <label style="width: 100%">
@@ -130,21 +130,21 @@
 
 
         // Capture the form submission event
-        $("#chat-form").submit(function (event) {
+        $("#privatechat-form").submit(function (event) {
             event.preventDefault(); // Prevent the default form submission
 
             let context = "${pageContext.request.contextPath}";
             let _url = "";
             if (!(context == null || context === "undefined" || typeof context === "undefined" || context === "")) {
-                _url = context + "/send-message";
+                _url = context + "/send-private-message";
             } else {
-                _url = "/send-message";
+                _url = "/send-private-message";
             }
             // Handle the form submission with an AJAX request
             $.ajax({
                 type: "POST", // or "GET" depending on your requirements
                 url: _url,
-                data: $("#chat-form").serialize(), // Serialize the form data
+                data: $("#privatechat-form ").serialize(), // Serialize the form data
                 success: function (response) {
                     console.log("AJAX Request Success: " + response);
                     scrollChatToBottom();

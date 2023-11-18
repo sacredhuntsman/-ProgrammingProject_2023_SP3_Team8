@@ -25,10 +25,11 @@ public class GroupManagementServlet extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String action = request.getParameter("action");
+		String url = request.getParameter("url");
 		
 		if (action != null) {
 			if (action.equals("add-group")) {
-				handleAddGroup(request, response);
+				handleAddGroup(request, response, url);
 			} else if (action.equals("remove")) {
 				handleRemoveGroup(request, response);
 			}
@@ -37,7 +38,7 @@ public class GroupManagementServlet extends HttpServlet {
 
 	
 	
-	private void handleAddGroup(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	private void handleAddGroup(HttpServletRequest request, HttpServletResponse response, String url) throws ServletException, IOException {
 		String groupName = request.getParameter("groupName");
 		HttpSession session = request.getSession();
 		Database database = new Database();
@@ -52,7 +53,7 @@ public class GroupManagementServlet extends HttpServlet {
 		}
 		
 		// Redirect the user to the group page
-		response.sendRedirect("Groups.jsp?error=New Group Created");
+		response.sendRedirect(url);
 	}
 	
 	private void handleRemoveGroup(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
