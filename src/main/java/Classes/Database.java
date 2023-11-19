@@ -27,7 +27,9 @@ public class Database {
             // TO DO exception handling
         }
         try {
-            // Loading application.properties file and storing url,username and password in variables for conntion
+            // Loading application.properties file and storing url,username and password in
+            //
+            // variables for conntion
             InputStream inputStream = getClass().getClassLoader().getResourceAsStream("application.properties");
             properties.load(inputStream);
 
@@ -68,7 +70,7 @@ public class Database {
     }
 
     public void closePreparedStatement(PreparedStatement preparedStatement) {
-        // closes prepared statement 
+        // closes prepared statement
         if (preparedStatement != null) {
             try {
                 preparedStatement.close();
@@ -77,9 +79,6 @@ public class Database {
             }
         }
     }
-    
-   
-
 
     // QUERY FUNCTIONS
 
@@ -88,7 +87,7 @@ public class Database {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
-        
+
         try {
             connection = getConnection();
             String query = "SELECT UserID FROM UserDB WHERE Username = ?";
@@ -99,7 +98,9 @@ public class Database {
             return resultSet.next(); // If there is a result, the username exists
         } catch (SQLException e) {
             e.printStackTrace();
-            // Handle the exception properly, e.g., throw a custom exception or log an error.
+            // Handle the exception properly, e.g., throw a custom exception or log an
+            //
+            // error.
             return false; // Consider it as non-existing on error
         } finally {
             closeResultSet(resultSet);
@@ -124,7 +125,8 @@ public class Database {
             return resultSet.next(); // If there is a result, the email exists
         } catch (SQLException e) {
             e.printStackTrace();
-            // Handle the exception properly, e.g., throw a custom exception or log an error.
+            // Handle the exception properly, e.g., throw a custom exception or log an
+            // error.
             return false; // Consider it as non-existing on error
         } finally {
             closeResultSet(resultSet);
@@ -132,7 +134,7 @@ public class Database {
             closeConnection(connection);
         }
     }
-    
+
     // Inserts new user into database
     public void insertUser(User user) {
         Connection connection = null;
@@ -151,14 +153,16 @@ public class Database {
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
-            // Handle the exception properly, e.g., throw a custom exception or log an error.
+            // Handle the exception properly, e.g., throw a custom exception or log an
+            // error.
         } finally {
             closePreparedStatement(preparedStatement);
             closeConnection(connection);
         }
     }
 
-    // Function to check if user exists in databse, and if exists, check if password matches, if password or user does not match, return false
+    // Function to check if user exists in databse, and if exists, check if password
+    // matches, if password or user does not match, return false
     public boolean authenticate(String username, String password) {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -174,13 +178,17 @@ public class Database {
             if (resultSet.next()) {
                 String hashedPassword = resultSet.getString("Password");
 
+                System.out.println(
+
+                        "------hashedPassword = -------" + hashedPassword + "------password = -------" + password);
                 return PasswordValidations.verifyPassword(password, hashedPassword);
             } else {
                 return false;
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            // Handle the exception properly, e.g., throw a custom exception or log an error.
+            // Handle the exception properly, e.g., throw a custom exception or log an
+            // error.
             return false; // Consider it as non-existing on error
         } finally {
             closeResultSet(resultSet);
@@ -188,7 +196,8 @@ public class Database {
             closeConnection(connection);
         }
     }
-    public int getUserID(String username){
+
+    public int getUserID(String username) {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
@@ -205,7 +214,8 @@ public class Database {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            // Handle the exception properly, e.g., throw a custom exception or log an error.
+            // Handle the exception properly, e.g., throw a custom exception or log an
+            // error.
         } finally {
             closeResultSet(resultSet);
             closePreparedStatement(preparedStatement);
@@ -213,8 +223,8 @@ public class Database {
         }
         return userId;
     }
-    
-    public int getGroupID(String groupName){
+
+    public int getGroupID(String groupName) {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
@@ -231,7 +241,8 @@ public class Database {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            // Handle the exception properly, e.g., throw a custom exception or log an error.
+            // Handle the exception properly, e.g., throw a custom exception or log an
+            // error.
         } finally {
             closeResultSet(resultSet);
             closePreparedStatement(preparedStatement);
@@ -239,8 +250,8 @@ public class Database {
         }
         return groupId;
     }
-    
-    public int getChannelID(String channelName){
+
+    public int getChannelID(String channelName) {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
@@ -257,7 +268,8 @@ public class Database {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            // Handle the exception properly, e.g., throw a custom exception or log an error.
+            // Handle the exception properly, e.g., throw a custom exception or log an
+            // error.
         } finally {
             closeResultSet(resultSet);
             closePreparedStatement(preparedStatement);
@@ -265,26 +277,26 @@ public class Database {
         }
         return channelId;
     }
-    
+
     public Map<String, String> getSessionData(String username) {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         Map<String, String> userData = new HashMap<>();
-        
+
         try {
             connection = getConnection();
             String query = "SELECT UserID, FirstName, LastName, Email FROM UserDB WHERE Username = ?";
             preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, username);
             resultSet = preparedStatement.executeQuery();
-            
+
             if (resultSet.next()) {
                 int userId = resultSet.getInt("UserID");
                 String firstName = resultSet.getString("FirstName");
                 String lastName = resultSet.getString("LastName");
                 String email = resultSet.getString("Email");
-                
+
                 // Store the data in a map
                 userData.put("UserID", String.valueOf(userId));
                 userData.put("FirstName", firstName);
@@ -293,20 +305,20 @@ public class Database {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            // Handle the exception properly, e.g., throw a custom exception or log an error.
+            // Handle the exception properly, e.g., throw a custom exception or log an
+            // error.
         } finally {
             closeResultSet(resultSet);
             closePreparedStatement(preparedStatement);
             closeConnection(connection);
         }
-        
+
         return userData;
     }
 
-
     // TEST WITH HELLOSERVLET TO DUMP ALL USERS TO COMMAND LINE
     public void getAllUsers() {
-        // initialise variables 
+        // initialise variables
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
@@ -315,7 +327,7 @@ public class Database {
             // get connection
             connection = getConnection();
 
-            // create query string 
+            // create query string
             String query = "SELECT * FROM UserDB";
             preparedStatement = connection.prepareStatement(query);
             resultSet = preparedStatement.executeQuery();
@@ -327,9 +339,10 @@ public class Database {
                 String lastName = resultSet.getString("LastName");
                 String email = resultSet.getString("Email");
                 String password = resultSet.getString("Password");
-                
+
                 // print all data
-                System.out.println("User ID: " + userId + ", Username: " + username + ", First Name: " + firstName + ", Last Name: " + lastName + ", Email: " + email + ", Password: " + password);
+                System.out.println("User ID: " + userId + ", Username: " + username + ", First Name: " + firstName
+                        + ", Last Name: " + lastName + ", Email: " + email + ", Password: " + password);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -341,8 +354,8 @@ public class Database {
             closeConnection(connection);
         }
     }
-	
-	public void inviteUser(String userName, int groupId) {
+
+    public void inviteUser(String userName, int groupId) {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
 
@@ -360,12 +373,13 @@ public class Database {
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
-            // Handle the exception properly, e.g., throw a custom exception or log an error.
+            // Handle the exception properly, e.g., throw a custom exception or log an
+            // error.
         } finally {
             closePreparedStatement(preparedStatement);
             closeConnection(connection);
         }
-	}
+    }
 
     public List<String> getUsernamesMatchingQuery(String searchQuery) {
         Connection connection = null;
@@ -385,7 +399,8 @@ public class Database {
             return usernames;
         } catch (SQLException e) {
             e.printStackTrace();
-            // Handle the exception properly, e.g., throw a custom exception or log an error.
+            // Handle the exception properly, e.g., throw a custom exception or log an
+            // error.
             return usernames; // Ensure a valid list is returned even on error
         } finally {
             // Close resources in the reverse order of their creation
@@ -412,13 +427,13 @@ public class Database {
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
-            // Handle the exception properly, e.g., throw a custom exception or log an error.
+            // Handle the exception properly, e.g., throw a custom exception or log an
+            // error.
         } finally {
             closePreparedStatement(preparedStatement);
             closeConnection(connection);
         }
     }
-
 
     public void addFriend(String userName, String currentUser) {
         Connection connection = null;
@@ -442,7 +457,7 @@ public class Database {
             preparedStatement.setInt(2, currentID);
             preparedStatement.executeUpdate();
 
-            //create a group based on the new friendship and add to the database
+            // create a group based on the new friendship and add to the database
 
             ChatService chatService = new ChatService();
             int friendshipID = getFriendshipID(userName, currentUser);
@@ -450,17 +465,17 @@ public class Database {
             Group group = null;
             group = chatService.createPrivateGroup("FriendshipID:" + friendshipID, currentID, userID);
 
-
-
         } catch (SQLException e) {
             e.printStackTrace();
-            // Handle the exception properly, e.g., throw a custom exception or log an error.
+            // Handle the exception properly, e.g., throw a custom exception or log an
+            // error.
         } finally {
             closePreparedStatement(preparedStatement);
             closeConnection(connection);
         }
     }
-    //get the friendshipid from the database
+
+    // get the friendshipid from the database
     public int getFriendshipID(String userName, String currentUser) {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -490,10 +505,10 @@ public class Database {
             }
             return friendshipID;
 
-
         } catch (SQLException e) {
             e.printStackTrace();
-            // Handle the exception properly, e.g., throw a custom exception or log an error.
+            // Handle the exception properly, e.g., throw a custom exception or log an
+            // error.
             return friendshipID;
         } finally {
             closeResultSet(resultSet);
@@ -502,7 +517,7 @@ public class Database {
         }
     }
 
-    public int getPrivateGroupID(String groupName){
+    public int getPrivateGroupID(String groupName) {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
@@ -519,7 +534,8 @@ public class Database {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            // Handle the exception properly, e.g., throw a custom exception or log an error.
+            // Handle the exception properly, e.g., throw a custom exception or log an
+            // error.
         } finally {
             closeResultSet(resultSet);
             closePreparedStatement(preparedStatement);
@@ -527,7 +543,6 @@ public class Database {
         }
         return groupId;
     }
-
 
     public void updatePassword(String username, String newPassword) {
         Connection connection = null;
@@ -542,7 +557,8 @@ public class Database {
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
-            // Handle the exception properly, e.g., throw a custom exception or log an error.
+            // Handle the exception properly, e.g., throw a custom exception or log an
+            // error.
         } finally {
             closePreparedStatement(preparedStatement);
             closeConnection(connection);
@@ -566,7 +582,8 @@ public class Database {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            // Handle the exception properly, e.g., throw a custom exception or log an error.
+            // Handle the exception properly, e.g., throw a custom exception or log an
+            // error.
         } finally {
             closeResultSet(resultSet);
             closePreparedStatement(preparedStatement);
@@ -590,10 +607,141 @@ public class Database {
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
-            // Handle the exception properly, e.g., throw a custom exception or log an error.
+            // Handle the exception properly, e.g., throw a custom exception or log an
+            // error.
         } finally {
             closePreparedStatement(preparedStatement);
             closeConnection(connection);
         }
     }
+
+    // Clears and previous details from ACS table to allow for new entries for API
+    // call
+    public void clearACSTable() {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        try {
+
+            connection = getConnection();
+
+            String query = "DELETE FROM VOIP";
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // Handle the exception properly, e.g., throw a custom exception or log an
+            // error.
+        } finally {
+            closePreparedStatement(preparedStatement);
+            closeConnection(connection);
+        }
+    }
+
+    // Inserts data into ACS table (clears first)
+    public void insertACSDetails(String userAccessToken, String meetingID) {
+        clearACSTable();
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        try {
+
+            connection = getConnection();
+
+            String query = "INSERT INTO VOIP (userAccessToken, meetingID) VALUES (?, ?)";
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, userAccessToken);
+            preparedStatement.setString(2, meetingID);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // Handle the exception properly, e.g., throw a custom exception or log an
+            // error.
+        } finally {
+            closePreparedStatement(preparedStatement);
+            closeConnection(connection);
+        }
+    }
+
+    // gets data from ACS call in DB
+    public List<String[]> getACSDetails() {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        List<String[]> acsDetails = new ArrayList<>(); // List of String arrays to store both userAccessToken and
+                                                       // meetingID
+        try {
+            connection = getConnection();
+            String query = "SELECT userAccessToken, meetingID FROM VOIP"; // Select only necessary columns
+            preparedStatement = connection.prepareStatement(query);
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                String userAccessToken = resultSet.getString("userAccessToken");
+                String meetingID = resultSet.getString("meetingID");
+                acsDetails.add(new String[] { userAccessToken, meetingID });
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // Handle the exception properly, e.g., throw a custom exception or log an
+            // error.
+        } finally {
+            // Close resources in the reverse order of their creation
+            closeResultSet(resultSet);
+            closePreparedStatement(preparedStatement);
+            closeConnection(connection);
+        }
+        return acsDetails;
+    }
+
+    // Inserts data into Rooms table
+    public void addRoom(int groupID, int channelID, String roomID) {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        try {
+
+            connection = getConnection();
+
+            String query = "INSERT INTO Rooms (groupID, channelID, roomID) VALUES (?, ?, ?)";
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1, groupID);
+            preparedStatement.setInt(2, channelID);
+            preparedStatement.setString(3, roomID);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // Handle the exception properly, e.g., throw a custom exception or log an
+            // error.
+        } finally {
+            closePreparedStatement(preparedStatement);
+            closeConnection(connection);
+        }
+    }
+
+    public String getRoom(int groupID, int channelID) {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        String roomID = null;
+        try {
+            connection = getConnection();
+            String query = "SELECT roomID FROM Rooms WHERE groupID = ? AND channelID = ?";
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1, groupID);
+            preparedStatement.setInt(2, channelID);
+            resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                roomID = resultSet.getString("roomID");
+            }
+            return roomID;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // Handle the exception properly, e.g., throw a custom exception or log an
+            // error.
+            return roomID; // Ensure a valid list is returned even on error
+        } finally {
+            // Close resources in the reverse order of their creation
+            closeResultSet(resultSet);
+            closePreparedStatement(preparedStatement);
+            closeConnection(connection);
+        }
+    }
+
 }
