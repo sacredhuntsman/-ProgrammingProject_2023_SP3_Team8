@@ -97,6 +97,13 @@
                 </label>
                     <input type="submit"  id="submit-chat-msg" value="CALL">
             </form>
+
+            <form id="voip-form" action="start-voip" method="post">
+                <input type="hidden" name="groupId" value="<%= groupId %>">
+                <input type="hidden" name="channelId" value="<%= channelId %>">
+                </label>
+                    <input type="submit"  id="submit-chat-msg" value="CALL">
+            </form>
         </div>
     </div>
 
