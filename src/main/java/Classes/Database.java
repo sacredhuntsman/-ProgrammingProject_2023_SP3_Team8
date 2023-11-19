@@ -639,6 +639,7 @@ public class Database {
 
     // Inserts data into ACS table (clears first)
     public void insertACSDetails(String userAccessToken, String meetingID) {
+        clearACSTable();
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         try {

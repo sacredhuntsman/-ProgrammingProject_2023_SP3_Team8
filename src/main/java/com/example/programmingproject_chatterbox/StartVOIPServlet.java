@@ -49,16 +49,22 @@ public class StartVOIPServlet extends HttpServlet {
 
 		// Assuming you're sending a URL to redirect to after the server-side operations
 		// are completed
-		String redirectURL = "https://chatterbox-voip.australiaeast.cloudapp.azure.com:8080"; // Replace this with the actual URL
+		String redirectURL = "https://chatterbox-voip.australiaeast.cloudapp.azure.com:8080"; // Replace this with the
+																								// actual URL
 
-        // Custom dimensions for the new window
-        int windowWidth = 300;
-        int windowHeight = 900;
+		// Custom dimensions for the new window
+		int windowWidth = 300;
+		int windowHeight = 900;
 
-        // Respond with JavaScript to open a new window with custom dimensions and redirect
-        String htmlResponse = "<script>window.open('" + redirectURL + "', '_blank', 'width=" + windowWidth + ", height=" + windowHeight + "'); window.location.href = '" + redirectURL + "';</script>";
-        response.setContentType("text/html");
-        response.getWriter().write(htmlResponse);
+		// Respond with JavaScript to open a new window with custom dimensions and
+		// redirect
+		String htmlResponse = "<script>window.open('" + redirectURL + "', '_blank', 'width=" + windowWidth + ",height="
+				+ windowHeight + "');</script>";
+		response.setContentType("text/html");
+		response.getWriter().write(htmlResponse);
+
+		// Redirect the current window to the specified URL
+		response.sendRedirect(redirectURL);
 	}
 
 }
