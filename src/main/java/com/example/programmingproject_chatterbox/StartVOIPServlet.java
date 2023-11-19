@@ -14,11 +14,14 @@ import java.io.PrintWriter;
 import java.io.IOException;
 import java.sql.SQLException;
 
-import Classes.Rooms;; 
+import com.azure.communication.common.CommunicationIdentifier;
+
+import Classes.Rooms2;
+
 @WebServlet(name = "StartVOIPServlet", value = "/start-voip")
 public class StartVOIPServlet extends HttpServlet {
 	
-	Rooms room = new Rooms();
+	Rooms2 room = new Rooms2();
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// Get the groupId, channelID  from the request
@@ -32,15 +35,15 @@ public class StartVOIPServlet extends HttpServlet {
 		System.out.println(roomID);
 		
 		//Create Identity which also adds to room
-		String userIdentity = room.createIdentity(roomID);
+		CommunicationIdentifier userIdentity = room.addOrUpdateParticipants(roomID);
+		System.out.println(userIdentity);
 
+		//Create token
+		String userToken = room.generateToken(userIdentity);
+		System.out.println(userToken);
+		
 		// Update API with Room ID and Join token 
-		//room.updateAPI(roomID, userIdentity);
-		
-		//return to main page and pop voip
-		
-		
-
+		database.insertACSDetails(userToken, roomID);
 	}
 
 }

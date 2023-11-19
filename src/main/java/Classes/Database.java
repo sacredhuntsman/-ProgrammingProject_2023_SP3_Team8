@@ -179,7 +179,7 @@ public class Database {
                 String hashedPassword = resultSet.getString("Password");
 
                 System.out.println(
-                        
+
                         "------hashedPassword = -------" + hashedPassword + "------password = -------" + password);
                 return PasswordValidations.verifyPassword(password, hashedPassword);
             } else {
@@ -427,13 +427,13 @@ public class Database {
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
-            // Handle the exception properly, e.g., throw a custom exception or log an error.
+            // Handle the exception properly, e.g., throw a custom exception or log an
+            // error.
         } finally {
             closePreparedStatement(preparedStatement);
             closeConnection(connection);
         }
     }
-
 
     public void addFriend(String userName, String currentUser) {
         Connection connection = null;
@@ -457,7 +457,7 @@ public class Database {
             preparedStatement.setInt(2, currentID);
             preparedStatement.executeUpdate();
 
-            //create a group based on the new friendship and add to the database
+            // create a group based on the new friendship and add to the database
 
             ChatService chatService = new ChatService();
             int friendshipID = getFriendshipID(userName, currentUser);
@@ -465,17 +465,17 @@ public class Database {
             Group group = null;
             group = chatService.createPrivateGroup("FriendshipID:" + friendshipID, currentID, userID);
 
-
-
         } catch (SQLException e) {
             e.printStackTrace();
-            // Handle the exception properly, e.g., throw a custom exception or log an error.
+            // Handle the exception properly, e.g., throw a custom exception or log an
+            // error.
         } finally {
             closePreparedStatement(preparedStatement);
             closeConnection(connection);
         }
     }
-    //get the friendshipid from the database
+
+    // get the friendshipid from the database
     public int getFriendshipID(String userName, String currentUser) {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -505,10 +505,10 @@ public class Database {
             }
             return friendshipID;
 
-
         } catch (SQLException e) {
             e.printStackTrace();
-            // Handle the exception properly, e.g., throw a custom exception or log an error.
+            // Handle the exception properly, e.g., throw a custom exception or log an
+            // error.
             return friendshipID;
         } finally {
             closeResultSet(resultSet);
@@ -517,7 +517,7 @@ public class Database {
         }
     }
 
-    public int getPrivateGroupID(String groupName){
+    public int getPrivateGroupID(String groupName) {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
@@ -534,7 +534,8 @@ public class Database {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            // Handle the exception properly, e.g., throw a custom exception or log an error.
+            // Handle the exception properly, e.g., throw a custom exception or log an
+            // error.
         } finally {
             closeResultSet(resultSet);
             closePreparedStatement(preparedStatement);
@@ -542,7 +543,6 @@ public class Database {
         }
         return groupId;
     }
-
 
     public void updatePassword(String username, String newPassword) {
         Connection connection = null;
@@ -557,7 +557,8 @@ public class Database {
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
-            // Handle the exception properly, e.g., throw a custom exception or log an error.
+            // Handle the exception properly, e.g., throw a custom exception or log an
+            // error.
         } finally {
             closePreparedStatement(preparedStatement);
             closeConnection(connection);
@@ -581,7 +582,8 @@ public class Database {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            // Handle the exception properly, e.g., throw a custom exception or log an error.
+            // Handle the exception properly, e.g., throw a custom exception or log an
+            // error.
         } finally {
             closeResultSet(resultSet);
             closePreparedStatement(preparedStatement);
@@ -605,12 +607,14 @@ public class Database {
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
-            // Handle the exception properly, e.g., throw a custom exception or log an error.
+            // Handle the exception properly, e.g., throw a custom exception or log an
+            // error.
         } finally {
             closePreparedStatement(preparedStatement);
             closeConnection(connection);
         }
     }
+
     // Clears and previous details from ACS table to allow for new entries for API
     // call
     public void clearACSTable() {
@@ -657,32 +661,33 @@ public class Database {
     }
 
     // gets data from ACS call in DB
-    public List<String> getACSDetails() {
+    public List<String[]> getACSDetails() {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
-        List<String> acsDetails = new ArrayList<>(); // Initialize the list
+        List<String[]> acsDetails = new ArrayList<>(); // List of String arrays to store both userAccessToken and
+                                                       // meetingID
         try {
             connection = getConnection();
-            String query = "SELECT FROM VOIP";
+            String query = "SELECT userAccessToken, meetingID FROM VOIP"; // Select only necessary columns
             preparedStatement = connection.prepareStatement(query);
             resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                String acsDetail = resultSet.getString("Username");
-                acsDetails.add(acsDetail);
+                String userAccessToken = resultSet.getString("userAccessToken");
+                String meetingID = resultSet.getString("meetingID");
+                acsDetails.add(new String[] { userAccessToken, meetingID });
             }
-            return acsDetails;
         } catch (SQLException e) {
             e.printStackTrace();
             // Handle the exception properly, e.g., throw a custom exception or log an
             // error.
-            return acsDetails; // Ensure a valid list is returned even on error
         } finally {
             // Close resources in the reverse order of their creation
             closeResultSet(resultSet);
             closePreparedStatement(preparedStatement);
             closeConnection(connection);
         }
+        return acsDetails;
     }
 
     // Inserts data into Rooms table
@@ -737,4 +742,5 @@ public class Database {
             closeConnection(connection);
         }
     }
+
 }

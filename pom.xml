@@ -11,6 +11,13 @@
     <name>ProgrammingProject_Chatterbox</name>
     <packaging>war</packaging>
 
+    <repositories>
+        <repository>
+            <id>azure-communication-rooms</id>
+            <url>file://${project.basedir}\azure-communication-rooms</url>
+        </repository>
+    </repositories>
+
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.target>11</maven.compiler.target>
@@ -26,8 +33,13 @@
         </dependency>
         <dependency>
             <groupId>com.azure</groupId>
+            <artifactId>azure-communication-common</artifactId>
+            <version>1.2.8</version> 
+        </dependency>
+        <dependency>
+            <groupId>com.azure</groupId>
             <artifactId>azure-communication-identity</artifactId>
-            <version>1.0.0</version>
+            <version>1.4.6</version>
         </dependency>
         <dependency>
             <groupId>com.azure</groupId>
