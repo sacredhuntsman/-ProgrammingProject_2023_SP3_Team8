@@ -34,16 +34,15 @@ public class getVOIPTokenServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         List<String[]> connectionDetails = database.getACSDetails();
-        List<Map<String, String>> connectionDetailsList = new ArrayList<>();
 
-        for (String[] details : connectionDetails) {
-            Map<String, String> connectionDetailMap = new HashMap<>();
-            connectionDetailMap.put("userToken", details[0]); // Assuming userAccessToken is at index 0
-            connectionDetailMap.put("meetingId", details[1]); // Assuming meetingID is at index 1
-            connectionDetailsList.add(connectionDetailMap);
-        }
+        // Assuming only the first record is needed
+        String[] firstDetails = connectionDetails.get(0);
 
-        String connectionDetailsJSON = gson.toJson(connectionDetailsList);
+        Map<String, String> connectionDetailMap = new HashMap<>();
+        connectionDetailMap.put("userToken", firstDetails[0]); // Assuming userAccessToken is at index 0
+        connectionDetailMap.put("meetingId", firstDetails[1]); // Assuming meetingID is at index 1
+
+        String connectionDetailsJSON = gson.toJson(connectionDetailMap);
 
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
@@ -52,3 +51,4 @@ public class getVOIPTokenServlet extends HttpServlet {
         out.flush();
     }
 }
+
