@@ -1,6 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
-<head>
+<head lang="en">
     <title>Forgot Password</title>
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/main.css">
     <script src="https://kit.fontawesome.com/9c30b9a3ff.js" crossorigin="anonymous"></script>

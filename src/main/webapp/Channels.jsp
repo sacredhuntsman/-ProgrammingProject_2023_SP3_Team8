@@ -26,7 +26,7 @@
     }
 %>
 
-<html>
+<html lang="en">
 <head>
     <title>Channels</title>
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/dashboard.css">

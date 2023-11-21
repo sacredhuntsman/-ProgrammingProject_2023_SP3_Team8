@@ -7,7 +7,7 @@
 <%@ page import="java.util.LinkedHashMap" %>
 
 
-<html>
+<html lang="en">
 <head>
     <title>Enrolled Members</title>
 </head>
@@ -57,4 +57,4 @@
     }
 %>
 </body>
-</html>
+</htmll>
