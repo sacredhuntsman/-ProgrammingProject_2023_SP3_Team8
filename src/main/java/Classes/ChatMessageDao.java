@@ -16,11 +16,12 @@ public class ChatMessageDao {
 		Connection connection = database.getConnection();
 		try {
 			PreparedStatement statement = connection.prepareStatement("INSERT INTO GroupDB (GroupName) VALUES (?)");
-			PreparedStatement statementCreator = connection.prepareStatement("INSERT INTO GroupMembershipDB (GroupID, GroupUserID) VALUES (?,?)");
+			PreparedStatement statementCreator = connection.prepareStatement("INSERT INTO GroupMembershipDB (GroupID, GroupUserID, GroupRole) VALUES (?,?,?)");
 			statement.setString(1, group.getName());
 			statement.executeUpdate();
 			statementCreator.setInt(1, database.getGroupID(group.getName()));
 			statementCreator.setInt(2, creatorID);
+			statementCreator.setInt(3, 1);
 			statementCreator.executeUpdate();
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
@@ -213,13 +214,38 @@ public class ChatMessageDao {
 		try {
 			PreparedStatement statement = connection.prepareStatement("INSERT INTO ChannelDB (ChannelName, GroupID) VALUES (?, ?)");
 			PreparedStatement statementCreator = connection.prepareStatement
-					("INSERT INTO ChannelMembershipDB (ChannelID, UserID) VALUES (?, ?)");
+					("INSERT INTO ChannelMembershipDB (ChannelID, UserID, ChannelRole) VALUES (?, ?, ?)");
 			statement.setString(1, channel.getChannelName());
 			statement.setInt(2, channel.getGroupId());
 			statement.executeUpdate();
 			statementCreator.setInt(1, database.getChannelID(channel.getChannelName()));
 			statementCreator.setInt(2, creatorID);
+			statementCreator.setInt(3, 1);
 			statementCreator.executeUpdate();
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		} finally {
+			database.closeConnection(connection);
+		}
+	}
+
+	//Check session data to confirm f current user is a admin for the channel
+	public boolean isAdmin(int channelID, int userID) throws SQLException {
+		Connection connection = database.getConnection();
+		try {
+			PreparedStatement statement = connection.prepareStatement("SELECT ChannelRole FROM ChannelMembershipDB WHERE ChannelID = ? AND UserID = ?");
+			statement.setInt(1, channelID);
+			statement.setInt(2, userID);
+			ResultSet resultSet = statement.executeQuery();
+			int role = 0;
+			while (resultSet.next()) {
+				role = resultSet.getInt("ChannelRole");
+			}
+			if (role == 1) {
+				return true;
+			} else {
+				return false;
+			}
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		} finally {

@@ -5,6 +5,7 @@
 <%@ page import="java.net.URL" %>
 <%@ page import="java.util.Map" %>
 <%@ page import="java.util.LinkedHashMap" %>
+<%@ page import="Classes.ChatMessageDao" %>
 
 
 <html>
@@ -33,12 +34,17 @@
         while (resultSet.next()) {
             PrintWriter output = response.getWriter();
             PreparedStatement preparedStatementUserName = connection.prepareStatement("SELECT * FROM UserDB where UserID = ?");
-            preparedStatementUserName.setInt(1, resultSet.getInt("UserID"));
+            int userId = resultSet.getInt("UserID");
+            preparedStatementUserName.setInt(1, userId);
             ResultSet resultSetUserName = preparedStatementUserName.executeQuery();
+            ChatMessageDao dao = new ChatMessageDao();
 
             // Need to move to the first record of the result set
             if (resultSetUserName.next()) {
                 output.println("<li class=\"text-sm text-white active py-1\">" + resultSetUserName.getString("Username") + "</li>");
+                if (dao.isAdmin(channelId, userId)){
+                    output.println("+");
+                }
             }
         }
 
