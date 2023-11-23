@@ -21,6 +21,10 @@ public class ChatServlet extends HttpServlet {
 	public ChatServlet() {
 		chatService = new ChatService();
 	}
+
+	public boolean checkChannelMembership(int channelId, int userId) throws SQLException {
+		return chatService.checkChannelMembership(channelId, userId);
+	}
 	
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

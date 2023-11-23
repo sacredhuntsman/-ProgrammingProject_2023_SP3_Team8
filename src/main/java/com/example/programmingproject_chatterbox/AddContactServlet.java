@@ -13,10 +13,24 @@ import java.io.IOException;
 public class AddContactServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // Invite user functionality
+        System.out.println("DEBUG");
+        Database database = new Database();
         HttpSession session = request.getSession();
         String userName = request.getParameter("UserName");
+        if (request.getParameter("UserIDtoChange") != null) {
+            String userNameFromUserID = database.getUsername(Integer.parseInt(request.getParameter("UserIDtoChange")));
+            System.out.println(userNameFromUserID + "  userNameFromUserID");
+            userName = userNameFromUserID;
+        }
+
+
+
+
         String currentUser = (String) session.getAttribute("userName");
-        Database database = new Database();
+        System.out.println(userName);
+        System.out.println(currentUser + " " + userName);
+
+
         database.addFriend(userName, currentUser);
         response.sendRedirect("Profile.jsp");
         }

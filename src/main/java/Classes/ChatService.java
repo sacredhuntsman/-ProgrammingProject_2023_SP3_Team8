@@ -1,5 +1,8 @@
 package Classes;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -92,4 +95,25 @@ public class ChatService {
 		message.setMessageText(messageText);
 		chatMessageDao.savePrivateMessage(message);
 	}
+
+    public boolean checkChannelMembership(int channelId, int userId) throws SQLException {
+		Database database = new Database();
+
+		Connection connection = database.getConnection();
+		try {
+			PreparedStatement statement = connection.prepareStatement("SELECT * FROM ChannelMembershipDB WHERE ChannelID = ? AND UserID = ?");
+			statement.setInt(1, channelId);
+			statement.setInt(2, userId);
+			ResultSet resultSet = statement.executeQuery();
+			if (resultSet.next()) {
+				return true;
+			} else {
+				return false;
+			}
+		} catch (SQLException e){
+			throw new RuntimeException(e);
+		} finally {
+			database.closeConnection(connection);
+		}
+    }
 }

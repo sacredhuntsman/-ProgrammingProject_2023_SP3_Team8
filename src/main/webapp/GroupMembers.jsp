@@ -5,6 +5,7 @@
 <%@ page import="java.net.URL" %>
 <%@ page import="java.util.Map" %>
 <%@ page import="java.util.LinkedHashMap" %>
+<%@ page import="Classes.ChatMessageDao" %>
 
 
 <html>
@@ -31,15 +32,35 @@
         while (resultSet.next()) {
             PrintWriter output = response.getWriter();
             PreparedStatement preparedStatementUserName = connection.prepareStatement("SELECT * FROM UserDB where UserID = ?");
-            preparedStatementUserName.setInt(1, resultSet.getInt("GroupUserID"));
+            int userId = resultSet.getInt("GroupUserID");
+            preparedStatementUserName.setInt(1, userId);
             ResultSet resultSetUserName = preparedStatementUserName.executeQuery();
+            ChatMessageDao dao = new ChatMessageDao();
+            String UserName;
+            int currentUserID = database.getUserID((String) session.getAttribute("userName"));
+
 
             // Need to move to the first record of the result set
             if (resultSetUserName.next()) {
-                output.println("Username: " + resultSetUserName.getString("Username") + "<br>");
-                // output.println("Name: " + resultSet.getString("name") + "<br>");
-                // Add other member details here based on your database structure
-                output.println("<br>");
+                UserName = resultSetUserName.getString("Username");
+                output.print("<li class=\"text-sm text-white active py-1\">" + UserName);
+
+
+                // Add buttons for actions
+                output.print("<button onclick=\"addFriend(" + userId + ")\"> Add Friend </button>");
+                if (dao.isGroupAdmin(groupId, currentUserID)) {
+                    if (dao.isGroupAdmin(groupId, userId)) {
+                        output.print("<button onclick=\"removeAdmin(" + userId + ", " + groupId +")\">Remove Admin</button>");
+
+                    } else {
+                        output.print("<button onclick=\"makeAdmin(" + userId + ", " + groupId +")\">Make Admin</button>");
+
+                    }
+                    output.print("<button onclick=\"removeFromGroup(" + userId + ", " + groupId +")\">Remove from Group</button>");
+                }
+
+
+                output.print("</li>");
             }
         }
 
@@ -57,5 +78,67 @@
         }
     }
 %>
+
+<script>
+    function addFriend(userId) {
+        // Make an AJAX request to AddContactServlet
+        const xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+            if (this.readyState === 4 && this.status === 200) {
+                // Handle the response if needed
+                console.log("Friend added successfully");
+            }
+        };
+        xhttp.open("POST", "add-contact", true);
+        xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xhttp.send("UserIDtoChange=" + encodeURIComponent(userId));
+
+    }
+    function makeAdmin(userId, groupId) {
+        // Make an AJAX request to AddContactServlet
+        const xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+            if (this.readyState === 4 && this.status === 200) {
+                // Handle the response if needed
+                console.log("Admin added successfully");
+            }
+        };
+        xhttp.open("POST", "make-admin", true);
+        xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xhttp.send("UserId=" + userId + "&GroupId=" + groupId + "&type=" + "group");
+    }
+
+
+    function removeAdmin(userId, groupId) {
+        // Make an AJAX request to AddContactServlet
+        const xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+            if (this.readyState === 4 && this.status === 200) {
+                // Handle the response if needed
+                console.log("Admin removed successfully");
+            }
+        };
+        xhttp.open("POST", "remove-admin", true);
+        xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xhttp.send("UserId=" + userId + "&GroupId=" + groupId + "&type=" + "group");
+    }
+
+    //rmeove memeber from group
+    function removeFromGroup(userId, groupId) {
+        // Make an AJAX request to AddContactServlet
+        const xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+            if (this.readyState === 4 && this.status === 200) {
+                // Handle the response if needed
+                console.log("Member removed successfully");
+            }
+        };
+        xhttp.open("POST", "remove-from-group", true);
+        xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xhttp.send("UserId=" + userId + "&GroupId=" + groupId + "&type=" + "group");
+    }
+
+    // Add similar functions for other actions (removeAdmin, makeAdmin, removeFromGroup) if needed
+</script>
 </body>
 </html>

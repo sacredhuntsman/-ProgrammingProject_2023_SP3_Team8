@@ -1,4 +1,5 @@
 function fetchNewMessages(groupId, channelId, urlPath, existingMessagesCount) {
+
     let _url = "";
     let msgs = [];
     console.log(urlPath);
@@ -21,6 +22,11 @@ function fetchNewMessages(groupId, channelId, urlPath, existingMessagesCount) {
             console.log(data);
             //clear existing messages
             $('#chat-box').html("");
+            if (data === null) {
+                $('#chat-box').html("<p>You are not a member of this channel.</p>");
+                return;
+            }
+
             for(let i= 0; i < data.length; i++) {
                 $('#chat-box').append(formatMessage(data[i].isSender, data[i].senderName, data[i].timestamp, data[i].message));
             }

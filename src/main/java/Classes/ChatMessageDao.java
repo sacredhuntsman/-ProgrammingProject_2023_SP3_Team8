@@ -230,7 +230,7 @@ public class ChatMessageDao {
 	}
 
 	//Check session data to confirm f current user is a admin for the channel
-	public boolean isAdmin(int channelID, int userID) throws SQLException {
+	public boolean isChannelAdmin(int channelID, int userID) throws SQLException {
 		Connection connection = database.getConnection();
 		try {
 			PreparedStatement statement = connection.prepareStatement("SELECT ChannelRole FROM ChannelMembershipDB WHERE ChannelID = ? AND UserID = ?");
@@ -240,6 +240,28 @@ public class ChatMessageDao {
 			int role = 0;
 			while (resultSet.next()) {
 				role = resultSet.getInt("ChannelRole");
+			}
+			if (role == 1) {
+				return true;
+			} else {
+				return false;
+			}
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		} finally {
+			database.closeConnection(connection);
+		}
+	}
+	public boolean isGroupAdmin(int groupID, int userID) throws SQLException {
+		Connection connection = database.getConnection();
+		try {
+			PreparedStatement statement = connection.prepareStatement("SELECT GroupRole FROM GroupMembershipDB WHERE GroupID = ? AND GroupUserID = ?");
+			statement.setInt(1, groupID);
+			statement.setInt(2, userID);
+			ResultSet resultSet = statement.executeQuery();
+			int role = 0;
+			while (resultSet.next()) {
+				role = resultSet.getInt("GroupRole");
 			}
 			if (role == 1) {
 				return true;
@@ -324,4 +346,6 @@ public class ChatMessageDao {
 			database.closeConnection(connection);
 		}
 	}
+
+
 }

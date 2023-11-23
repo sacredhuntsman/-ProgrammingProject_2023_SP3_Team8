@@ -178,9 +178,6 @@ public class Database {
             if (resultSet.next()) {
                 String hashedPassword = resultSet.getString("Password");
 
-                System.out.println(
-
-                        "------hashedPassword = -------" + hashedPassword + "------password = -------" + password);
                 return PasswordValidations.verifyPassword(password, hashedPassword);
             } else {
                 return false;
@@ -222,6 +219,36 @@ public class Database {
             closeConnection(connection);
         }
         return userId;
+    }
+
+    //get username from userID
+    public String getUsername(int userID) {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        String username = "";
+        try {
+            connection = getConnection();
+            String query = "SELECT Username FROM UserDB WHERE UserID = ?";
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1, userID);
+            resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                username = resultSet.getString("Username");
+            }
+            return username;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // Handle the exception properly, e.g., throw a custom exception or log an
+            //
+            // error.
+            return username; // Consider it as non-existing on error
+        } finally {
+            closeResultSet(resultSet);
+            closePreparedStatement(preparedStatement); // Fixed variable name
+            closeConnection(connection);
+        }
     }
 
     public int getGroupID(String groupName) {
@@ -715,6 +742,7 @@ public class Database {
         }
     }
 
+
     public String getRoom(int groupID, int channelID) {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -744,4 +772,158 @@ public class Database {
         }
     }
 
+    //make a user an admin in the group membership table
+    public boolean makeGroupAdmin(int groupID, int userID) {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        try {
+            connection = getConnection();
+            String query = "UPDATE GroupMembershipDB SET GroupRole = 1 WHERE GroupID = ? AND GroupUserID = ?";
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1, groupID);
+            preparedStatement.setInt(2, userID);
+            int rowsUpdated = preparedStatement.executeUpdate();
+
+            // Check if the update was successful (at least one row updated)
+            if (rowsUpdated > 0) {
+                return true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // Handle the exception properly, e.g., throw a custom exception or log an error.
+        } finally {
+            closePreparedStatement(preparedStatement);
+            closeConnection(connection);
+        }
+        return false;
+    }
+
+
+    public boolean removeGroupAdmin(int groupId, int userId) {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        try {
+            connection = getConnection();
+            String query = "UPDATE GroupMembershipDB SET GroupRole = 0 WHERE GroupID = ? AND GroupUserID = ?";
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1, groupId);
+            preparedStatement.setInt(2, userId);
+            int rowsUpdated = preparedStatement.executeUpdate();
+
+            // Check if the update was successful (at least one row updated)
+            if (rowsUpdated > 0) {
+                return true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // Handle the exception properly, e.g., throw a custom exception or log an error.
+        } finally {
+            closePreparedStatement(preparedStatement);
+            closeConnection(connection);
+        }
+        return false;
+    }
+
+    public Boolean makeChannelAdmin(int channelId, int userId) {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        try {
+            connection = getConnection();
+            String query = "UPDATE ChannelMembershipDB SET ChannelRole = 1 WHERE ChannelID = ? AND UserID = ?";
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1, channelId);
+            preparedStatement.setInt(2, userId);
+            int rowsUpdated = preparedStatement.executeUpdate();
+
+            // Check if the update was successful (at least one row updated)
+            if (rowsUpdated > 0) {
+                return true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // Handle the exception properly, e.g., throw a custom exception or log an error.
+        } finally {
+            closePreparedStatement(preparedStatement);
+            closeConnection(connection);
+        }
+        return false;
+    }
+
+
+
+    public boolean removeFromGroup(int groupId, int userId) {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        try {
+            connection = getConnection();
+            String query = "DELETE FROM GroupMembershipDB WHERE GroupID = ? AND GroupUserID = ?";
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1, groupId);
+            preparedStatement.setInt(2, userId);
+            int rowsUpdated = preparedStatement.executeUpdate();
+
+            // Check if the update was successful (at least one row updated)
+            if (rowsUpdated > 0) {
+                return true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // Handle the exception properly, e.g., throw a custom exception or log an error.
+        } finally {
+            closePreparedStatement(preparedStatement);
+            closeConnection(connection);
+        }
+        return false;
+    }
+
+
+    public Boolean removeChannelAdmin(int channelId, int userId) {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        try {
+            connection = getConnection();
+            String query = "UPDATE ChannelMembershipDB SET ChannelRole = 0 WHERE ChannelID = ? AND UserID = ?";
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1, channelId);
+            preparedStatement.setInt(2, userId);
+            int rowsUpdated = preparedStatement.executeUpdate();
+
+            // Check if the update was successful (at least one row updated)
+            if (rowsUpdated > 0) {
+                return true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // Handle the exception properly, e.g., throw a custom exception or log an error.
+        } finally {
+            closePreparedStatement(preparedStatement);
+            closeConnection(connection);
+        }
+        return false;
+    }
+
+    public Boolean removeFromChannel(int channelId, int userId) {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        try {
+            connection = getConnection();
+            String query = "DELETE FROM ChannelMembershipDB WHERE ChannelID = ? AND UserID = ?";
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1, channelId);
+            preparedStatement.setInt(2, userId);
+            int rowsUpdated = preparedStatement.executeUpdate();
+
+            // Check if the update was successful (at least one row updated)
+            if (rowsUpdated > 0) {
+                return true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // Handle the exception properly, e.g., throw a custom exception or log an error.
+        } finally {
+            closePreparedStatement(preparedStatement);
+            closeConnection(connection);
+        }
+        return false;
+    }
 }

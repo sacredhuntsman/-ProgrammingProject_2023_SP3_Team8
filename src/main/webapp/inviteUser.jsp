@@ -7,7 +7,7 @@
 </head>
 <body>
 <form action="invite" id="inviteForm" method="post">
-    <label class="text-white py-1">Serach for user and click there name in the list below:</label>
+    <label class="text-white py-1">Search for user and click there name in the list below:</label>
     <!-- Hidden input field to capture the groupId from the URL -->
     <input type="hidden" name="groupId" value="${param.groupId}">
     <c:if test="${not empty param.channelId}">

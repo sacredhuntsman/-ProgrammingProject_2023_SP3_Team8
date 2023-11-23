@@ -9,7 +9,7 @@
     // Get the list of groups from the ChatService class
     Database database = new Database();
     int userID = database.getUserID((String) session.getAttribute("userName"));
-	System.out.println(userID);
+
     List<Group> groups = null;
     ChatService chatService = new ChatService();
     try {

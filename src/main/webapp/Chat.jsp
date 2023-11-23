@@ -53,8 +53,15 @@
         if(channelIdParam == null || channelIdParam.isEmpty()) {
             channelId = channels.get(0).getChannelId();
         }
+        boolean isMember = chatService.checkChannelMembership(channelId, userIdValue);
 
-        messages = chatService.getMessages(groupId, channelId);
+        if(!isMember) {
+            messages = null;
+        }else{
+            messages = chatService.getMessages(groupId, channelId);
+        }
+
+
         chatTitle = chatService.getChatTitle(groupId, channelId);
 
     } catch (SQLException e) {

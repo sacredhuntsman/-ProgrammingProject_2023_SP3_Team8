@@ -52,36 +52,40 @@
                     if (resultSetGroupID.next()) {
                         int privateGroupId = resultSetGroupID.getInt("PrivateGroupID");
 
-                        //remove duplicate
-
-
                         // Create a hyperlink with the username pointing to PrivateChat.jsp
                         String privateChatURL = "PrivateChat.jsp?privateGroupID=" + privateGroupId;
                         output.println("<a href=\"" + privateChatURL + "\" class=\"text-white\">" + resultSetUserName.getString("Username") + "</a>");
+
+                        // Add a button for deleting the contact
+                        output.println("<form action=\"remove-contact\" method=\"post\" style=\"display: inline;\">");
+                        output.println("<input type=\"hidden\" name=\"friendUserId\" value=\"" + friendUserId + "\">");
+                        output.println("<input type=\"hidden\" name=\"privateGroupId\" value=\"" + privateGroupId + "\">");
+                        output.println("<button type=\"submit\">Delete</button>");
+                        output.println("</form>");
+
                         output.println("<br>");
-                        // Now you can use the privateGroupId as needed
+
                     } else {
                         System.out.println("<span class=\"text-white\">No PrivateGroupID found for the given userIDs");
                     }
-                    //System.out.println(resultSetGroupID.getInt("PrivateGroupID"));
                 }
             }
 
             resultSet.close();
             preparedStatement.close();
 
-    } catch (SQLException e) {
-        e.printStackTrace();
-    } finally {
-        if (connection != null) {
-            try {
-                connection.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
             }
         }
     }
-}
 %>
 </body>
 </html>
