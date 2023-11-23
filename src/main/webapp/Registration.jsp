@@ -1,6 +1,6 @@
 <%@ page import="java.io.PrintWriter" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
+<html lang="en">
 <head>
     <title>Registration</title>
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/main.css">

@@ -26,7 +26,7 @@
 
 
 %>
-<html>
+<html lang="en">
 <head>
     <title>User Profile</title>
     <jsp:include page="head.jsp" />

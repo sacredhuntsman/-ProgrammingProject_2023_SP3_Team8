@@ -62,7 +62,7 @@
     }
 %>
 
-<html>
+<html lang="en">
 <head>
     <title>Chat</title>
     <jsp:include page="head.jsp" />
@@ -79,7 +79,22 @@
 
         </div>
         <div id="chat-box" class="p-2 pt-4 overflow-y-scroll scrollbar1">
-            <!-- messages get populated here via Javascript AJAX -->
+            <!-- messages get populated here via Javascript AJAX
+                 below needs to be included so styles are rendered into tailwind css -->
+
+            <div class="chat-message w-full flex my-6" >
+                <div class="sender-img text-center">
+                </div>
+                <div class="message-content">
+                    <div class="message-info flex mx-2">
+                        <div class="message-sender-name text-white mr-2"></div>
+                        <div class="message-stats text-slate-200 text-xs italic" style="line-height: 24px;"> @ ${formattedDate}</div>
+                    </div>
+                    <div class="message-text text-white mx-2">
+
+                    </div>
+                </div>
+            </div>
         </div>
         <div id="chat-control" >
             <form id="chat-form" action="send-message" method="post" style="display: flex;">
