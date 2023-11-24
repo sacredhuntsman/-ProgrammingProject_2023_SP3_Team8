@@ -348,4 +348,23 @@ public class ChatMessageDao {
 	}
 
 
+    public boolean isFriend(int currentUserID, int friendUserId) throws SQLException {
+		Connection connection = database.getConnection();
+		//check friend table for a row with both user ids
+		try {
+			PreparedStatement statement = connection.prepareStatement("SELECT * FROM FriendDB WHERE UserID = ? AND FriendUserID = ?");
+			statement.setInt(1, currentUserID);
+			statement.setInt(2, friendUserId);
+			ResultSet resultSet = statement.executeQuery();
+			if (resultSet.next()) {
+				return true;
+			} else {
+				return false;
+			}
+		} catch (SQLException e){
+			throw new RuntimeException(e);
+		} finally {
+			database.closeConnection(connection);
+		}
+	}
 }

@@ -29,6 +29,7 @@
 <html>
 <head>
     <title>User Profile</title>
+    <link rel="icon" type="image/png" href="images/favicon.png" sizes="32x40" />
     <jsp:include page="head.jsp" />
 </head>
 <body>
@@ -40,10 +41,15 @@
         </div>
         <div id="chat-control" class="mx-2">
             <img src="https://chatterboxavatarstorage.blob.core.windows.net/blob/${sessionScope.userName}" alt="Avatar" style="width:200px">
-            <form action="updateAvatar" method="post" enctype="multipart/form-data">
-                <div class="text-1xl">Update Image</div>
-                <input type="file" name="avatarImage" accept="image/*">
-                <input type="submit" value="Upload">
+            <form action="updateAvatar" method="post" enctype="multipart/form-data" class="mt-4">
+                <div class="text-1xl text-white font-bold">Update Image</div>
+                <div class="mt-2">
+                    <label for="avatarImage" class="text-white">Choose an image:</label>
+                    <input type="file" name="avatarImage" id="avatarImage" accept="image/*" class="p-1">
+                </div>
+                <div class="mt-2">
+                    <input type="submit" value="Upload" class="btn-div">
+                </div>
                 <input type="hidden" name="username" value="${sessionScope.userName}">
             </form>
             <form action="updateProfile" method="post">

@@ -29,6 +29,7 @@
 <html>
 <head>
     <title>Channels</title>
+    <link rel="icon" type="image/png" href="images/favicon.png" sizes="32x40" />
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/dashboard.css">
     <jsp:include page="head.jsp" />
 </head>

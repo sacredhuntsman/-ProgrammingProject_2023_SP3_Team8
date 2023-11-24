@@ -24,8 +24,7 @@ public class RemoveContactServlet extends HttpServlet {
         deleteContact(currentUser, friendUserId, privateGroupId);
 
         // Redirect back to the previous page
-        String referer = request.getHeader("referer");
-        response.sendRedirect(referer);
+
     }
 
     private void deleteContact(int currentUser, int friendUserId, int privateGroupId) {

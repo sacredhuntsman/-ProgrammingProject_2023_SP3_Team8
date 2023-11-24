@@ -46,5 +46,6 @@ public class RemoveAdminServlet extends HttpServlet {
             out.write("Failed to make the user an admin");
         }
         out.flush();
+
     }
 }

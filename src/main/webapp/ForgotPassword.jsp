@@ -2,6 +2,7 @@
 <html>
 <head>
     <title>Forgot Password</title>
+    <link rel="icon" type="image/png" href="images/favicon.png" sizes="32x40" />
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/main.css">
     <script src="https://kit.fontawesome.com/9c30b9a3ff.js" crossorigin="anonymous"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">

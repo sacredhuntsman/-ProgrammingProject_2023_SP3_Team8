@@ -71,7 +71,8 @@
 
 <html>
 <head>
-    <title>Chat</title>
+    <title><%= chatTitle %></title>
+    <link rel="icon" type="image/png" href="images/favicon.png" sizes="32x40" />
     <jsp:include page="head.jsp" />
 </head>
 <body>
@@ -109,7 +110,7 @@
 
     <div class="info-bar">
         <div class="m-4">
-            <div class="text-2xl text-white">Group Members</div>
+            <div class="text-2xl text-white">Channel Members</div>
             <ul class="flex flex-col list-disc pt-2 pl-4">
                 <jsp:include page="ChannelMembers.jsp" />
             </ul>

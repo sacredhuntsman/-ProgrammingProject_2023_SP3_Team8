@@ -6,12 +6,50 @@
 <html>
 <head>
     <title>Contacts</title>
+    <style>
+        .contact-item {
+            list-style-type: none;
+            margin-bottom: 10px;
+            padding: 5px;
+            color: white;
+            display: flex; /* Use flexbox to align items horizontally */
+            align-items: center; /* Center items vertically within the flex container */
+        }
+
+        .contact-item a {
+            text-decoration: none;
+            color: white;
+        }
+
+        .contact-item img {
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        .delete-button {
+            background: none;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            color: red;
+        }
+
+        .user-icon {
+            width: 20px;
+            height: 20px;
+            object-fit: cover;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+    </style>
 </head>
 <body>
 
 <%
     // Extract channel ID from the URL
-
     String userId = (String) session.getAttribute("userId");
     if (!(userId != null && !userId.isEmpty())) {
         response.sendRedirect("login");
@@ -46,24 +84,27 @@
                     preparedStatementGroupID.setInt(3, friendUserId);
                     preparedStatementGroupID.setInt(4, currentUser);
 
-
                     ResultSet resultSetGroupID = preparedStatementGroupID.executeQuery();
 
                     if (resultSetGroupID.next()) {
                         int privateGroupId = resultSetGroupID.getInt("PrivateGroupID");
+                        String userName = resultSetUserName.getString("Username");
 
                         // Create a hyperlink with the username pointing to PrivateChat.jsp
                         String privateChatURL = "PrivateChat.jsp?privateGroupID=" + privateGroupId;
-                        output.println("<a href=\"" + privateChatURL + "\" class=\"text-white\">" + resultSetUserName.getString("Username") + "</a>");
 
-                        // Add a button for deleting the contact
-                        output.println("<form action=\"remove-contact\" method=\"post\" style=\"display: inline;\">");
-                        output.println("<input type=\"hidden\" name=\"friendUserId\" value=\"" + friendUserId + "\">");
-                        output.println("<input type=\"hidden\" name=\"privateGroupId\" value=\"" + privateGroupId + "\">");
-                        output.println("<button type=\"submit\">Delete</button>");
-                        output.println("</form>");
+                        // Display user icon and username in one line
+                        output.print("<li class=\"contact-item\"><img src='https://chatterboxavatarstorage.blob.core.windows.net/blob/" + userName + "' alt='User Icon' style='width: 30px; height: 30px;'>");
+                        output.println("<a href=\"" + privateChatURL + "\">" + userName + "</a>");
 
-                        output.println("<br>");
+                        // Add a button for deleting the contact with an icon and confirmation
+                        output.print("<form style=\"display: inline;\">");
+                        output.print("<input type=\"hidden\" name=\"friendUserId\" value=\"" + friendUserId + "\">");
+                        output.print("<input type=\"hidden\" name=\"privateGroupId\" value=\"" + privateGroupId + "\">");
+                        output.print("<button type=\"button\" class=\"delete-button\" onclick=\"confirmRemoveContact(" + friendUserId + ", " + privateGroupId + ")\"><img src='images/delete-friend.png' alt='Delete Icon' style='width: 20px; height: 20px;'></button>");
+                        output.print("</form>");
+
+                        output.print("</li>");
 
                     } else {
                         System.out.println("<span class=\"text-white\">No PrivateGroupID found for the given userIDs");
@@ -87,5 +128,24 @@
         }
     }
 %>
+<script>
+    // Function to show confirmation dialog and handle remove-contact action
+    function confirmRemoveContact(friendUserId, privateGroupId) {
+        if (confirm("Are you sure you want to remove this contact?")) {
+            const xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function () {
+                if (this.readyState === 4 && this.status === 200) {
+                    console.log("Contact removed successfully");
+                    window.location.reload();
+                }
+            };
+            xhttp.open("POST", "remove-contact", true);
+            xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            xhttp.send("friendUserId=" + friendUserId + "&privateGroupId=" + privateGroupId);
+        } else {
+            console.log("Remove contact canceled");
+        }
+    }
+</script>
 </body>
 </html>

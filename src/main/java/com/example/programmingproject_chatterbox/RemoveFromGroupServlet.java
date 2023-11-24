@@ -47,5 +47,6 @@ public class RemoveFromGroupServlet extends HttpServlet {
         }
 
         out.flush();
+
     }
 }
