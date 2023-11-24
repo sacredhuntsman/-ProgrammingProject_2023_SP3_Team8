@@ -58,7 +58,8 @@
 
 <html lang="en">
 <head>
-    <title>Chat</title>
+    <title>Private chat: <%= chatTitle %></title>
+    <link rel="icon" type="image/png" href="images/favicon.png" sizes="32x40" />
     <jsp:include page="head.jsp" />
 </head>
 <body>
@@ -87,19 +88,7 @@
             </form>
         </div>
     </div>
-    <div class="info-bar" style="display: none">
-        <div class="m-4">
-            <h1 class="text-white text-xl mt-4 font-bold">Dev Links</h1>
-            <ul>
-                <li class="text-white mt-2"><a href="${pageContext.request.contextPath}/login">Login</a></li>
-                <li class="text-white mt-2"><a href="${pageContext.request.contextPath}/Profile.jsp">Profile</a></li>
-                <li class="text-white mt-2"><a href="${pageContext.request.contextPath}/Groups.jsp">Groups</a></li>
-                <li class="text-white mt-2">____________</li>
-                <li class="text-white mt-2"><a href="${pageContext.request.contextPath}/Channels.jsp?groupId=9">Example Channel - Test Group 2</a></li>
-                <li class="text-white mt-2"><a href="${pageContext.request.contextPath}/Chat.jsp?groupId=9&channelId=14">Example Chat - TG 2 CH 1</a></li>
-            </ul>
-        </div>
-    </div>
+
 </div>
 <script src="${pageContext.request.contextPath}/js/chat.js"></script>
 <script>
