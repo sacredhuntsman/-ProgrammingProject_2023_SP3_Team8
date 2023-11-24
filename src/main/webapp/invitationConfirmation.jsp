@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-<head>
+<head lang="en">
     <title>Invitation Confirmation</title>
 </head>
 <body>

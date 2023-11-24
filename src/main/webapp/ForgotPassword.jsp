@@ -1,6 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
-<head>
+<head lang="en">
     <title>Forgot Password</title>
     <link rel="icon" type="image/png" href="images/favicon.png" sizes="32x40" />
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/main.css">

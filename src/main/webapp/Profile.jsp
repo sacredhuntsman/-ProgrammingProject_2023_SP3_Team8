@@ -26,7 +26,7 @@
 
 
 %>
-<html>
+<html lang="en">
 <head>
     <title>User Profile</title>
     <link rel="icon" type="image/png" href="images/favicon.png" sizes="32x40" />

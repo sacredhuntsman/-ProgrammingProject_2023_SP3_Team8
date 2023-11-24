@@ -3,7 +3,7 @@
 <%@ page import="Classes.Database" %>
 <%@ page import="java.io.PrintWriter" %>
 <%@ page import="java.util.PropertyResourceBundle" %>
-<html>
+<html lang="en">
 <head>
     <title>Contacts</title>
     <style>

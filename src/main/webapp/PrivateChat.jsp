@@ -56,7 +56,7 @@
     }
 %>
 
-<html>
+<html lang="en">
 <head>
     <title>Chat</title>
     <jsp:include page="head.jsp" />

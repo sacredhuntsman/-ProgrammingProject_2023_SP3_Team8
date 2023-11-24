@@ -8,7 +8,7 @@
 <%@ page import="Classes.ChatMessageDao" %>
 
 
-<html>
+<html lang="en">
 <head>
     <title>Enrolled Members</title>
     <style>

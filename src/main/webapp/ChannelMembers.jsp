@@ -7,7 +7,7 @@
 <%@ page import="java.util.LinkedHashMap" %>
 <%@ page import="Classes.ChatMessageDao" %>
 
-<html>
+<html lang="en">
 <head>
     <title>Enrolled Members</title>
     <style>
@@ -184,4 +184,4 @@
     }
 </script>
 </body>
-</html>
+</htmll>

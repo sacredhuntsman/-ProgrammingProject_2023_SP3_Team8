@@ -110,12 +110,12 @@ function formatMessage(isSender, userName, formattedTimestamp, messageText) {
     return `
       <div class="chat-message w-full flex my-6 ${isSender}">
                 <div class="sender-img text-center">
-                 <img src="https://chatterboxavatarstorage.blob.core.windows.net/blob/${userName}" alt=" ">
+                 <img src="https://chatterboxavatarstorage.blob.core.windows.net/blob/${userName}" alt="user image">
                 </div>
                 <div class="message-content">
                     <div class="message-info flex mx-2">
                         <div class="message-sender-name text-white mr-2">${userName}</div>
-                        <div class="message-stats text-slate-400 text-xs italic" style="line-height: 24px;"> @ ${formattedDate}</div>
+                        <div class="message-stats text-slate-200 text-xs italic" style="line-height: 24px;"> @ ${formattedDate}</div>
                     </div>
                     <div class="message-text text-white mx-2">
                         ${messageText}
