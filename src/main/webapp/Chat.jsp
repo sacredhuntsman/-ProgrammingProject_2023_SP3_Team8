@@ -118,7 +118,7 @@
                 <input type="hidden" name="groupId" value="<%= groupId %>">
                 <input type="hidden" name="channelId" value="<%= channelId %>">
                 </label>
-                    <input type="submit"  id="submit-call" value="CALL">
+                    <input type="submit"  id="submit-call" value="Join Room Call">
             </form>
         </div>
     </div>
