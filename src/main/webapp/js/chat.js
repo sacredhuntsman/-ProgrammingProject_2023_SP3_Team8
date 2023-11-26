@@ -1,6 +1,13 @@
-function fetchNewMessages(groupId, channelId, urlPath, existingMessagesCount, test) {
+function fetchNewMessages(groupId, channelId, urlPath, existingMessagesCount, isMember) {
+    console.log(isMember);
 
+    if (isMember === false) {
+        console.log("User is not a member. Displaying message on the current page.");
 
+        // Display a message on the current page
+        $('#chat-box').html("<p class=\"text-white mt-2\">You are not a member of this channel. Please request to join to view messages.</p>");
+        return;
+    }
 
     let _url = "";
     let msgs = [];

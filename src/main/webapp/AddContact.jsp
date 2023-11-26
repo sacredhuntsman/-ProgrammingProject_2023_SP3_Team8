@@ -4,6 +4,20 @@
 <html>
 <head lang="en">
     <title>Find a friend</title>
+    <style>
+        .user-icon {
+            width: 30px; /* Adjust the width as needed */
+            height: 30px; /* Adjust the height as needed */
+            border-radius: 50%; /* Make it circular */
+            margin-right: 10px; /* Add some space between the icon and the username */
+        }
+
+        .list-item {
+            display: flex; /* Use flexbox to align items horizontally */
+            align-items: center; /* Center items vertically */
+            margin-bottom: 10px; /* Add space between items */
+        }
+    </style>
 </head>
 <body>
 <h1 class="text-white">Find a friend</h1>
@@ -38,9 +52,15 @@
 
         usernames.forEach(username => {
             const userItem = document.createElement('div');
+            userItem.className = 'list-item';
             userItem.textContent = username;
             // add pointer cursor
             userItem.style.cursor = 'pointer';
+            const userIcon = document.createElement('img');
+            userIcon.src = 'https://chatterboxavatarstorage.blob.core.windows.net/blob/' + username; // Replace with actual URL
+            userIcon.alt = 'User Icon';
+            userIcon.className = 'user-icon';
+            userItem.appendChild(userIcon);
             userItem.onclick = function() {
                 // Set the selected username to the input field
                 document.querySelector('input[name="UserName"]').value = username;

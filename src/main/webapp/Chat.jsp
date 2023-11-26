@@ -1,4 +1,4 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+        <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page import="Classes.Message" %>
 <%@ page import="Classes.Group" %>
 <%@ page import="Classes.Channel" %>
@@ -41,6 +41,7 @@
     }
 
     ChatService chatService = new ChatService();
+    boolean isMember = false;
     try {
 
         groups = chatService.getGroups(userIdValue);
@@ -50,14 +51,14 @@
             groupId = groups.get(0).getId();
         }
         channels = chatService.getChannels(groupId);
-        if(channelIdParam == null || channelIdParam.isEmpty()) {
+        if (channelIdParam == null || channelIdParam.isEmpty()) {
             channelId = channels.get(0).getChannelId();
         }
-        boolean isMember = chatService.checkChannelMembership(channelId, userIdValue);
+        isMember = chatService.checkChannelMembership(channelId, userIdValue);
 
-        if(!isMember) {
+        if (!isMember) {
             messages = null;
-        }else{
+        } else {
             messages = chatService.getMessages(groupId, channelId);
         }
 
@@ -71,7 +72,7 @@
 
 <html lang="en">
 <head>
-    <title><%= chatTitle %></title>
+    <title><%=chatTitle%></title>
     <link rel="icon" type="image/png" href="images/favicon.png" sizes="32x40" />
     <jsp:include page="head.jsp" />
 </head>
@@ -80,7 +81,7 @@
     <jsp:include page="sidebar.jsp" />
     <div class="main-content flex flex-col grow p-8">
         <div id="chat-title" class="flex content-center items-end mx-2 ">
-            <div id="chat-name" class="text-2xl"><%= chatTitle %></div>
+            <div id="chat-name" class="text-2xl"><%=chatTitle%></div>
             <div id="chat-info" class="mx-4 text-base">
 
             </div>
@@ -106,8 +107,8 @@
         </div>
         <div id="chat-control" >
             <form id="chat-form" action="send-message" method="post" style="display: flex;">
-                <input type="hidden" name="groupId" value="<%= groupId %>">
-                <input type="hidden" name="channelId" value="<%= channelId %>">
+                <input type="hidden" name="groupId" value="<%=groupId%>">
+                <input type="hidden" name="channelId" value="<%=channelId%>">
                 <label style="width: 100%">
                     <input type="text" style="width: 100%" id="chat-msg-input" name="messageText" placeholder="Enter your message here..." style="width: 100%" required autocomplete="off">
                 </label>
@@ -115,8 +116,8 @@
             </form>
 
             <form id="voip-form" action="start-voip" method="post">
-                <input type="hidden" name="groupId" value="<%= groupId %>">
-                <input type="hidden" name="channelId" value="<%= channelId %>">
+                <input type="hidden" name="groupId" value="<%=groupId%>">
+                <input type="hidden" name="channelId" value="<%=channelId%>">
                 </label>
                     <input type="submit"  id="submit-call" value="Join Room Call">
             </form>
@@ -131,8 +132,10 @@
             </ul>
         </div>
         <div class="m-4">
+            <% if (isMember) { %>
             <div class="text-2xl text-white">Invite User</div>
-            <c:import url="inviteUser.jsp" />
+            <c:import url="inviteUser.jsp"/>
+            <% } %>
         </div>
     </div>
 </div>
@@ -144,7 +147,8 @@
     }
 
     // initial load of messages
-    fetchNewMessages(<%= groupId %>, <%= channelId%>, "${pageContext.request.contextPath}");
+
+    fetchNewMessages(<%=groupId%>, <%=channelId%>, "${pageContext.request.contextPath}", 0 ,<%=isMember%>);
 
 
 
@@ -152,10 +156,10 @@
     setInterval(function() {
         //count the number of messages
         let msg = document.getElementsByClassName("chat-message");
-        console.log("msg length: " + msg.length);
+        console.log("msg length: " + msg.length)
         let msgCount = msg.length;
 
-        fetchNewMessages(<%= groupId %>, <%= channelId%>, "${pageContext.request.contextPath}", msgCount);
+        fetchNewMessages(<%=groupId%>, <%=channelId%>, "${pageContext.request.contextPath}", msgCount,<%=isMember%>);
     }, 10000);
     $(document).ready(function () {
 
@@ -184,7 +188,7 @@
                     console.log("AJAX Request Success: " + response);
                     scrollChatToBottom();
                     // Fetch the new messages after the form submission
-                    fetchNewMessages(<%= groupId %>, <%= channelId%>, "${pageContext.request.contextPath}");
+                    fetchNewMessages(<%=groupId%>, <%=channelId%>, "${pageContext.request.contextPath}");
                     scrollChatToBottom();
                 },
                 error: function (error) {
