@@ -1,5 +1,7 @@
 ChatterBox Release Notes
 
+
+
 Version 1.0.0
 
 Release Date: [23/11/2023]
@@ -55,7 +57,8 @@ Known Issues:
 - There is no ability to edit messages in the chat window.
 - There is no ability to delete groups or channels.
 - There is no ability to edit groups or channels names.
-- Private calls and video calls are not currently supported.
+- Private calls and video calls can only be made in one conversation at a time. nop support for multi private chats
+- Private video only shares audio, local video will display but will not stream
 
 
 For more information and updates, please visit the ChatterBox documentation or contact our support team.
@@ -71,3 +74,4 @@ ProgrammingProject_2023_SP3_Team8
 * [Jack Burgess]
 * [Michael Moon]
 * [Tyler Stosic]
+
