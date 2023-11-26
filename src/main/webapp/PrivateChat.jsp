@@ -82,7 +82,7 @@
                 <input type="hidden" name="groupId" value="<%= groupId %>">
 
                 <label style="width: 100%">
-                    <input type="text" style="width: 100%" id="chat-msg-input" name="privateMessageText" placeholder="Enter your message here...">
+                    <input type="text" style="width: 100%" id="chat-msg-input" name="privateMessageText" placeholder="Enter your message here..." required autocomplete="off">
                 </label>
                 <input type="submit"  id="submit-chat-msg" value="send">
             </form>
