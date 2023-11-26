@@ -16,7 +16,7 @@ import java.util.List;
 
 public class ChatServlet extends HttpServlet {
 	
-	private ChatService chatService;
+	private final ChatService chatService;
 	
 	public ChatServlet() {
 		chatService = new ChatService();

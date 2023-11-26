@@ -35,7 +35,6 @@ public class RemoveAdminServlet extends HttpServlet {
 
         }
 
-
         // Send the response
         response.setContentType("text/plain");
         response.setCharacterEncoding("UTF-8");
@@ -46,6 +45,5 @@ public class RemoveAdminServlet extends HttpServlet {
             out.write("Failed to make the user an admin");
         }
         out.flush();
-
     }
 }

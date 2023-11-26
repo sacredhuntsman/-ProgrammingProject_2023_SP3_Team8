@@ -6,7 +6,7 @@ import java.util.List;
 
 public class ChatMessageDao {
 	
-	private Database database;
+	private final Database database;
 	
 	public ChatMessageDao() {
 		database = new Database();
@@ -241,11 +241,7 @@ public class ChatMessageDao {
 			while (resultSet.next()) {
 				role = resultSet.getInt("ChannelRole");
 			}
-			if (role == 1) {
-				return true;
-			} else {
-				return false;
-			}
+            return role == 1;
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		} finally {
@@ -263,11 +259,7 @@ public class ChatMessageDao {
 			while (resultSet.next()) {
 				role = resultSet.getInt("GroupRole");
 			}
-			if (role == 1) {
-				return true;
-			} else {
-				return false;
-			}
+            return role == 1;
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		} finally {
@@ -356,11 +348,7 @@ public class ChatMessageDao {
 			statement.setInt(1, currentUserID);
 			statement.setInt(2, friendUserId);
 			ResultSet resultSet = statement.executeQuery();
-			if (resultSet.next()) {
-				return true;
-			} else {
-				return false;
-			}
+            return resultSet.next();
 		} catch (SQLException e){
 			throw new RuntimeException(e);
 		} finally {

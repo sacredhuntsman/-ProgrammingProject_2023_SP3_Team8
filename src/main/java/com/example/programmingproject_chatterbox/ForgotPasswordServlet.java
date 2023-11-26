@@ -13,12 +13,10 @@ import javax.mail.internet.MimeMessage;
 import java.io.IOException;
 import java.security.SecureRandom;
 import java.util.Properties;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+
 
 @WebServlet(name = "ForgotPassword", value = "/forgotpassword")
 public class ForgotPasswordServlet extends HttpServlet {
-	private String message;
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -88,17 +86,6 @@ public class ForgotPasswordServlet extends HttpServlet {
 		//response.setContentType("text/html");
 		request.getRequestDispatcher("/ForgotPassword.jsp").forward(request, response);
 	}
-
-	private static String generateResetToken() {
-		// Generate a random token (you may use a more secure method)
-		SecureRandom random = new SecureRandom();
-		byte[] bytes = new byte[20];
-		random.nextBytes(bytes);
-		return org.apache.commons.codec.binary.Base64.encodeBase64URLSafeString(bytes);
-	}
-
-
-
 
 	public void destroy() {
 	}

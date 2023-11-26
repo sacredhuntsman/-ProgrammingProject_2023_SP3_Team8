@@ -1,6 +1,6 @@
 package com.example.programmingproject_chatterbox;
 
-import Classes.ChatService;
+
 import Classes.Database;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -8,13 +8,8 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import java.io.PrintWriter;
-
 import java.io.IOException;
-import java.sql.SQLException;
-
 import com.azure.communication.common.CommunicationIdentifier;
-
 import Classes.Rooms2;
 
 @WebServlet(name = "StartVOIPServlet", value = "/start-voip")
@@ -37,7 +32,7 @@ public class StartVOIPServlet extends HttpServlet {
 		System.out.println(roomID);
 
 		// Create Identity which also adds to room
-		CommunicationIdentifier userIdentity = room.addOrUpdateParticipants(roomID);
+		CommunicationIdentifier userIdentity = Rooms2.addOrUpdateParticipants(roomID);
 		System.out.println(userIdentity);
 
 		// Create token

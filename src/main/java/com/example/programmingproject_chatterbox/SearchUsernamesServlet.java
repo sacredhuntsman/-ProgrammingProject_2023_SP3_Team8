@@ -1,7 +1,7 @@
 package com.example.programmingproject_chatterbox;
+
 import java.io.IOException;
 import java.util.List;
-
 import Classes.Database;
 import com.microsoft.applicationinsights.core.dependencies.google.gson.Gson;
 import jakarta.servlet.ServletException;

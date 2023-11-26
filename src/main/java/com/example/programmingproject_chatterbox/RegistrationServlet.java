@@ -1,40 +1,21 @@
 package com.example.programmingproject_chatterbox;
 
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.PrintWriter;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
-import java.sql.SQLException;
-import java.text.SimpleDateFormat;
-import java.sql.Connection;
-
 import java.text.SimpleDateFormat;
 import java.util.*;
-
 import Classes.User;
-import Classes.UserData;
-
 import Classes.Database;
 import Classes.FileStore;
-
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.MultipartConfig;
-
 import static Classes.PasswordValidations.hashPassword;
 import static Classes.UserData.users;
-
 import jakarta.servlet.http.Part;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-
-import com.azure.storage.blob.BlobClient;
-import com.azure.storage.blob.BlobServiceClient;
-import com.azure.storage.blob.BlobServiceClientBuilder;
-
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
@@ -116,7 +97,6 @@ public class RegistrationServlet extends HttpServlet {
 			//return;
 			passwordError = "Passwords do not match";
 			errors.add(passwordError);
-
 		}
 
 		if (age < 13) {
@@ -157,7 +137,7 @@ public class RegistrationServlet extends HttpServlet {
 					.append("&ageError=").append(ageError)
 					.append("&passwordError=").append(passwordError);
 
-			response.sendRedirect("Registration.jsp" + errorParams.toString());
+			response.sendRedirect("Registration.jsp" + errorParams);
 			return;
 		}
 
@@ -195,12 +175,9 @@ public class RegistrationServlet extends HttpServlet {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
 		// Redirect to a success page or login page after registration
 		System.out.println(users.toString());
 		response.sendRedirect("Login.jsp"); // Replace with your success page URL
-
-
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -248,30 +225,20 @@ public class RegistrationServlet extends HttpServlet {
 				Database db = new Database();
 
 				// Generate a unique random string for account verification
-
-
-
-
 				//extract the current url
 
 				int lastSlashIndex = url.lastIndexOf('/');
 				if (lastSlashIndex != -1) {
 					url = url.substring(0, lastSlashIndex + 1);
 				}
-
 				// Set the actual message
 				EmailMessage.setText("Click the following link to authorise your account: " + url + "authoriseAccount?" + "email=" + email + "&token=" + authoriseToken);
-
 				// Send message
 				Transport.send(EmailMessage);
-
 				System.out.println("Account authorization email sent successfully.");
-
 
 			} catch (MessagingException e) {
 				e.printStackTrace();
 			}
-
 	}
-
 }

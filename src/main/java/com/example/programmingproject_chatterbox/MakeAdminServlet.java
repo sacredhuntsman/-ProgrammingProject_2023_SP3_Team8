@@ -6,8 +6,6 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.eclipse.tags.shaded.org.apache.xpath.operations.Bool;
-
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -37,11 +35,6 @@ public class MakeAdminServlet extends HttpServlet {
             success = database.makeChannelAdmin(channelId, userId);
 
         }
-
-
-
-
-
         // Send the response
         response.setContentType("text/plain");
         response.setCharacterEncoding("UTF-8");

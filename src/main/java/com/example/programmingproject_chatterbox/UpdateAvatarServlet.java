@@ -8,9 +8,9 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.Part;
-
 import java.io.IOException;
 import java.io.InputStream;
+
 @WebServlet(name = "UpdateAvatarServlet", urlPatterns = { "/updateAvatar" })
 @MultipartConfig(location = "/", // Temporary directory for file uploads
         fileSizeThreshold = 0, // No file size threshold

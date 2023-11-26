@@ -2,26 +2,17 @@ package Classes;
 
 import Classes.Database;
 
-import java.io.BufferedReader;
+
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.time.OffsetDateTime;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Properties;
-import java.util.Set;
+import java.util.*;
 
 import com.azure.communication.rooms.models.AddOrUpdateParticipantsResult;
 import com.azure.communication.rooms.models.CommunicationRoom;
 import com.azure.communication.rooms.models.CreateRoomOptions;
 import com.azure.communication.rooms.models.ParticipantRole;
-import com.azure.communication.rooms.models.RemoveParticipantsResult;
 import com.azure.communication.rooms.models.RoomParticipant;
-import com.azure.communication.rooms.models.UpdateRoomOptions;
-import com.azure.communication.rooms.implementation.models.CommunicationErrorResponseException;
 import com.azure.communication.common.CommunicationIdentifier;
 import com.azure.communication.common.CommunicationUserIdentifier;
 import com.azure.communication.common.implementation.CommunicationConnectionString;
@@ -30,9 +21,6 @@ import com.azure.communication.rooms.RoomsClientBuilder;
 import com.azure.communication.identity.CommunicationIdentityClient;
 import com.azure.communication.identity.CommunicationIdentityClientBuilder;
 import com.azure.communication.identity.models.CommunicationTokenScope;
-import com.azure.core.http.rest.PagedIterable;
-import com.azure.core.http.rest.PagedResponse;
-import com.azure.core.util.Context;
 import com.azure.core.credential.AccessToken;
 import com.azure.core.credential.AzureKeyCredential;
 
@@ -138,7 +126,7 @@ public class Rooms2 {
         CommunicationIdentityClient communicationIdentityClient = new CommunicationIdentityClientBuilder()
                 .connectionString(CONNECTION_STRING)
                 .buildClient();
-        List<CommunicationTokenScope> scopes = new ArrayList<>(Arrays.asList(CommunicationTokenScope.VOIP));
+        List<CommunicationTokenScope> scopes = new ArrayList<>(Collections.singletonList(CommunicationTokenScope.VOIP));
 
         AccessToken accessToken = communicationIdentityClient.getToken((CommunicationUserIdentifier) userIdentity, scopes);
         OffsetDateTime expiresAt = accessToken.getExpiresAt();

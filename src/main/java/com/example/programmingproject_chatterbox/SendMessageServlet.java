@@ -10,8 +10,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.io.PrintWriter;
 import Classes.SimpleStringEncryptor;
-
-
 import java.io.IOException;
 import java.sql.SQLException;
 
@@ -28,8 +26,7 @@ public class SendMessageServlet extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// Get the groupId, senderId, recipientId, and messageText from the request
-;
-		HttpSession session = request.getSession();
+        HttpSession session = request.getSession();
 		Database database = new Database();
 		int groupId = Integer.parseInt(request.getParameter("groupId"));
 		int channelId = Integer.parseInt(request.getParameter("channelId"));
@@ -44,7 +41,6 @@ public class SendMessageServlet extends HttpServlet {
 			throw new RuntimeException("Error encrypting messageText", e);
 		}
 
-
 		// Send the message
 		try {
 			chatService.sendMessage(groupId, channelId, senderId, recipientId, messageText);
@@ -58,5 +54,4 @@ public class SendMessageServlet extends HttpServlet {
 			throw new RuntimeException(e);
 		}
 	}
-
 }

@@ -8,7 +8,7 @@ import java.util.List;
 
 public class ChatService {
 	
-	private ChatMessageDao chatMessageDao;
+	private final ChatMessageDao chatMessageDao;
 	
 	public ChatService() {
 		chatMessageDao = new ChatMessageDao();
@@ -105,11 +105,7 @@ public class ChatService {
 			statement.setInt(1, channelId);
 			statement.setInt(2, userId);
 			ResultSet resultSet = statement.executeQuery();
-			if (resultSet.next()) {
-				return true;
-			} else {
-				return false;
-			}
+            return resultSet.next();
 		} catch (SQLException e){
 			throw new RuntimeException(e);
 		} finally {

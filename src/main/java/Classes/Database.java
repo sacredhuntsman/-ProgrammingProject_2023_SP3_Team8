@@ -945,9 +945,7 @@ public class Database {
 
             if (resultSet.next()) {
                 int status = resultSet.getInt("status");
-                if (status == 1) {
-                    return true;
-                }
+                return status == 1;
             }
             return false;
         } catch (SQLException e) {

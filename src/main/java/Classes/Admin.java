@@ -1,9 +1,9 @@
 package Classes;
 
 public class Admin {
-	private String adminUsername;
-	private String adminPassword;
-	private String adminEmail;
+	private final String adminUsername;
+	private final String adminPassword;
+	private final String adminEmail;
 	
 
 	public Admin(String adminUsername, String adminPassword, String adminEmail){

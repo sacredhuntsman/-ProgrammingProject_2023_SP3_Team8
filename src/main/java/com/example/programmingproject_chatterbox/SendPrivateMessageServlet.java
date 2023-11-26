@@ -9,7 +9,6 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
@@ -41,11 +40,9 @@ public class SendPrivateMessageServlet extends HttpServlet {
 			throw new RuntimeException("Error encrypting messageText", e);
 		}
 
-
 		// Send the message
 		try {
 			chatService.sendPrivateMessage(groupId, senderId, messageText);
-
 			// Send a success response
 			response.setContentType("application/json");
 			response.setCharacterEncoding("UTF-8");
@@ -55,5 +52,4 @@ public class SendPrivateMessageServlet extends HttpServlet {
 			throw new RuntimeException(e);
 		}
 	}
-
 }

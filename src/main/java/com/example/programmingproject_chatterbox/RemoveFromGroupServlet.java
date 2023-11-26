@@ -33,7 +33,6 @@ public class RemoveFromGroupServlet extends HttpServlet {
             success = database.removeFromChannel(channelId, userId);
         }
 
-
         // Send the response
         response.setContentType("text/plain");
         response.setCharacterEncoding("UTF-8");
@@ -45,8 +44,6 @@ public class RemoveFromGroupServlet extends HttpServlet {
             out.write("Failed to remove the user from the group");
             response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
-
         out.flush();
-
     }
 }

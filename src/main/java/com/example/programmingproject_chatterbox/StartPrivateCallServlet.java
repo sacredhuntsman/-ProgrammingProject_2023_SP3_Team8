@@ -1,20 +1,11 @@
 package com.example.programmingproject_chatterbox;
 
-import Classes.ChatService;
-import Classes.Database;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
-import java.io.PrintWriter;
-
 import java.io.IOException;
-import java.sql.SQLException;
-
-import com.azure.communication.common.CommunicationIdentifier;
-
 import Classes.Rooms2;
 
 @WebServlet(name = "StartPrivateCallServlet", value = "/start-private-call")

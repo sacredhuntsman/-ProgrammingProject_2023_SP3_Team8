@@ -7,7 +7,6 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -24,7 +23,6 @@ public class RemoveContactServlet extends HttpServlet {
         deleteContact(currentUser, friendUserId, privateGroupId);
 
         // Redirect back to the previous page
-
     }
 
     private void deleteContact(int currentUser, int friendUserId, int privateGroupId) {
@@ -33,7 +31,6 @@ public class RemoveContactServlet extends HttpServlet {
         try {
             connection = database.getConnection();
 
-
             //Delete the entry from PrivateChatMessageDB
             String deletePrivateChatMessageQuery = "DELETE FROM PrivateChatMessageDB WHERE PrivateGroupID = ?";
             try (PreparedStatement preparedStatement = connection.prepareStatement(deletePrivateChatMessageQuery)) {
@@ -41,21 +38,18 @@ public class RemoveContactServlet extends HttpServlet {
                 preparedStatement.executeUpdate();
             }
 
-
             // Delete the entry from PrivateGroupMembershipDB
             String deleteMembershipQuery = "DELETE FROM PrivateGroupMembershipDB WHERE PrivateGroupID = ?";
             try (PreparedStatement preparedStatement = connection.prepareStatement(deleteMembershipQuery)) {
                 preparedStatement.setInt(1, privateGroupId);
                 preparedStatement.executeUpdate();
             }
-
             //delete the private group
             String deletePrivateGroupQuery = "DELETE FROM PrivateGroupDB WHERE PrivateGroupID = ?";
             try (PreparedStatement preparedStatement = connection.prepareStatement(deletePrivateGroupQuery)) {
                 preparedStatement.setInt(1, privateGroupId);
                 preparedStatement.executeUpdate();
             }
-
             // Delete the entry from FriendDB
             String deleteFriendQuery = "DELETE FROM FriendDB WHERE UserID = ? AND FriendUserID = ?";
             try (PreparedStatement preparedStatement = connection.prepareStatement(deleteFriendQuery)) {
@@ -69,7 +63,6 @@ public class RemoveContactServlet extends HttpServlet {
                 preparedStatement.setInt(2, currentUser);
                 preparedStatement.executeUpdate();
             }
-
             // Additional logic if needed...
 
         } catch (SQLException e) {
@@ -85,6 +78,4 @@ public class RemoveContactServlet extends HttpServlet {
             }
         }
     }
-
-
 }

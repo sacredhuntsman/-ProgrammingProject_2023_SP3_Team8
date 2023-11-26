@@ -1,18 +1,14 @@
 package Classes;
 
-import com.azure.storage.blob.BlobClientBuilder;
+
 import com.azure.storage.blob.BlobContainerClient;
 import com.azure.storage.blob.BlobContainerClientBuilder;
 import com.azure.storage.blob.models.BlobItem;
-import com.azure.storage.blob.models.BlobProperties;
-
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
-import java.io.InputStream;
 
 public class FileStore {
     private String connectionString;

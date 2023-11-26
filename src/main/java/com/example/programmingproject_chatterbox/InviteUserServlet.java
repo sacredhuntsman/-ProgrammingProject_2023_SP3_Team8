@@ -3,9 +3,6 @@ package com.example.programmingproject_chatterbox;
 import Classes.Database;
 
 import java.io.IOException;
-import java.util.List;
-
-import com.microsoft.applicationinsights.core.dependencies.google.gson.Gson;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;

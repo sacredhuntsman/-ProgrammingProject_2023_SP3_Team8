@@ -3,17 +3,12 @@ package com.example.programmingproject_chatterbox;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
 import java.util.List;
-import java.util.Date;
-
-import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-
 import Classes.ChatService;
 import Classes.Message;
 import Classes.SimpleStringEncryptor;
@@ -108,13 +103,9 @@ public class FetchNewMessagesServlet extends HttpServlet {
                 throw new RuntimeException(e);
             }
         }
-
         json.append("]");
-
         return json.toString();
     }
-
-
 
     public void destroy() {
     }
