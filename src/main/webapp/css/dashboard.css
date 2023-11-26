@@ -225,7 +225,7 @@ body, html {
     color: #fff;
     text-decoration: underline;
 }
-#addGroupForm {
+#addGroupForm, #addFriendForm {
     background-color: #494949;
     border-radius: 14px;
     padding: 4px;
@@ -252,7 +252,7 @@ body, html {
     margin: 10px;
     cursor: pointer;
 }
-#cancelAddChannel {
+#cancelAddChannel, #cancelAddContact {
     color: #f77171;
     width: 100%;
     position: relative;
@@ -261,7 +261,7 @@ body, html {
     text-decoration: underline;
     cursor: pointer;
 }
-#addGroupContainer {
+#addGroupContainer, #addContactContainer {
     border-bottom: solid 1px #595959;
 }
 .side-bar-m {

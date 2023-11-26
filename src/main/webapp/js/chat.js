@@ -1,4 +1,6 @@
-function fetchNewMessages(groupId, channelId, urlPath, existingMessagesCount) {
+function fetchNewMessages(groupId, channelId, urlPath, existingMessagesCount, test) {
+
+
 
     let _url = "";
     let msgs = [];

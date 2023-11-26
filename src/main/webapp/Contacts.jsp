@@ -102,7 +102,7 @@
                         output.println("<a href=\"" + privateChatURL + "\">" + userName + "</a>");
 
                         // Add a button for deleting the contact with an icon and confirmation
-                        output.print("<form style=\"display: inline;\">");
+                        output.print("<form style=\"display: inline;\" class=\">");
                         output.print("<input type=\"hidden\" name=\"friendUserId\" value=\"" + friendUserId + "\">");
                         output.print("<input type=\"hidden\" name=\"privateGroupId\" value=\"" + privateGroupId + "\">");
                         output.print("<button type=\"button\" class=\"delete-button\" onclick=\"confirmRemoveContact(" + friendUserId + ", " + privateGroupId + ")\"><img src='images/delete-friend.png' alt='Delete Icon' style='width: 20px; height: 20px;'></button>");
