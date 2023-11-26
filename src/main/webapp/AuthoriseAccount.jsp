@@ -23,14 +23,14 @@
             String email = request.getParameter("email");
         %>
 
-        <h1>Verify Account</h1>
-        <p>Click the button below to verify your account.</p>
+        <h1 style="font-family: 'Noto Sans', sans-serif;color: #fff;">Verify Account</h1>
+        <p style="color: #fff;font-family: 'Noto Sans', sans-serif;">Click the button below to verify your account.</p>
 
         <form action="authoriseAccount" method="post">
 
             <input type="hidden" name="email" value="<%= email %>">
             <input type="hidden" name="token" value="<%= token %>">
-            <input type="submit" value="Verify Account">
+            <input type="submit" value="Verify Account" style="margin: 12px auto;">
         </form>
     </div>
 </div>
