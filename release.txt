@@ -1,0 +1,73 @@
+ChatterBox Release Notes
+
+Version 1.0.0
+
+Release Date: [23/11/2023]
+
+Introduction:
+ChatterBox is a feature-rich messaging and collaboration platform designed to facilitate secure and seamless communication within groups and channels. This release introduces several enhancements and improvements to the user interface and functionality.
+
+Current Features:
+1. **User Search and Invitation:**
+   - The user search functionality has been improved to provide a more intuitive experience.
+   - Users can now search for other members by username and invite them to groups or channels directly from the interface.
+
+2. **Add Friend:**
+   - Users can now add other members as friends directly from the interface.
+   - The "Add Friend" feature is available in the contact section.
+   - Users can add friends directly from the members list or by searching for a specific user.
+
+3. **Improved Styling:**
+   - The user interface has been updated with improved styling for a more visually appealing experience.
+   - Icons are now displayed inline with usernames in search results.
+
+4. **Logout functionality:**
+   - Users can now log out of the application by clicking on the "Logout" button in the navigation bar which clears their session information
+
+5. **Message Timestamps:**
+   - Message timestamps are now displayed in the chat window with the local timezone for a more intuitive experience.
+
+6. **Messaging features:**
+   - Users can now send messages to other members in the group or channel.
+   - Messages are displayed in the chat window with the user's name and profile picture.
+   - Users can also send messages to direct contacts privately and securely
+
+7. **Group and channel restrictions:**
+    - Users can now create groups and channels with restricted access.
+    - Group and channel owners can invite other members to join their group or channel.
+    - Group admin owners can also remove members from their group or channel.
+
+8. **Video and Audio Calling:**
+    - Users can now initiate video and audio calls with other members within a channel.
+
+
+Bug Fixes:
+- Resolved issues related to contacts lists duplicating content.
+- Resolved overloading of page window with unused css imports
+- Fixed styling inconsistencies for a more cohesive and polished look.
+- Fixed issues related to the user search functionality.
+- Fixed bug with non-active accounts unable to get past login screen
+
+
+
+Known Issues:
+- There is no ability to delete messages from the chat window.
+- There is no ability to edit messages in the chat window.
+- There is no ability to delete groups or channels.
+- There is no ability to edit groups or channels names.
+- Private calls and video calls are not currently supported.
+
+
+For more information and updates, please visit the ChatterBox documentation or contact our support team.
+
+Thank you for using ChatterBox!
+
+[Chatterbox]
+## Authors
+ProgrammingProject_2023_SP3_Team8
+* [Alexander Cowan]
+* [Avrohom Rosenfeld]
+* [Brendan Libbis]
+* [Jack Burgess]
+* [Michael Moon]
+* [Tyler Stosic]
