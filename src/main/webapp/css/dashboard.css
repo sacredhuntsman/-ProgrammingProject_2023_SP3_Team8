@@ -225,6 +225,51 @@ body, html {
     color: #fff;
     text-decoration: underline;
 }
+#addGroupForm {
+    background-color: #494949;
+    border-radius: 14px;
+    padding: 4px;
+    margin-top: 12px;
+}
+.sidebar-text-input {
+    background-color: #f2f2f2;
+    border: none;
+    padding: 4px;
+    border-radius: 4px;
+    color: #000;
+    width: 90%;
+    max-width: 200px;
+    margin: 10px;
+}
+.sidebar-submit-button {
+    background-color: #EFE84B !important;
+    border: none;
+    border-radius: 14px;
+    padding: 4px;
+    color: #000;
+    width: 90%;
+    max-width: 200px;
+    margin: 10px;
+    cursor: pointer;
+}
+#cancelAddChannel {
+    color: #f77171;
+    width: 100%;
+    position: relative;
+    top: -10px;
+    text-align: center;
+    text-decoration: underline;
+    cursor: pointer;
+}
+#addGroupContainer {
+    border-bottom: solid 1px #595959;
+}
+.side-bar-m {
+    overflow-y: scroll;
+}
+#avatarImage {
+    color: #fff;
+}
 @media only screen and (max-width: 600px) {
     .side-bar, .info-bar {
         display: none !important;
