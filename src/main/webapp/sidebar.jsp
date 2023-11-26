@@ -110,8 +110,9 @@
             <ul class="flex flex-col">
                 <li class="text-sm"><a href="${pageContext.request.contextPath}/Profile.jsp">Edit Profile</a></li>
                 <li class="text-sm"><a href="mailto:notarealemail@chatterbox.dev?subject=Help%20Request">Help</a></li>
-                <li class="text-sm"><a href="${pageContext.request.contextPath}/login?action=logout">Logout</a></li>
+                <li class="text-sm"><a href="${pageContext.request.contextPath}/logout">Logout</a></li>
             </ul>
+
         </div>
 
     </div>
