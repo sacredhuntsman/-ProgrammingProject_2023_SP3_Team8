@@ -142,7 +142,7 @@ public class Database {
 
         try {
             connection = getConnection();
-            String query = "INSERT INTO UserDB (Username, FirstName, LastName, Email, Password, DateOfBirth, status) VALUES (?, ?, ?, ?, ?, ?, ?)";
+            String query = "INSERT INTO UserDB (Username, FirstName, LastName, Email, Password, DateOfBirth, status, Token) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
             preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, user.getUsername());
             preparedStatement.setString(2, user.getFirstName());
@@ -151,6 +151,7 @@ public class Database {
             preparedStatement.setString(5, user.getPassword());
             preparedStatement.setString(6, user.getAge());
             preparedStatement.setString(7, "0");
+            preparedStatement.setString(8, user.getToken());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -960,15 +961,15 @@ public class Database {
 
     }
     //update the userDB to make account active
-    public boolean makeAccountActive(String username) {
+    public boolean makeAccountActive(String email) {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
 
         try {
             connection = getConnection();
-            String query = "UPDATE UserDB SET status = 1 WHERE Username = ?";
+            String query = "UPDATE UserDB SET status = 1 WHERE Email = ?";
             preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setString(1, username);
+            preparedStatement.setString(1, email);
 
             int rowsAffected = preparedStatement.executeUpdate();
             return rowsAffected > 0; // Returns true if at least one row was updated
@@ -982,5 +983,29 @@ public class Database {
     }
 
 
+    public String getToken(String email) {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        String token = "";
+        try {
+            connection = getConnection();
+            String query = "SELECT Token FROM UserDB WHERE Email = ?";
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, email);
+            resultSet = preparedStatement.executeQuery();
 
+            if (resultSet.next()) {
+                token = resultSet.getString("Token");
+            }
+            return token;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return token;
+        } finally {
+            closeResultSet(resultSet);
+            closePreparedStatement(preparedStatement);
+            closeConnection(connection);
+        }
+    }
 }

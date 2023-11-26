@@ -7,19 +7,21 @@ public class User {
 	private String email;
 	private String password; // Password should be securely hashed and salted in practice
 	private String ageString;
+	private String token;
 
 	// Constructors
 	public User() {
 		// Default constructor
 	}
 
-	public User(String username, String firstName, String lastName, String email, String password, String ageString) {
+	public User(String username, String firstName, String lastName, String email, String password, String ageString, String token) {
 		this.username = username;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
 		this.password = password;
 		this.ageString = ageString;
+		this.token = token;
 	}
 
 	// Getter and Setter methods for each field
@@ -60,6 +62,14 @@ public class User {
 		this.ageString = ageString;
 	}
 
+	public void setToken(String authoriseToken) {
+		this.token = authoriseToken;
+	}
+
+	public String getToken() {
+		return token;
+	}
+
 	@Override
 	public String toString() {
 		return "User{" +
@@ -70,4 +80,6 @@ public class User {
 				", password='" + password + '\'' +
 				'}';
 	}
+
+
 }

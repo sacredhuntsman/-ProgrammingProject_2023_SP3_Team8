@@ -12,10 +12,7 @@ import java.text.SimpleDateFormat;
 import java.sql.Connection;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 import Classes.User;
 import Classes.UserData;
@@ -30,11 +27,17 @@ import jakarta.servlet.annotation.MultipartConfig;
 
 import static Classes.PasswordValidations.hashPassword;
 import static Classes.UserData.users;
+
+import jakarta.servlet.http.Part;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import com.azure.storage.blob.BlobClient;
 import com.azure.storage.blob.BlobServiceClient;
 import com.azure.storage.blob.BlobServiceClientBuilder;
+
+import javax.mail.*;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 
 @WebServlet(name = "Registration", value = "/registration")
 @MultipartConfig(location = "/", // Temporary directory for file uploads
@@ -159,6 +162,12 @@ public class RegistrationServlet extends HttpServlet {
 		}
 
 		// if neither email or password taken, create new user in database
+		String authoriseToken = UUID.randomUUID().toString();
+		String url = request.getRequestURL().toString();
+		int lastSlashIndex = url.lastIndexOf('/');
+		if (lastSlashIndex != -1) {
+			url = url.substring(0, lastSlashIndex + 1);
+		}
 
 		User newUser = new User();
 		newUser.setUsername(username);
@@ -167,6 +176,9 @@ public class RegistrationServlet extends HttpServlet {
 		newUser.setEmail(email);
 		newUser.setPassword(hashPassword(password));
 		newUser.setAge(ageString);
+		newUser.setToken(authoriseToken);
+
+		sendRegistrationEmail(email, url, authoriseToken);
 
 		// insert user into database
 		try {
@@ -197,6 +209,69 @@ public class RegistrationServlet extends HttpServlet {
 	}
 
 	public void destroy() {
+	}
+
+	public void sendRegistrationEmail(String email, String url, String authoriseToken) {
+		// Create a Properties object to contain connection configuration information
+
+		Database database = new Database();
+
+			String fromEmail = "chatterbox-reset@outlook.com";
+			String password = "Chatterbox2023";
+
+			// Set up the properties for the mail server
+			Properties properties = new Properties();
+			properties.put("mail.smtp.host", "smtp-mail.outlook.com");
+			properties.put("mail.smtp.port", "587");
+			properties.put("mail.smtp.auth", "true");
+			properties.put("mail.smtp.starttls.enable", "true");
+
+			Session session = Session.getDefaultInstance(properties, new Authenticator() {
+				protected PasswordAuthentication getPasswordAuthentication() {
+					return new PasswordAuthentication(fromEmail, password);
+				}
+			});
+
+			System.out.println("DEBUG1");
+			try {
+				// Create a default MimeMessage object
+				Message EmailMessage = new MimeMessage(session);
+
+				// Set From: header field of the header
+				EmailMessage.setFrom(new InternetAddress(fromEmail));
+
+				// Set To: header field of the header
+				EmailMessage.setRecipients(Message.RecipientType.TO, InternetAddress.parse(email));
+
+				// Set Subject: header field
+				EmailMessage.setSubject("Account verification");
+				Database db = new Database();
+
+				// Generate a unique random string for account verification
+
+
+
+
+				//extract the current url
+
+				int lastSlashIndex = url.lastIndexOf('/');
+				if (lastSlashIndex != -1) {
+					url = url.substring(0, lastSlashIndex + 1);
+				}
+
+				// Set the actual message
+				EmailMessage.setText("Click the following link to authorise your account: " + url + "authoriseAccount?" + "email=" + email + "&token=" + authoriseToken);
+
+				// Send message
+				Transport.send(EmailMessage);
+
+				System.out.println("Account authorization email sent successfully.");
+
+
+			} catch (MessagingException e) {
+				e.printStackTrace();
+			}
+
 	}
 
 }
