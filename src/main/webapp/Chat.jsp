@@ -109,7 +109,7 @@
                 <input type="hidden" name="groupId" value="<%= groupId %>">
                 <input type="hidden" name="channelId" value="<%= channelId %>">
                 <label style="width: 100%">
-                    <input type="text" style="width: 100%" id="chat-msg-input" name="messageText" placeholder="Enter your message here..." style="width: 100%">
+                    <input type="text" style="width: 100%" id="chat-msg-input" name="messageText" placeholder="Enter your message here..." style="width: 100%" required>
                 </label>
                 <input type="submit"  id="submit-chat-msg" value="send">
             </form>
