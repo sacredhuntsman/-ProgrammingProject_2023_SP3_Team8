@@ -86,6 +86,10 @@
                 </label>
                 <input type="submit"  id="submit-chat-msg" value="send">
             </form>
+
+            <form id="voip-form" action="start-private-call" method="post">
+                <input type="submit"  id="submit-call" value="Start Call">
+            </form>
         </div>
     </div>
 

@@ -373,10 +373,6 @@ public class Database {
                 String lastName = resultSet.getString("LastName");
                 String email = resultSet.getString("Email");
                 String password = resultSet.getString("Password");
-
-                // print all data
-                System.out.println("User ID: " + userId + ", Username: " + username + ", First Name: " + firstName
-                        + ", Last Name: " + lastName + ", Email: " + email + ", Password: " + password);
             }
         } catch (SQLException e) {
             e.printStackTrace();

@@ -20,8 +20,6 @@ public class FileStore {
 
     public FileStore() {
         loadCredentials();
-        System.out.println(connectionString);
-        System.out.println(containerName);
     }
 
     private void loadCredentials() {
@@ -47,7 +45,6 @@ public class FileStore {
         for (BlobItem blobItem : blobContainerClient.listBlobs()) {
             files.add(blobItem.getName());
         }
-        System.out.println(files);
         return files;
     }
 
