@@ -42,7 +42,7 @@
             <input type="hidden" name="username" value="<%= username %>">
             <input type="hidden" name="token" value="<%= token %>">
 
-            <input type="submit" value="Reset Password">
+            <input type="submit" value="Reset Password" style="margin: 12px auto;">
         </form>
     </div>
 </div>
