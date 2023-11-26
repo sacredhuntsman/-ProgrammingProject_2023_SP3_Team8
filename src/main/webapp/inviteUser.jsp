@@ -4,6 +4,20 @@
 <html lang="en">
 <head>
     <title>Invite User to Group</title>
+    <style>
+        .user-icon {
+            width: 30px; /* Adjust the width as needed */
+            height: 30px; /* Adjust the height as needed */
+            border-radius: 50%; /* Make it circular */
+            margin-right: 10px; /* Add some space between the icon and the username */
+        }
+
+        .list-item {
+            display: flex; /* Use flexbox to align items horizontally */
+            align-items: center; /* Center items vertically */
+            margin-bottom: 10px; /* Add space between items */
+        }
+    </style>
 </head>
 <body>
 <form action="invite" id="inviteForm" method="post">
@@ -40,9 +54,17 @@
 
         usernames.forEach(username => {
             const userItem = document.createElement('div');
+            userItem.className = 'list-item';
             // add cursor style
+
             userItem.style.cursor = 'pointer';
             userItem.textContent = username;
+
+            const userIcon = document.createElement('img');
+            userIcon.src = 'https://chatterboxavatarstorage.blob.core.windows.net/blob/' + username; // Replace with actual URL
+            userIcon.alt = 'User Icon';
+            userIcon.className = 'user-icon';
+            userItem.appendChild(userIcon);
             userItem.onclick = function() {
                 // Set the selected username to the input field
                 document.querySelector('input[name="userName"]').value = username;

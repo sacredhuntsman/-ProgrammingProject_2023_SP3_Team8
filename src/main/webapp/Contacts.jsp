@@ -90,7 +90,7 @@
                     ResultSet resultSetGroupID = preparedStatementGroupID.executeQuery();
 
                     if (resultSetGroupID.next()) {
-                        System.out.println(resultSetGroupID);
+
                         int privateGroupId = resultSetGroupID.getInt("PrivateGroupID");
                         String userName = resultSetUserName.getString("Username");
 
