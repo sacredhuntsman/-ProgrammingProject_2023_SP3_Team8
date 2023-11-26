@@ -22,10 +22,10 @@
 <body>
 <h1 class="text-white">Find a friend</h1>
 <form action="add-contact" id="addFriendForm" method="post">
-    <label class="text-white">Enter User Name:</label>
+    <label class="text-white" style="margin-top: 12px">Enter User Name:</label>
     <!-- Hidden input field to capture the groupId from the URL -->
 
-    <input type="text" name="UserName" oninput="searchFriendUsernames(this)">
+    <input type="text" name="UserName" oninput="searchFriendUsernames(this)" class="sidebar-text-input">
     <div id="friendUserResults" style="display: none;"></div>
     <input type="submit" value="Add Friend" style="display: none;">
 </form>
