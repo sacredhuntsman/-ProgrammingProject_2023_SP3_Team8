@@ -111,8 +111,9 @@
                 <li class="text-sm"><a href="${pageContext.request.contextPath}/Profile.jsp">Edit Profile</a></li>
                 <li class="text-sm">Manage Chat Rooms</li>
                 <li class="text-sm">Help</li>
-                <li class="text-sm"><a href="${pageContext.request.contextPath}/login?action=logout">Logout</a></li>
+                <li class="text-sm"><a href="${pageContext.request.contextPath}/logout">Logout</a></li>
             </ul>
+
         </div>
 
     </div>
