@@ -60,8 +60,16 @@ public class ResetPasswordServlet extends HttpServlet {
 		System.out.println(username);
 		updatePassword(username, newPassword);
 
-		// Redirect to a success page
-		response.sendRedirect("Login.jsp?success=Password Reset was successful");
+		//check to see if there is an active session.
+		//if no active session, return to login page. If active session, return to profile page
+		//if no active session, return to login page. If active session, return to profile page
+		if (request.getSession(false) == null) {
+			response.sendRedirect("Login.jsp?success=Password Reset was successful");
+			//response.sendRedirect("Login.jsp?success=Password Reset was successful");
+		} else {
+			response.sendRedirect("Profile.jsp?success=Password Reset was successful");
+		}
+
 	}
 
 	private void updatePassword(String username, String newPassword) {

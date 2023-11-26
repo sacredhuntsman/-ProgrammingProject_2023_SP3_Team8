@@ -73,6 +73,34 @@
                 </label>
                 <input type="submit" class="btn-div">
             </form>
+            <%-- Link to the reset password page --%>
+            <%
+                String sessionId = request.getSession().getId();
+            %>
+            <% String success = request.getParameter("success");
+                if (success != null && !success.isEmpty()) { %>
+            <p style="color: lightgreen;"><%= success %></p>
+            <% } %>
+            <form id="resetPasswordForm" action="resetPassword" method="post">
+                <input type="hidden" name="username" value="${sessionScope.userName}">
+                <label>
+                    <input type="hidden" name="token" value="<%=sessionId%>">
+                </label>
+                    <a href="#" class="btn-div" style="display: inline-block; vertical-align: middle;" onclick="navigateToResetPassword()">Update Password</a>
+            </form>
+
+
+            <script>
+                function navigateToResetPassword() {
+                    const form = document.getElementById('resetPasswordForm');
+                    const username = form.elements['username'].value;
+                    window.location.href = 'resetPassword?username=' + encodeURIComponent(username) + "&token=<%=sessionId%>"
+                }
+            </script>
+
+
+
+
         </div>
 
     </div>
