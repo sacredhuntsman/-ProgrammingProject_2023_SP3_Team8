@@ -89,23 +89,12 @@ function FetchPrivateMessages(groupId, urlPath, existingMessagesCount) {
 
 function formatMessage(isSender, userName, formattedTimestamp, messageText) {
 
-    // Input date string
-    var inputDateStr = formattedTimestamp;
+    var formattedDate = convertUTCDateToLocalDate(new Date(formattedTimestamp));
 
-    // Parse the input date string into a JavaScript Date object
-    var inputDate = new Date(inputDateStr);
+    // convert the date and time to match this format Time AM/PM day/month/Year
+    formattedDate = formattedDate.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true }) + " " + formattedDate.toLocaleString('en-US', { day: 'numeric', month: 'numeric', year: 'numeric' });
 
-    // Format the date as "hh:mma dd/MM"
-    var formattedDate = inputDate.toLocaleTimeString('en-US', {
-        hour: '2-digit',
-        minute: '2-digit',
-        hour12: true,
-    }) + ' ' + inputDate.toLocaleDateString('en-US', {
-        day: '2-digit',
-        month: '2-digit',
-    });
-
-    console.log(formattedDate); // Output: "10:42AM 08/11"
+    console.log(formattedDate);
 
     return `
       <div class="chat-message w-full flex my-6 ${isSender}">
@@ -123,6 +112,16 @@ function formatMessage(isSender, userName, formattedTimestamp, messageText) {
                 </div>
             </div>
     `;
+}
+function convertUTCDateToLocalDate(date) {
+    var newDate = new Date(date.getTime()+date.getTimezoneOffset()*60*1000);
+
+    var offset = date.getTimezoneOffset() / 60;
+    var hours = date.getHours();
+
+    newDate.setHours(hours - offset);
+
+    return newDate;
 }
 
 
