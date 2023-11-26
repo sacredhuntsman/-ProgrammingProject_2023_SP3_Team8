@@ -15,19 +15,20 @@
         .member-item {
             list-style-type: none;
             margin-bottom: 10px;
-            padding: 5px;
+            padding: 12px;
             border: 1px solid #ddd;
             border-radius: 5px;
             color: white;
         }
 
         .member-item button {
-            margin-right: 5px;
+            margin-left: 2px;
             padding: 5px;
             cursor: pointer;
             background: none;
             border: none;
             outline: none;
+            float: right;
         }
 
         .member-item button:hover {

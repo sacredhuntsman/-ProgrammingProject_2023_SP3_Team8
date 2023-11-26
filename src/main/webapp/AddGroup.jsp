@@ -13,15 +13,13 @@
 <body>
 
 <h3 class="text-white text-xl mt-6">Add a New Group</h3>
-<form action="<%= request.getContextPath() %>/add-group" method="post">
+<form action="<%= request.getContextPath() %>/add-group" method="post" id="addGroupForm">
     <label>
-        <input type="text" name="groupName" placeholder="Group Name">
+        <input type="text" name="groupName" placeholder="Group Name" class="sidebar-text-input">
     </label>
-    <input type="hidden" name="action" value="add-group"><br>
+    <input type="hidden" name="action" value="add-group">
     <input type="hidden" name="url" id="currentUrl" value="<%= request.getRequestURI() %>">
-
-    <input class="btn-div" type="submit" value="Add">
-
+    <input class="btn-div sidebar-submit-button" type="submit" value="Add">
 </form>
 <script>
     document.getElementById('addGroupForm').addEventListener('submit', function() {

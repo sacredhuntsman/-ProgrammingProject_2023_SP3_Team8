@@ -35,6 +35,9 @@
             outline: none;
             cursor: pointer;
             color: red;
+            position: relative;
+            top: 8px;
+            right: -10px;
         }
 
         .user-icon {

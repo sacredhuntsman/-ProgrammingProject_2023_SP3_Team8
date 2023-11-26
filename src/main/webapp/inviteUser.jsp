@@ -13,7 +13,7 @@
     <c:if test="${not empty param.channelId}">
         <input type="hidden" name="channelID" value="${param.channelId}">
     </c:if>
-    <input type="text" name="userName" oninput="searchInviteUsernames(this)">
+    <input type="text" name="userName" oninput="searchInviteUsernames(this)" style="margin: 10px 0">
     <div id="inviteUserResults" style="display: none;"></div>
     <input type="submit" value="Invite User" style="display: none;">
 </form>
@@ -40,6 +40,8 @@
 
         usernames.forEach(username => {
             const userItem = document.createElement('div');
+            // add cursor style
+            userItem.style.cursor = 'pointer';
             userItem.textContent = username;
             userItem.onclick = function() {
                 // Set the selected username to the input field

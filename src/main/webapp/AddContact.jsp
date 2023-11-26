@@ -39,6 +39,8 @@
         usernames.forEach(username => {
             const userItem = document.createElement('div');
             userItem.textContent = username;
+            // add pointer cursor
+            userItem.style.cursor = 'pointer';
             userItem.onclick = function() {
                 // Set the selected username to the input field
                 document.querySelector('input[name="UserName"]').value = username;

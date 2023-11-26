@@ -109,8 +109,7 @@
         <div id="user-menu" class="m-4 mt-8">
             <ul class="flex flex-col">
                 <li class="text-sm"><a href="${pageContext.request.contextPath}/Profile.jsp">Edit Profile</a></li>
-                <li class="text-sm">Manage Chat Rooms</li>
-                <li class="text-sm">Help</li>
+                <li class="text-sm"><a href="mailto:notarealemail@chatterbox.dev?subject=Help%20Request">Help</a></li>
                 <li class="text-sm"><a href="${pageContext.request.contextPath}/login?action=logout">Logout</a></li>
             </ul>
         </div>
@@ -151,9 +150,9 @@
     <div id="chat-rooms" class="flex flex-col  rounded-md m-4 p-2">
         <div class="title flex items-center">
             <div class="section-title text-xl"><%= activeGroup%> Rooms</div>
-            <div class="add-button flex content-center justify-center items-center mx-2" id="addChannelButton">
+            <a href="Channels.jsp?groupId=<%= groupId %>"><div class="add-button flex content-center justify-center items-center mx-2" id="addChannelButton">
                 <i class="fas fa-plus"></i>
-            </div>
+            </div></a>
         </div>
         <div id="addChannelContainer" style="display: none;">
             <!-- Include the add group -->
@@ -208,9 +207,11 @@
         <div id="user-info-m" class="flex flex-col shadow-lg rounded-md m-4 p-2">
             <div id="user-bar-m" class="flex justify-between content-center items-center mt-2">
                 <div id="user-icon-m" class="flex content-center justify-center items-center mx-2 shrink-0">
-                           <img src="https://chatterboxavatarstorage.blob.core.windows.net/blob/${sessionScope.userName}" alt="Avatar" style="width: 50px; height: 50px;">
-
+                    <div class="circular-icon">
+                        <img src="https://chatterboxavatarstorage.blob.core.windows.net/blob/${sessionScope.userName}" alt="Avatar"  style="width: 50px; height: 50px;">
+                    </div>
                 </div>
+
                 <div id="user-name-m" class="flex grow text-xl content-center justify-start items-center justify-items-start px-2">
                     ${sessionScope.userName}
                 </div>
@@ -221,8 +222,7 @@
             <div id="user-menu-m" class="m-4 mt-8">
                 <ul class="flex flex-col">
                     <li class="text-sm"><a href="${pageContext.request.contextPath}/Profile.jsp">Edit Profile</a></li>
-                    <li class="text-sm">Manage Chat Rooms</li>
-                    <li class="text-sm">Help</li>
+                    <li class="text-sm"><a href="mailto:notarealemail@chatterbox.dev?subject=Help%20Request">Help</a></li>
                     <li class="text-sm"><a href="${pageContext.request.contextPath}/login?action=logout">Logout</a></li>
                 </ul>
             </div>
@@ -231,9 +231,6 @@
         <div id="groups-rooms-m" class="flex flex-col  rounded-md m-4 p-2">
             <div class="title flex items-center">
                 <div class="section-title text-xl">Your Groups</div>
-                <div class="add-button flex content-center justify-center items-center mx-2">
-                    <i class="fas fa-plus"></i>
-                </div>
             </div>
             <div id="groups-list-m" class="mt-4">
                 <%
@@ -256,9 +253,6 @@
         <div id="chat-rooms-m" class="flex flex-col  rounded-md m-4 p-2">
             <div class="title flex items-center">
                 <div class="section-title text-xl"><%= activeGroup%> Rooms</div>
-                <div class="add-button flex content-center justify-center items-center mx-2">
-                    <i class="fas fa-plus"></i>
-                </div>
             </div>
             <div id="chat-room-list-m" class="mt-4">
                 <ul class="flex flex-col">
@@ -276,13 +270,6 @@
         <div id="contacts-m" class="flex flex-col  rounded-md m-4 p-2">
             <div class="title flex items-center">
                 <div class="section-title text-xl">Contacts</div>
-                <div class="add-button flex content-center justify-center items-center mx-2">
-                    <i class="fas fa-plus"></i>
-                </div>
-            </div>
-            <div>
-                <!-- Include the add friend -->
-                <jsp:include page="AddContact.jsp" />
             </div>
             <div id="contacts-list-m" class="mt-4">
 
@@ -315,10 +302,9 @@
             $('#addChannelContainer').toggle();
             $('#addGroupContainer').hide(); // Hide Add Group form when showing Add Channel form
         });
-
         $('#cancelAddChannel').click(function() {
-            $('#addChannelContainer').hide();
-        })
+            $('#addGroupContainer').hide();
+        });
         $('#addContactButton').click(function() {
             $('#addContactContainer').toggle();
             $('#addGroupContainer').hide(); // Hide Add Group form when showing Add Channel form

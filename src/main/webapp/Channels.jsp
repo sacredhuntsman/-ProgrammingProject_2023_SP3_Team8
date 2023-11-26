@@ -36,10 +36,7 @@
 <body>
 <div class="main-container flex items-stretch justify-stretch">
     <jsp:include page="sidebar.jsp" />
-        <div>
-            <!-- Include the group members' page within an iframe -->
-            <jsp:include page="GroupMembers.jsp" />
-            </div>
+
 
     <div class="main-content flex flex-col grow p-8">
         <div id="chat-title" class="flex content-center items-end mx-2 ">
@@ -63,10 +60,22 @@
         </div>
 
     </div>
-    <div>
-        <c:import url="inviteUser.jsp" />
-    </div>
 
+    <div class="info-bar">
+        <div class="m-4">
+            <div class="text-2xl text-white">Channel Members</div>
+                <div>
+                    <!-- Include the group members' page within an iframe -->
+                    <jsp:include page="GroupMembers.jsp" />
+                </div>
+        </div>
+        <div class="m-4">
+            <div class="text-2xl text-white">Invite User</div>
+            <div>
+                <c:import url="inviteUser.jsp" />
+            </div>
+        </div>
+    </div>
 </div>
 </body>
 </html>

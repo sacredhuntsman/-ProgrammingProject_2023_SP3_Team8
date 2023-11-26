@@ -57,7 +57,18 @@
 
         </div>
     </div>
+    <div class="info-bar">
+        <div class="m-4">
+            <div class="text-2xl text-white">Channel Members</div>
+            <ul class="flex flex-col list-disc pt-2 pl-4">
 
+            </ul>
+        </div>
+        <div class="m-4">
+            <div class="text-2xl text-white">Invite User</div>
+
+        </div>
+    </div>
 
 </div>
 
