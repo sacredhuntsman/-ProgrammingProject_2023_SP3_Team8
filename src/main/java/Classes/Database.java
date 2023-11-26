@@ -142,7 +142,7 @@ public class Database {
 
         try {
             connection = getConnection();
-            String query = "INSERT INTO UserDB (Username, FirstName, LastName, Email, Password, DateOfBirth) VALUES (?, ?, ?, ?, ?, ?)";
+            String query = "INSERT INTO UserDB (Username, FirstName, LastName, Email, Password, DateOfBirth, status) VALUES (?, ?, ?, ?, ?, ?, ?)";
             preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, user.getUsername());
             preparedStatement.setString(2, user.getFirstName());
@@ -150,6 +150,7 @@ public class Database {
             preparedStatement.setString(4, user.getEmail());
             preparedStatement.setString(5, user.getPassword());
             preparedStatement.setString(6, user.getAge());
+            preparedStatement.setString(7, "0");
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -166,10 +167,16 @@ public class Database {
     public boolean authenticate(String username, String password) {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
+        PreparedStatement preparedStatementStatus = null;
         ResultSet resultSet = null;
+        ResultSet resultStatus = null;
 
         try {
             connection = getConnection();
+
+
+
+
             String query = "SELECT Password FROM UserDB WHERE Username = ?";
             preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, username);
@@ -926,4 +933,58 @@ public class Database {
         }
         return false;
     }
+
+    public boolean statusCheck(String username) {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        try {
+            connection = getConnection();
+            String query = "SELECT status FROM UserDB WHERE Username = ?";
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, username);
+            resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                int status = resultSet.getInt("status");
+                if (status == 1) {
+                    return true;
+                }
+            }
+            return false;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        } finally {
+            closeResultSet(resultSet);
+            closePreparedStatement(preparedStatement);
+            closeConnection(connection);
+        }
+
+    }
+    //update the userDB to make account active
+    public boolean makeAccountActive(String username) {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+
+        try {
+            connection = getConnection();
+            String query = "UPDATE UserDB SET status = 1 WHERE Username = ?";
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, username);
+
+            int rowsAffected = preparedStatement.executeUpdate();
+            return rowsAffected > 0; // Returns true if at least one row was updated
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        } finally {
+            closePreparedStatement(preparedStatement);
+            closeConnection(connection);
+        }
+    }
+
+
+
 }

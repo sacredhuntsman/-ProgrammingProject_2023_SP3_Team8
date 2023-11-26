@@ -22,70 +22,64 @@ import static Classes.PasswordValidations.verifyPassword;
 
 @WebServlet(name = "LoginServlet", urlPatterns = { "/login" })
 public class LoginServlet extends HttpServlet {
-	
+
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// Retrieve the username and password from the request parameters
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
-		
+
 		// Perform authentication logic here (e.g., check credentials against a database)
+
 		boolean isAuthenticated = authenticate(username, password);
-		
+		boolean isActive = statusCheck(username);
+
+
+
 		if (isAuthenticated) {
-			Database database = new Database();
-			Map<String, String> userData = database.getSessionData(username);
-			
-			// Store user details in the session
-			HttpSession session = request.getSession();
-			session.setAttribute("userId", userData.get("UserID"));
-			session.setAttribute("userName", username);
-			session.setAttribute("firstName", userData.get("FirstName"));
-			session.setAttribute("lastName", userData.get("LastName"));
-			session.setAttribute("email", userData.get("Email"));
-			
-			response.sendRedirect("Profile.jsp"); // Redirect to the profile page
+			if (!isActive) {
+				response.sendRedirect("Login.jsp?error=Account is not active"); // Redirect to login page with an error flag
+			}else{
+				Database database = new Database();
+				Map<String, String> userData = database.getSessionData(username);
+
+				// Store user details in the session
+				HttpSession session = request.getSession();
+				session.setAttribute("userId", userData.get("UserID"));
+				session.setAttribute("userName", username);
+				session.setAttribute("firstName", userData.get("FirstName"));
+				session.setAttribute("lastName", userData.get("LastName"));
+				session.setAttribute("email", userData.get("Email"));
+
+				response.sendRedirect("Profile.jsp"); // Redirect to the profile page
+			}
+
 		} else {
 			// Authentication failed, show an error message or redirect to a login error page
 			response.sendRedirect("Login.jsp?error=Username or Password does not match"); // Redirect to login page with an error flag
 		}
-		
+
 	}
+
+
+
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// This method handles GET requests to the /login URL
 		// You can use it for rendering the login form or providing additional information
-		
+
 		// For example, you can forward the request to the login page:
 		request.getRequestDispatcher("/Login.jsp").forward(request, response);
 	}
-	
+
 	// Search the database for a user with the given username and password
 	private boolean authenticate(String username, String password) {
 		Database database = new Database();
 		return database.authenticate(username, password);
 	}
-	
-	
-	
-	
-	//To remove once DB confirmed working
-	/*
-	private boolean authenticate(String username, String password) {
-		// Iterate through the user array list to find the user with the given username
-		for (User user : UserData.users) {
-			if (user.getUsername().equals(username)) {
-				// User with the provided username found
-				String hashedPassword = user.getPassword();
-				System.out.println(hashedPassword);
-				// Use the PasswordValidations class to hash the provided password
-				if (verifyPassword(password, hashedPassword)){
-					
-					return true;
-				}
-
-			}
-		}
-		// User with the provided username not found
-		return false;
+	private boolean statusCheck(String username) {
+		Database database = new Database();
+		return database.statusCheck(username);
 	}
-	 */
+
+
+
 }
