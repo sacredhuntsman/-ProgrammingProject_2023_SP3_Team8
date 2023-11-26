@@ -87,6 +87,7 @@
                     ResultSet resultSetGroupID = preparedStatementGroupID.executeQuery();
 
                     if (resultSetGroupID.next()) {
+                        System.out.println(resultSetGroupID);
                         int privateGroupId = resultSetGroupID.getInt("PrivateGroupID");
                         String userName = resultSetUserName.getString("Username");
 
@@ -107,7 +108,9 @@
                         output.print("</li>");
 
                     } else {
-                        System.out.println("<span class=\"text-white\">No PrivateGroupID found for the given userIDs");
+
+                        output.print("<span class=\"text-white\">No PrivateGroupID found for the given userIDs");
+
                     }
                 }
             }

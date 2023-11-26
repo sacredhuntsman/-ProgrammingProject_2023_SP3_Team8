@@ -63,6 +63,12 @@ public class RemoveContactServlet extends HttpServlet {
                 preparedStatement.setInt(2, friendUserId);
                 preparedStatement.executeUpdate();
             }
+            String deleteFriendQuery2 = "DELETE FROM FriendDB WHERE UserID = ? AND FriendUserID = ?";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(deleteFriendQuery2)) {
+                preparedStatement.setInt(1, friendUserId);
+                preparedStatement.setInt(2, currentUser);
+                preparedStatement.executeUpdate();
+            }
 
             // Additional logic if needed...
 
